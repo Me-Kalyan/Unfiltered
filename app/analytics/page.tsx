@@ -33,45 +33,8 @@ import {
   Sunset,
 } from "lucide-react"
 import Link from "next/link"
-
-// Logo Component
-function LogoMark({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 32 22"
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      aria-label="Unfiltered Logo"
-    >
-      <g 
-        stroke="#3d3535" 
-        strokeWidth="1.5" 
-        strokeLinecap="round"
-        strokeDasharray="2 1.5"
-        fill="none"
-      >
-        <line x1="16" y1="1" x2="16" y2="7" />
-        <line x1="9" y1="3" x2="11" y2="8" />
-        <line x1="23" y1="3" x2="21" y2="8" />
-        <line x1="3" y1="10" x2="7" y2="11" />
-        <line x1="29" y1="10" x2="25" y2="11" />
-      </g>
-      <path
-        d="M 6 18 A 10 10 0 0 1 26 18 Z"
-        fill="#d4a5a5"
-      />
-      <line
-        x1="2"
-        y1="18"
-        x2="30"
-        y2="18"
-        stroke="#3d3535"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  )
-}
+import { LogoMark } from "@/components/logo-mark"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 // Progress Ring Component
 function ProgressRing({ 
@@ -138,7 +101,7 @@ function StatCard({
   }
 
   return (
-    <Card className="bg-white/80 border-[#e8e0da]/60 hover:shadow-lg hover:shadow-[#d4a5a5]/5 transition-all">
+    <Card className="bg-white dark:bg-[#231c19]/80 border-[#e8e0da] dark:border-[#3a2f28]/60 hover:shadow-lg hover:shadow-[#d4a5a5]/5 transition-all">
       <CardContent className="p-5">
         <div className="flex items-start justify-between mb-3">
           <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${colorClasses[color]}`}>
@@ -146,7 +109,7 @@ function StatCard({
           </div>
           {trend && trendValue && (
             <div className={`flex items-center gap-1 text-sm font-medium ${
-              trend === "up" ? "text-emerald-600" : trend === "down" ? "text-red-500" : "text-[#8a7a7a]"
+              trend === "up" ? "text-emerald-600" : trend === "down" ? "text-red-500" : "text-[#8a7a7a] dark:text-[#9a8a82]"
             }`}>
               {trend === "up" ? <TrendingUp className="w-4 h-4" /> : 
                trend === "down" ? <TrendingDown className="w-4 h-4" /> : null}
@@ -154,8 +117,8 @@ function StatCard({
             </div>
           )}
         </div>
-        <div className="text-3xl font-bold text-[#3d3535] mb-1">{value}</div>
-        <div className="text-sm text-[#8a7a7a]">{label}</div>
+        <div className="text-3xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-1">{value}</div>
+        <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">{label}</div>
       </CardContent>
     </Card>
   )
@@ -173,7 +136,7 @@ function SimpleBarChart({ data }: { data: { label: string; value: number }[] }) 
             className="w-full bg-[#d4a5a5] rounded-t-lg transition-all hover:bg-[#c49090]"
             style={{ height: `${(item.value / maxValue) * 100}%`, minHeight: 4 }}
           />
-          <span className="text-xs text-[#8a7a7a]">{item.label}</span>
+          <span className="text-xs text-[#8a7a7a] dark:text-[#9a8a82]">{item.label}</span>
         </div>
       ))}
     </div>
@@ -204,8 +167,8 @@ function ActivityHeatmap() {
         })}
       </div>
       <div className="flex items-center justify-between mt-3">
-        <span className="text-xs text-[#8a7a7a]">12 weeks ago</span>
-        <div className="flex items-center gap-2 text-xs text-[#8a7a7a]">
+        <span className="text-xs text-[#8a7a7a] dark:text-[#9a8a82]">12 weeks ago</span>
+        <div className="flex items-center gap-2 text-xs text-[#8a7a7a] dark:text-[#9a8a82]">
           <span>Less</span>
           <div className="flex gap-1">
             <div className="w-3 h-3 rounded-sm bg-[#f0ebe5]" />
@@ -259,35 +222,38 @@ export default function AnalyticsPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-[#faf8f5]">
+    <div className="min-h-screen bg-[#faf8f5] dark:bg-[#1a1412]">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#faf8f5]/80 backdrop-blur-md border-b border-[#e8e0da]/50">
+      <header className="sticky top-0 z-50 bg-[#faf8f5] dark:bg-[#1a1412]/80 backdrop-blur-md border-b border-[#e8e0da] dark:border-[#3a2f28]/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Link 
                 href="/" 
-                className="w-9 h-9 rounded-lg flex items-center justify-center text-[#6a5f5f] hover:bg-[#f0ebe5] hover:text-[#3d3535] transition-colors"
+                className="w-9 h-9 rounded-lg flex items-center justify-center text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] hover:text-[#3d3535] dark:text-[#e8ddd5] transition-colors"
               >
                 <ArrowLeft className="w-5 h-5" />
               </Link>
               <div className="flex items-center gap-2.5">
                 <LogoMark className="h-8 w-auto" />
-                <span className="font-script text-2xl font-semibold text-[#3d3535]">Unfiltered</span>
+                <span className="font-script text-2xl font-semibold text-[#3d3535] dark:text-[#e8ddd5]">Unfiltered</span>
               </div>
             </div>
-            <Select value={timeRange} onValueChange={setTimeRange}>
-              <SelectTrigger className="w-[140px] bg-white border-[#e8e0da]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="7d">Last 7 days</SelectItem>
-                <SelectItem value="30d">Last 30 days</SelectItem>
-                <SelectItem value="90d">Last 90 days</SelectItem>
-                <SelectItem value="1y">Last year</SelectItem>
-                <SelectItem value="all">All time</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <Select value={timeRange} onValueChange={setTimeRange}>
+                <SelectTrigger className="w-[140px] bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28]">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="7d">Last 7 days</SelectItem>
+                  <SelectItem value="30d">Last 30 days</SelectItem>
+                  <SelectItem value="90d">Last 90 days</SelectItem>
+                  <SelectItem value="1y">Last year</SelectItem>
+                  <SelectItem value="all">All time</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
       </header>
@@ -295,8 +261,8 @@ export default function AnalyticsPage() {
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         {/* Page Title */}
         <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-[#3d3535] mb-2">Analytics</h1>
-          <p className="text-[#6a5f5f]">Track your writing journey and discover insights about your journaling habits.</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-2">Analytics</h1>
+          <p className="text-[#6a5f5f] dark:text-[#b0a098]">Track your writing journey and discover insights about your journaling habits.</p>
         </div>
 
         {/* Stats Grid */}
@@ -338,7 +304,7 @@ export default function AnalyticsPage() {
         {/* Charts Section */}
         <div className="grid lg:grid-cols-2 gap-6 mb-8">
           {/* Words Per Day */}
-          <Card className="bg-white/80 border-[#e8e0da]/60">
+          <Card className="bg-white dark:bg-[#231c19]/80 border-[#e8e0da] dark:border-[#3a2f28]/60">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <BarChart3 className="w-5 h-5 text-[#d4a5a5]" />
@@ -351,7 +317,7 @@ export default function AnalyticsPage() {
           </Card>
 
           {/* Entries Per Month */}
-          <Card className="bg-white/80 border-[#e8e0da]/60">
+          <Card className="bg-white dark:bg-[#231c19]/80 border-[#e8e0da] dark:border-[#3a2f28]/60">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <Activity className="w-5 h-5 text-[#d4a5a5]" />
@@ -367,7 +333,7 @@ export default function AnalyticsPage() {
         {/* Activity & Goals */}
         <div className="grid lg:grid-cols-3 gap-6 mb-8">
           {/* Activity Heatmap */}
-          <Card className="lg:col-span-2 bg-white/80 border-[#e8e0da]/60">
+          <Card className="lg:col-span-2 bg-white dark:bg-[#231c19]/80 border-[#e8e0da] dark:border-[#3a2f28]/60">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-[#d4a5a5]" />
@@ -380,7 +346,7 @@ export default function AnalyticsPage() {
           </Card>
 
           {/* Weekly Goal */}
-          <Card className="bg-white/80 border-[#e8e0da]/60">
+          <Card className="bg-white dark:bg-[#231c19]/80 border-[#e8e0da] dark:border-[#3a2f28]/60">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <Target className="w-5 h-5 text-[#d4a5a5]" />
@@ -392,13 +358,13 @@ export default function AnalyticsPage() {
                 <div className="relative">
                   <ProgressRing progress={68} size={140} strokeWidth={12} />
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-3xl font-bold text-[#3d3535]">68%</span>
-                    <span className="text-xs text-[#8a7a7a]">complete</span>
+                    <span className="text-3xl font-bold text-[#3d3535] dark:text-[#e8ddd5]">68%</span>
+                    <span className="text-xs text-[#8a7a7a] dark:text-[#9a8a82]">complete</span>
                   </div>
                 </div>
                 <div className="mt-4 text-center">
-                  <div className="text-lg font-semibold text-[#3d3535]">3,420 / 5,000</div>
-                  <div className="text-sm text-[#8a7a7a]">words this week</div>
+                  <div className="text-lg font-semibold text-[#3d3535] dark:text-[#e8ddd5]">3,420 / 5,000</div>
+                  <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">words this week</div>
                 </div>
               </div>
             </CardContent>
@@ -408,7 +374,7 @@ export default function AnalyticsPage() {
         {/* Insights Section */}
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Top Tags */}
-          <Card className="bg-white/80 border-[#e8e0da]/60">
+          <Card className="bg-white dark:bg-[#231c19]/80 border-[#e8e0da] dark:border-[#3a2f28]/60">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <Hash className="w-5 h-5 text-[#d4a5a5]" />
@@ -418,13 +384,13 @@ export default function AnalyticsPage() {
             <CardContent className="space-y-3">
               {topTags.map((item, i) => (
                 <div key={item.tag} className="flex items-center gap-3">
-                  <span className="w-6 h-6 rounded-full bg-[#f0ebe5] flex items-center justify-center text-xs font-medium text-[#6a5f5f]">
+                  <span className="w-6 h-6 rounded-full bg-[#f0ebe5] flex items-center justify-center text-xs font-medium text-[#6a5f5f] dark:text-[#b0a098]">
                     {i + 1}
                   </span>
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm font-medium text-[#3d3535]">#{item.tag}</span>
-                      <span className="text-xs text-[#8a7a7a]">{item.count} entries</span>
+                      <span className="text-sm font-medium text-[#3d3535] dark:text-[#e8ddd5]">#{item.tag}</span>
+                      <span className="text-xs text-[#8a7a7a] dark:text-[#9a8a82]">{item.count} entries</span>
                     </div>
                     <div className="h-1.5 bg-[#f0ebe5] rounded-full overflow-hidden">
                       <div 
@@ -439,7 +405,7 @@ export default function AnalyticsPage() {
           </Card>
 
           {/* Writing Times */}
-          <Card className="bg-white/80 border-[#e8e0da]/60">
+          <Card className="bg-white dark:bg-[#231c19]/80 border-[#e8e0da] dark:border-[#3a2f28]/60">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <Clock className="w-5 h-5 text-[#d4a5a5]" />
@@ -450,11 +416,11 @@ export default function AnalyticsPage() {
               {writingTimes.map((item) => (
                 <div key={item.time} className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-[#f0ebe5] flex items-center justify-center">
-                    <item.icon className="w-5 h-5 text-[#6a5f5f]" />
+                    <item.icon className="w-5 h-5 text-[#6a5f5f] dark:text-[#b0a098]" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm font-medium text-[#3d3535]">{item.time}</span>
+                      <span className="text-sm font-medium text-[#3d3535] dark:text-[#e8ddd5]">{item.time}</span>
                       <span className="text-sm font-semibold text-[#d4a5a5]">{item.percent}%</span>
                     </div>
                     <div className="h-2 bg-[#f0ebe5] rounded-full overflow-hidden">
@@ -470,7 +436,7 @@ export default function AnalyticsPage() {
           </Card>
 
           {/* Milestones */}
-          <Card className="bg-white/80 border-[#e8e0da]/60">
+          <Card className="bg-white dark:bg-[#231c19]/80 border-[#e8e0da] dark:border-[#3a2f28]/60">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <Award className="w-5 h-5 text-[#d4a5a5]" />
@@ -483,26 +449,26 @@ export default function AnalyticsPage() {
                   <Zap className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <div className="font-medium text-[#3d3535]">50K Words!</div>
-                  <div className="text-xs text-[#8a7a7a]">Reached on Jan 15</div>
+                  <div className="font-medium text-[#3d3535] dark:text-[#e8ddd5]">50K Words!</div>
+                  <div className="text-xs text-[#8a7a7a] dark:text-[#9a8a82]">Reached on Jan 15</div>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-3 bg-[#f0ebe5] rounded-xl">
                 <div className="w-10 h-10 rounded-full bg-[#e8e0da] flex items-center justify-center">
-                  <Flame className="w-5 h-5 text-[#8a7a7a]" />
+                  <Flame className="w-5 h-5 text-[#8a7a7a] dark:text-[#9a8a82]" />
                 </div>
                 <div>
-                  <div className="font-medium text-[#3d3535]">30 Day Streak</div>
-                  <div className="text-xs text-[#8a7a7a]">7 days to go!</div>
+                  <div className="font-medium text-[#3d3535] dark:text-[#e8ddd5]">30 Day Streak</div>
+                  <div className="text-xs text-[#8a7a7a] dark:text-[#9a8a82]">7 days to go!</div>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-3 bg-[#f0ebe5] rounded-xl opacity-50">
                 <div className="w-10 h-10 rounded-full bg-[#e8e0da] flex items-center justify-center">
-                  <FileText className="w-5 h-5 text-[#8a7a7a]" />
+                  <FileText className="w-5 h-5 text-[#8a7a7a] dark:text-[#9a8a82]" />
                 </div>
                 <div>
-                  <div className="font-medium text-[#3d3535]">200 Entries</div>
-                  <div className="text-xs text-[#8a7a7a]">53 entries to go</div>
+                  <div className="font-medium text-[#3d3535] dark:text-[#e8ddd5]">200 Entries</div>
+                  <div className="text-xs text-[#8a7a7a] dark:text-[#9a8a82]">53 entries to go</div>
                 </div>
               </div>
             </CardContent>

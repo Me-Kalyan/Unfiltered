@@ -32,45 +32,8 @@ import {
   Heart,
 } from "lucide-react"
 import Link from "next/link"
-
-// Logo Component
-function LogoMark({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 32 22"
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      aria-label="Unfiltered Logo"
-    >
-      <g 
-        stroke="#3d3535" 
-        strokeWidth="1.5" 
-        strokeLinecap="round"
-        strokeDasharray="2 1.5"
-        fill="none"
-      >
-        <line x1="16" y1="1" x2="16" y2="7" />
-        <line x1="9" y1="3" x2="11" y2="8" />
-        <line x1="23" y1="3" x2="21" y2="8" />
-        <line x1="3" y1="10" x2="7" y2="11" />
-        <line x1="29" y1="10" x2="25" y2="11" />
-      </g>
-      <path
-        d="M 6 18 A 10 10 0 0 1 26 18 Z"
-        fill="#d4a5a5"
-      />
-      <line
-        x1="2"
-        y1="18"
-        x2="30"
-        y2="18"
-        stroke="#3d3535"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  )
-}
+import { LogoMark } from "@/components/logo-mark"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 // Progress Ring Component
 function ProgressRing({ progress, size = 80, strokeWidth = 6 }: { progress: number; size?: number; strokeWidth?: number }) {
@@ -120,9 +83,9 @@ function AchievementBadge({
       <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
         unlocked ? "bg-[#d4a5a5]" : "bg-[#e8e0da]"
       }`}>
-        <Icon className={`w-6 h-6 ${unlocked ? "text-white" : "text-[#8a7a7a]"}`} />
+        <Icon className={`w-6 h-6 ${unlocked ? "text-white" : "text-[#8a7a7a] dark:text-[#9a8a82]"}`} />
       </div>
-      <span className="text-xs text-center text-[#6a5f5f] font-medium">{title}</span>
+      <span className="text-xs text-center text-[#6a5f5f] dark:text-[#b0a098] font-medium">{title}</span>
     </div>
   )
 }
@@ -140,7 +103,7 @@ function StatCard({
   trend?: string 
 }) {
   return (
-    <Card className="bg-white/80 border-[#e8e0da]/60">
+    <Card className="bg-white dark:bg-[#231c19]/80 border-[#e8e0da] dark:border-[#3a2f28]/60">
       <CardContent className="p-4">
         <div className="flex items-start justify-between mb-2">
           <Icon className="w-5 h-5 text-[#d4a5a5]" />
@@ -151,8 +114,8 @@ function StatCard({
             </span>
           )}
         </div>
-        <div className="text-2xl font-bold text-[#3d3535]">{value}</div>
-        <div className="text-sm text-[#8a7a7a]">{label}</div>
+        <div className="text-2xl font-bold text-[#3d3535] dark:text-[#e8ddd5]">{value}</div>
+        <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">{label}</div>
       </CardContent>
     </Card>
   )
@@ -187,20 +150,20 @@ export default function ProfilePage() {
   ]
 
   return (
-    <div className="min-h-screen bg-[#faf8f5]">
+    <div className="min-h-screen bg-[#faf8f5] dark:bg-[#1a1412]">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#faf8f5]/80 backdrop-blur-md border-b border-[#e8e0da]/50">
+      <header className="sticky top-0 z-50 bg-[#faf8f5] dark:bg-[#1a1412]/80 backdrop-blur-md border-b border-[#e8e0da] dark:border-[#3a2f28]/50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
-<button onClick={() => router.back()} className="flex items-center gap-2 text-[#6a5f5f] hover:text-[#3d3535]">
+<button onClick={() => router.back()} className="flex items-center gap-2 text-[#6a5f5f] dark:text-[#b0a098] hover:text-[#3d3535] dark:text-[#e8ddd5]">
   <ArrowLeft className="w-5 h-5" />
   <span className="hidden sm:inline">Back to Journal</span>
   </button>
             <div className="flex items-center gap-2.5">
               <LogoMark className="h-8 w-auto" />
-              <span className="font-script text-2xl font-semibold text-[#3d3535]">Unfiltered</span>
+              <span className="font-script text-2xl font-semibold text-[#3d3535] dark:text-[#e8ddd5]">Unfiltered</span>
             </div>
-            <div className="w-[100px]" />
+            <ThemeToggle />
           </div>
         </div>
       </header>
@@ -209,33 +172,33 @@ export default function ProfilePage() {
         {/* Profile Header */}
         <div className="relative mb-8">
           {/* Cover Area */}
-          <div className="h-32 sm:h-48 bg-gradient-to-br from-[#d4a5a5]/30 via-[#e5c5c5]/20 to-[#f0ebe5] rounded-2xl" />
+          <div className="h-32 sm:h-48 bg-gradient-to-br from-[#d4a5a5]/30 via-[#e5c5c5]/20 to-[#f0ebe5] dark:from-[#6b4f4f]/20 dark:via-[#5a4040]/15 dark:to-[#2a211d] rounded-2xl" />
           
           {/* Profile Info */}
           <div className="relative px-4 sm:px-6 -mt-16">
             <div className="flex flex-col sm:flex-row sm:items-end gap-4">
               {/* Avatar */}
               <div className="relative">
-                <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl bg-[#d4a5a5] border-4 border-[#faf8f5] flex items-center justify-center overflow-hidden">
+                <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl bg-[#d4a5a5] border-4 border-[#faf8f5] dark:border-[#1a1412] flex items-center justify-center overflow-hidden">
                   <span className="text-4xl font-bold text-white">AC</span>
                 </div>
-                <button className="absolute bottom-2 right-2 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center hover:bg-[#f0ebe5] transition-colors">
-                  <Camera className="w-4 h-4 text-[#6a5f5f]" />
+                <button className="absolute bottom-2 right-2 w-8 h-8 bg-white dark:bg-[#231c19] rounded-full shadow-md flex items-center justify-center hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] transition-colors">
+                  <Camera className="w-4 h-4 text-[#6a5f5f] dark:text-[#b0a098]" />
                 </button>
               </div>
 
               {/* Name & Actions */}
               <div className="flex-1 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <h1 className="text-2xl font-bold text-[#3d3535]">{profile.name}</h1>
-                  <p className="text-[#8a7a7a]">@{profile.username}</p>
+                  <h1 className="text-2xl font-bold text-[#3d3535] dark:text-[#e8ddd5]">{profile.name}</h1>
+                  <p className="text-[#8a7a7a] dark:text-[#9a8a82]">@{profile.username}</p>
                 </div>
                 <Button
                   onClick={() => setIsEditing(!isEditing)}
                   variant={isEditing ? "default" : "outline"}
                   className={isEditing 
                     ? "bg-[#d4a5a5] hover:bg-[#c49090] text-white" 
-                    : "border-[#e8e0da] text-[#6a5f5f] hover:bg-[#f0ebe5]"
+                    : "border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d]"
                   }
                 >
                   {isEditing ? (
@@ -259,21 +222,21 @@ export default function ProfilePage() {
                 <Textarea
                   value={profile.bio}
                   onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
-                  className="bg-white border-[#e8e0da] focus:border-[#d4a5a5] resize-none"
+                  className="bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28] focus:border-[#d4a5a5] resize-none"
                   rows={3}
                 />
               ) : (
                 <p className="text-[#4a3f3f] leading-relaxed">{profile.bio}</p>
               )}
 
-              <div className="flex flex-wrap gap-4 text-sm text-[#6a5f5f]">
+              <div className="flex flex-wrap gap-4 text-sm text-[#6a5f5f] dark:text-[#b0a098]">
                 <div className="flex items-center gap-1.5">
                   <MapPin className="w-4 h-4" />
                   {isEditing ? (
                     <Input
                       value={profile.location}
                       onChange={(e) => setProfile({ ...profile, location: e.target.value })}
-                      className="h-8 w-40 bg-white border-[#e8e0da]"
+                      className="h-8 w-40 bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28]"
                     />
                   ) : (
                     <span>{profile.location}</span>
@@ -285,7 +248,7 @@ export default function ProfilePage() {
                     <Input
                       value={profile.website}
                       onChange={(e) => setProfile({ ...profile, website: e.target.value })}
-                      className="h-8 w-40 bg-white border-[#e8e0da]"
+                      className="h-8 w-40 bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28]"
                     />
                   ) : (
                     <a href={`https://${profile.website}`} className="text-[#d4a5a5] hover:underline">
@@ -301,10 +264,10 @@ export default function ProfilePage() {
 
               {/* Social Links */}
               <div className="flex gap-3">
-                <a href="#" className="w-9 h-9 rounded-lg bg-[#f0ebe5] flex items-center justify-center text-[#6a5f5f] hover:bg-[#e8e0da] transition-colors">
+                <a href="#" className="w-9 h-9 rounded-lg bg-[#f0ebe5] flex items-center justify-center text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#e8e0da] transition-colors">
                   <Twitter className="w-4 h-4" />
                 </a>
-                <a href="#" className="w-9 h-9 rounded-lg bg-[#f0ebe5] flex items-center justify-center text-[#6a5f5f] hover:bg-[#e8e0da] transition-colors">
+                <a href="#" className="w-9 h-9 rounded-lg bg-[#f0ebe5] flex items-center justify-center text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#e8e0da] transition-colors">
                   <Instagram className="w-4 h-4" />
                 </a>
               </div>
@@ -323,15 +286,15 @@ export default function ProfilePage() {
         {/* Tabs */}
         <Tabs defaultValue="overview" className="space-y-6">
           <TabsList className="bg-[#f0ebe5] p-1">
-            <TabsTrigger value="overview" className="data-[state=active]:bg-white">Overview</TabsTrigger>
-            <TabsTrigger value="achievements" className="data-[state=active]:bg-white">Achievements</TabsTrigger>
-            <TabsTrigger value="activity" className="data-[state=active]:bg-white">Activity</TabsTrigger>
+            <TabsTrigger value="overview" className="data-[state=active]:bg-white dark:bg-[#231c19]">Overview</TabsTrigger>
+            <TabsTrigger value="achievements" className="data-[state=active]:bg-white dark:bg-[#231c19]">Achievements</TabsTrigger>
+            <TabsTrigger value="activity" className="data-[state=active]:bg-white dark:bg-[#231c19]">Activity</TabsTrigger>
           </TabsList>
 
           {/* Overview Tab */}
           <TabsContent value="overview" className="space-y-6">
             {/* Writing Goals */}
-            <Card className="bg-white/80 border-[#e8e0da]/60">
+            <Card className="bg-white dark:bg-[#231c19]/80 border-[#e8e0da] dark:border-[#3a2f28]/60">
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg flex items-center gap-2">
                   <Target className="w-5 h-5 text-[#d4a5a5]" />
@@ -343,13 +306,13 @@ export default function ProfilePage() {
                   <div className="relative">
                     <ProgressRing progress={68} size={100} strokeWidth={8} />
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-xl font-bold text-[#3d3535]">68%</span>
+                      <span className="text-xl font-bold text-[#3d3535] dark:text-[#e8ddd5]">68%</span>
                     </div>
                   </div>
                   <div className="flex-1">
-                    <div className="text-2xl font-bold text-[#3d3535]">3,420 / 5,000</div>
-                    <div className="text-sm text-[#8a7a7a]">words this week</div>
-                    <div className="mt-2 text-sm text-[#6a5f5f]">
+                    <div className="text-2xl font-bold text-[#3d3535] dark:text-[#e8ddd5]">3,420 / 5,000</div>
+                    <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">words this week</div>
+                    <div className="mt-2 text-sm text-[#6a5f5f] dark:text-[#b0a098]">
                       Keep it up! You're on track to hit your goal by Sunday.
                     </div>
                   </div>
@@ -358,7 +321,7 @@ export default function ProfilePage() {
             </Card>
 
             {/* Recent Entries */}
-            <Card className="bg-white/80 border-[#e8e0da]/60">
+            <Card className="bg-white dark:bg-[#231c19]/80 border-[#e8e0da] dark:border-[#3a2f28]/60">
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg">Recent Entries</CardTitle>
               </CardHeader>
@@ -366,13 +329,13 @@ export default function ProfilePage() {
                 {recentEntries.map((entry) => (
                   <div
                     key={entry.id}
-                    className="p-3 rounded-xl bg-[#faf8f5] hover:bg-[#f0ebe5] transition-colors cursor-pointer"
+                    className="p-3 rounded-xl bg-[#faf8f5] dark:bg-[#1a1412] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] transition-colors cursor-pointer"
                   >
                     <div className="flex items-start justify-between mb-1">
-                      <h4 className="font-medium text-[#3d3535]">{entry.title}</h4>
-                      <span className="text-xs text-[#8a7a7a]">{entry.date}</span>
+                      <h4 className="font-medium text-[#3d3535] dark:text-[#e8ddd5]">{entry.title}</h4>
+                      <span className="text-xs text-[#8a7a7a] dark:text-[#9a8a82]">{entry.date}</span>
                     </div>
-                    <p className="text-sm text-[#6a5f5f] line-clamp-1">{entry.preview}</p>
+                    <p className="text-sm text-[#6a5f5f] dark:text-[#b0a098] line-clamp-1">{entry.preview}</p>
                   </div>
                 ))}
                 <Button variant="ghost" className="w-full text-[#d4a5a5] hover:bg-[#d4a5a5]/10">
@@ -384,7 +347,7 @@ export default function ProfilePage() {
 
           {/* Achievements Tab */}
           <TabsContent value="achievements">
-            <Card className="bg-white/80 border-[#e8e0da]/60">
+            <Card className="bg-white dark:bg-[#231c19]/80 border-[#e8e0da] dark:border-[#3a2f28]/60">
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg flex items-center gap-2">
                   <Award className="w-5 h-5 text-[#d4a5a5]" />
@@ -404,12 +367,12 @@ export default function ProfilePage() {
                   <AchievementBadge icon={Award} title="Perfectionist" />
                   <AchievementBadge icon={Target} title="Goal Crusher" />
                 </div>
-                <div className="mt-6 p-4 bg-[#faf8f5] rounded-xl">
+                <div className="mt-6 p-4 bg-[#faf8f5] dark:bg-[#1a1412] rounded-xl">
                   <div className="flex items-center gap-3 mb-2">
                     <Award className="w-5 h-5 text-[#d4a5a5]" />
-                    <span className="font-medium text-[#3d3535]">Next Achievement</span>
+                    <span className="font-medium text-[#3d3535] dark:text-[#e8ddd5]">Next Achievement</span>
                   </div>
-                  <p className="text-sm text-[#6a5f5f]">
+                  <p className="text-sm text-[#6a5f5f] dark:text-[#b0a098]">
                     Write <strong>3 more entries</strong> to unlock "100 Entries" badge!
                   </p>
                 </div>
@@ -419,7 +382,7 @@ export default function ProfilePage() {
 
           {/* Activity Tab */}
           <TabsContent value="activity">
-            <Card className="bg-white/80 border-[#e8e0da]/60">
+            <Card className="bg-white dark:bg-[#231c19]/80 border-[#e8e0da] dark:border-[#3a2f28]/60">
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg flex items-center gap-2">
                   <Clock className="w-5 h-5 text-[#d4a5a5]" />
@@ -429,7 +392,7 @@ export default function ProfilePage() {
               <CardContent>
                 {/* Activity Heatmap Placeholder */}
                 <div className="mb-6">
-                  <div className="text-sm text-[#8a7a7a] mb-3">Last 12 weeks</div>
+                  <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82] mb-3">Last 12 weeks</div>
                   <div className="grid grid-cols-12 gap-1">
                     {Array.from({ length: 84 }).map((_, i) => {
                       const intensity = Math.random()
@@ -446,7 +409,7 @@ export default function ProfilePage() {
                       )
                     })}
                   </div>
-                  <div className="flex items-center justify-end gap-2 mt-2 text-xs text-[#8a7a7a]">
+                  <div className="flex items-center justify-end gap-2 mt-2 text-xs text-[#8a7a7a] dark:text-[#9a8a82]">
                     <span>Less</span>
                     <div className="flex gap-1">
                       <div className="w-3 h-3 rounded-sm bg-[#f0ebe5]" />
@@ -460,34 +423,34 @@ export default function ProfilePage() {
                 </div>
 
                 {/* Best Writing Times */}
-                <div className="p-4 bg-[#faf8f5] rounded-xl">
-                  <div className="text-sm font-medium text-[#3d3535] mb-3">Your Best Writing Times</div>
+                <div className="p-4 bg-[#faf8f5] dark:bg-[#1a1412] rounded-xl">
+                  <div className="text-sm font-medium text-[#3d3535] dark:text-[#e8ddd5] mb-3">Your Best Writing Times</div>
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-[#6a5f5f]">Morning (6am-12pm)</span>
+                      <span className="text-sm text-[#6a5f5f] dark:text-[#b0a098]">Morning (6am-12pm)</span>
                       <div className="flex items-center gap-2">
                         <div className="w-24 h-2 bg-[#e8e0da] rounded-full overflow-hidden">
                           <div className="h-full bg-[#d4a5a5] rounded-full" style={{ width: "65%" }} />
                         </div>
-                        <span className="text-sm text-[#3d3535] font-medium">65%</span>
+                        <span className="text-sm text-[#3d3535] dark:text-[#e8ddd5] font-medium">65%</span>
                       </div>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-[#6a5f5f]">Afternoon (12pm-6pm)</span>
+                      <span className="text-sm text-[#6a5f5f] dark:text-[#b0a098]">Afternoon (12pm-6pm)</span>
                       <div className="flex items-center gap-2">
                         <div className="w-24 h-2 bg-[#e8e0da] rounded-full overflow-hidden">
                           <div className="h-full bg-[#d4a5a5] rounded-full" style={{ width: "20%" }} />
                         </div>
-                        <span className="text-sm text-[#3d3535] font-medium">20%</span>
+                        <span className="text-sm text-[#3d3535] dark:text-[#e8ddd5] font-medium">20%</span>
                       </div>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-[#6a5f5f]">Evening (6pm-12am)</span>
+                      <span className="text-sm text-[#6a5f5f] dark:text-[#b0a098]">Evening (6pm-12am)</span>
                       <div className="flex items-center gap-2">
                         <div className="w-24 h-2 bg-[#e8e0da] rounded-full overflow-hidden">
                           <div className="h-full bg-[#d4a5a5] rounded-full" style={{ width: "15%" }} />
                         </div>
-                        <span className="text-sm text-[#3d3535] font-medium">15%</span>
+                        <span className="text-sm text-[#3d3535] dark:text-[#e8ddd5] font-medium">15%</span>
                       </div>
                     </div>
                   </div>

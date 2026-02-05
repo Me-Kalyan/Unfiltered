@@ -61,45 +61,8 @@ import {
   Bookmark,
 } from "lucide-react"
 import Link from "next/link"
-
-// Logo Component
-function LogoMark({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 32 22"
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      aria-label="Unfiltered Logo"
-    >
-      <g 
-        stroke="#3d3535" 
-        strokeWidth="1.5" 
-        strokeLinecap="round"
-        strokeDasharray="2 1.5"
-        fill="none"
-      >
-        <line x1="16" y1="1" x2="16" y2="7" />
-        <line x1="9" y1="3" x2="11" y2="8" />
-        <line x1="23" y1="3" x2="21" y2="8" />
-        <line x1="3" y1="10" x2="7" y2="11" />
-        <line x1="29" y1="10" x2="25" y2="11" />
-      </g>
-      <path
-        d="M 6 18 A 10 10 0 0 1 26 18 Z"
-        fill="#d4a5a5"
-      />
-      <line
-        x1="2"
-        y1="18"
-        x2="30"
-        y2="18"
-        stroke="#3d3535"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  )
-}
+import { LogoMark } from "@/components/logo-mark"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 // Toggle Switch Component
 function Toggle({ 
@@ -119,10 +82,10 @@ function Toggle({
       onClick={onToggle}
       disabled={disabled}
       className={`w-12 h-7 rounded-full transition-all duration-300 relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4a5a5] focus-visible:ring-offset-2 ${
-        enabled ? "bg-[#d4a5a5]" : "bg-[#e8e0da]"
+        enabled ? "bg-[#d4a5a5]" : "bg-[#e8e0da] dark:bg-[#3a2f28]"
       } ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:shadow-md"}`}
     >
-      <div className={`w-5 h-5 rounded-full bg-white shadow-md transition-all duration-300 absolute top-1 ${
+      <div className={`w-5 h-5 rounded-full bg-white dark:bg-[#231c19] shadow-md transition-all duration-300 absolute top-1 ${
         enabled ? "translate-x-6" : "translate-x-1"
       }`} />
     </button>
@@ -146,21 +109,21 @@ function SettingRow({
   showChevron?: boolean
 }) {
   const content = (
-    <div className={`flex items-center justify-between py-4 border-b border-[#e8e0da]/60 last:border-0 ${onClick ? 'cursor-pointer hover:bg-[#f5f0eb]/50 -mx-4 px-4 rounded-lg transition-colors' : ''}`}>
+    <div className={`flex items-center justify-between py-4 border-b border-[#e8e0da] dark:border-[#3a2f28]/60 last:border-0 ${onClick ? 'cursor-pointer hover:bg-[#f5f0eb] dark:bg-[#231c19]/50 -mx-4 px-4 rounded-lg transition-colors' : ''}`}>
       <div className="flex items-center gap-3 flex-1 min-w-0">
         {Icon && (
-          <div className="w-10 h-10 rounded-xl bg-[#f5f0eb] flex items-center justify-center flex-shrink-0">
-            <Icon className="w-5 h-5 text-[#6a5f5f]" />
+          <div className="w-10 h-10 rounded-xl bg-[#f5f0eb] dark:bg-[#231c19] flex items-center justify-center flex-shrink-0">
+            <Icon className="w-5 h-5 text-[#6a5f5f] dark:text-[#b0a098]" />
           </div>
         )}
         <div className="min-w-0">
-          <div className="font-medium text-[#3d3535]">{title}</div>
-          {description && <div className="text-sm text-[#8a7a7a] mt-0.5 truncate">{description}</div>}
+          <div className="font-medium text-[#3d3535] dark:text-[#e8ddd5]">{title}</div>
+          {description && <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82] mt-0.5 truncate">{description}</div>}
         </div>
       </div>
       <div className="flex items-center gap-2 flex-shrink-0 ml-4">
         {children}
-        {showChevron && <ChevronRight className="w-5 h-5 text-[#8a7a7a]" />}
+        {showChevron && <ChevronRight className="w-5 h-5 text-[#8a7a7a] dark:text-[#9a8a82]" />}
       </div>
     </div>
   )
@@ -187,20 +150,20 @@ function AccountCard({
     <button
       type="button"
       onClick={onClick}
-      className="w-full flex items-center gap-4 p-4 bg-white/90 border border-[#e8e0da] rounded-xl hover:bg-[#f5f0eb]/50 hover:border-[#d4a5a5]/30 transition-all duration-200 group"
+      className="w-full flex items-center gap-4 p-4 bg-white dark:bg-[#231c19]/90 border border-[#e8e0da] dark:border-[#3a2f28] rounded-xl hover:bg-[#f5f0eb] dark:bg-[#231c19]/50 hover:border-[#d4a5a5]/30 transition-all duration-200 group"
     >
       <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#f0ebe5] to-[#e8e0da] flex items-center justify-center overflow-hidden flex-shrink-0">
         {avatarUrl ? (
           <img src={avatarUrl || "/placeholder.svg"} alt={name} className="w-full h-full object-cover" />
         ) : (
-          <User className="w-6 h-6 text-[#8a7a7a]" />
+          <User className="w-6 h-6 text-[#8a7a7a] dark:text-[#9a8a82]" />
         )}
       </div>
       <div className="flex-1 text-left min-w-0">
-        <div className="font-semibold text-[#3d3535] truncate">{name}</div>
-        <div className="text-sm text-[#8a7a7a]">Settings & more</div>
+        <div className="font-semibold text-[#3d3535] dark:text-[#e8ddd5] truncate">{name}</div>
+        <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">Settings & more</div>
       </div>
-      <ChevronRight className="w-5 h-5 text-[#8a7a7a] group-hover:text-[#6a5f5f] group-hover:translate-x-0.5 transition-all" />
+      <ChevronRight className="w-5 h-5 text-[#8a7a7a] dark:text-[#9a8a82] group-hover:text-[#6a5f5f] dark:text-[#b0a098] group-hover:translate-x-0.5 transition-all" />
     </button>
   )
 }
@@ -210,13 +173,13 @@ function SettingsDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="w-9 h-9 rounded-lg hover:bg-[#f0ebe5]">
-          <Settings className="w-5 h-5 text-[#6a5f5f]" />
+        <Button variant="ghost" size="icon" className="w-9 h-9 rounded-lg hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d]">
+          <Settings className="w-5 h-5 text-[#6a5f5f] dark:text-[#b0a098]" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48 bg-white border-[#e8e0da]">
+      <DropdownMenuContent align="end" className="w-48 bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28]">
         <DropdownMenuItem className="cursor-pointer gap-2 py-2.5">
-          <Settings className="w-4 h-4 text-[#6a5f5f]" />
+          <Settings className="w-4 h-4 text-[#6a5f5f] dark:text-[#b0a098]" />
           <span>Settings</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator className="bg-[#e8e0da]" />
@@ -233,8 +196,8 @@ function SettingsDropdown() {
 function SectionHeader({ title, description }: { title: string; description?: string }) {
   return (
     <div className="mb-4">
-      <h3 className="text-lg font-semibold text-[#3d3535]">{title}</h3>
-      {description && <p className="text-sm text-[#8a7a7a] mt-1">{description}</p>}
+      <h3 className="text-lg font-semibold text-[#3d3535] dark:text-[#e8ddd5]">{title}</h3>
+      {description && <p className="text-sm text-[#8a7a7a] dark:text-[#9a8a82] mt-1">{description}</p>}
     </div>
   )
 }
@@ -295,24 +258,25 @@ export default function SettingsPage() {
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen bg-[#faf8f5]">
+      <div className="min-h-screen bg-[#faf8f5] dark:bg-[#1a1412]">
         {/* Header */}
-        <header className="sticky top-0 z-50 bg-[#faf8f5]/90 backdrop-blur-md border-b border-[#e8e0da]/50">
+        <header className="sticky top-0 z-50 bg-[#faf8f5] dark:bg-[#1a1412]/90 backdrop-blur-md border-b border-[#e8e0da] dark:border-[#3a2f28]/50">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
 <button
   onClick={() => router.back()}
-  className="w-10 h-10 rounded-xl flex items-center justify-center text-[#6a5f5f] hover:bg-[#f0ebe5] hover:text-[#3d3535]"
+  className="w-10 h-10 rounded-xl flex items-center justify-center text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] hover:text-[#3d3535] dark:text-[#e8ddd5]"
   >
   <ArrowLeft className="w-5 h-5" />
   </button>
                 <div className="flex items-center gap-2.5">
                   <LogoMark className="h-8 w-auto" />
-                  <span className="font-script text-2xl font-semibold text-[#3d3535]">Unfiltered</span>
+                  <span className="font-script text-2xl font-semibold text-[#3d3535] dark:text-[#e8ddd5]">Unfiltered</span>
                 </div>
               </div>
               <div className="flex items-center gap-2">
+                <ThemeToggle />
                 <SettingsDropdown />
                 <Button 
                   onClick={handleSave}
@@ -344,8 +308,8 @@ export default function SettingsPage() {
         <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
           {/* Page Title */}
           <div className="mb-6">
-            <h1 className="text-2xl sm:text-3xl font-bold text-[#3d3535] mb-2">Settings</h1>
-            <p className="text-[#6a5f5f]">Manage your account settings and preferences.</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-2">Settings</h1>
+            <p className="text-[#6a5f5f] dark:text-[#b0a098]">Manage your account settings and preferences.</p>
           </div>
 
           {/* Account Card - Prominent at top */}
@@ -362,35 +326,35 @@ export default function SettingsPage() {
             <TabsList className="bg-[#f0ebe5]/80 p-1.5 rounded-xl flex-wrap h-auto gap-1 w-full sm:w-auto">
               <TabsTrigger 
                 value="account" 
-                className="data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-lg px-4 py-2.5 transition-all"
+                className="data-[state=active]:bg-white dark:bg-[#231c19] data-[state=active]:shadow-sm rounded-lg px-4 py-2.5 transition-all"
               >
                 <User className="w-4 h-4 mr-2" />
                 Account
               </TabsTrigger>
               <TabsTrigger 
                 value="notifications" 
-                className="data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-lg px-4 py-2.5 transition-all"
+                className="data-[state=active]:bg-white dark:bg-[#231c19] data-[state=active]:shadow-sm rounded-lg px-4 py-2.5 transition-all"
               >
                 <Bell className="w-4 h-4 mr-2" />
                 Notifications
               </TabsTrigger>
               <TabsTrigger 
                 value="privacy" 
-                className="data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-lg px-4 py-2.5 transition-all"
+                className="data-[state=active]:bg-white dark:bg-[#231c19] data-[state=active]:shadow-sm rounded-lg px-4 py-2.5 transition-all"
               >
                 <Lock className="w-4 h-4 mr-2" />
                 Privacy
               </TabsTrigger>
               <TabsTrigger 
                 value="appearance" 
-                className="data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-lg px-4 py-2.5 transition-all"
+                className="data-[state=active]:bg-white dark:bg-[#231c19] data-[state=active]:shadow-sm rounded-lg px-4 py-2.5 transition-all"
               >
                 <Palette className="w-4 h-4 mr-2" />
                 Appearance
               </TabsTrigger>
               <TabsTrigger 
                 value="data" 
-                className="data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-lg px-4 py-2.5 transition-all"
+                className="data-[state=active]:bg-white dark:bg-[#231c19] data-[state=active]:shadow-sm rounded-lg px-4 py-2.5 transition-all"
               >
                 <Download className="w-4 h-4 mr-2" />
                 Data
@@ -400,7 +364,7 @@ export default function SettingsPage() {
             {/* Account Settings */}
             <TabsContent value="account" className="space-y-6 animate-fade-in">
               {/* Profile Photo */}
-              <Card className="bg-white/90 border-[#e8e0da]/60 shadow-sm">
+              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg">Profile Photo</CardTitle>
                   <CardDescription>Upload a photo to personalize your account</CardDescription>
@@ -412,7 +376,7 @@ export default function SettingsPage() {
                         {settings.avatarUrl ? (
                           <img src={settings.avatarUrl || "/placeholder.svg"} alt="Avatar" className="w-full h-full object-cover" />
                         ) : (
-                          <User className="w-10 h-10 text-[#8a7a7a]" />
+                          <User className="w-10 h-10 text-[#8a7a7a] dark:text-[#9a8a82]" />
                         )}
                       </div>
                       <button 
@@ -423,18 +387,18 @@ export default function SettingsPage() {
                       </button>
                     </div>
                     <div className="flex flex-col gap-2">
-                      <Button variant="outline" size="sm" className="border-[#e8e0da] text-[#6a5f5f] bg-transparent hover:bg-[#f5f0eb]">
+                      <Button variant="outline" size="sm" className="border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] bg-transparent hover:bg-[#f5f0eb] dark:bg-[#231c19]">
                         <Camera className="w-4 h-4 mr-2" />
                         Upload Photo
                       </Button>
-                      <span className="text-xs text-[#8a7a7a]">JPG, PNG or GIF. Max 2MB.</span>
+                      <span className="text-xs text-[#8a7a7a] dark:text-[#9a8a82]">JPG, PNG or GIF. Max 2MB.</span>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
               {/* Profile Information */}
-              <Card className="bg-white/90 border-[#e8e0da]/60 shadow-sm">
+              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg">Profile Information</CardTitle>
                   <CardDescription>Update your personal details</CardDescription>
@@ -442,53 +406,53 @@ export default function SettingsPage() {
                 <CardContent className="space-y-5">
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div className="space-y-2">
-                      <Label htmlFor="name" className="text-[#3d3535] font-medium">Full Name</Label>
+                      <Label htmlFor="name" className="text-[#3d3535] dark:text-[#e8ddd5] font-medium">Full Name</Label>
                       <Input
                         id="name"
                         value={settings.name}
                         onChange={(e) => updateSetting("name", e.target.value)}
-                        className="bg-white border-[#e8e0da] focus:border-[#d4a5a5] focus:ring-[#d4a5a5]/20 h-11"
+                        className="bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28] focus:border-[#d4a5a5] focus:ring-[#d4a5a5]/20 h-11"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="username" className="text-[#3d3535] font-medium">Username</Label>
+                      <Label htmlFor="username" className="text-[#3d3535] dark:text-[#e8ddd5] font-medium">Username</Label>
                       <div className="relative">
-                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#8a7a7a]">@</span>
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#8a7a7a] dark:text-[#9a8a82]">@</span>
                         <Input
                           id="username"
                           value={settings.username}
                           onChange={(e) => updateSetting("username", e.target.value)}
-                          className="bg-white border-[#e8e0da] focus:border-[#d4a5a5] focus:ring-[#d4a5a5]/20 pl-8 h-11"
+                          className="bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28] focus:border-[#d4a5a5] focus:ring-[#d4a5a5]/20 pl-8 h-11"
                         />
                       </div>
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="text-[#3d3535] font-medium">Email Address</Label>
+                    <Label htmlFor="email" className="text-[#3d3535] dark:text-[#e8ddd5] font-medium">Email Address</Label>
                     <Input
                       id="email"
                       type="email"
                       value={settings.email}
                       onChange={(e) => updateSetting("email", e.target.value)}
-                      className="bg-white border-[#e8e0da] focus:border-[#d4a5a5] focus:ring-[#d4a5a5]/20 h-11"
+                      className="bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28] focus:border-[#d4a5a5] focus:ring-[#d4a5a5]/20 h-11"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="bio" className="text-[#3d3535] font-medium">Bio</Label>
+                    <Label htmlFor="bio" className="text-[#3d3535] dark:text-[#e8ddd5] font-medium">Bio</Label>
                     <Textarea
                       id="bio"
                       value={settings.bio}
                       onChange={(e) => updateSetting("bio", e.target.value)}
-                      className="bg-white border-[#e8e0da] focus:border-[#d4a5a5] focus:ring-[#d4a5a5]/20 resize-none min-h-[100px]"
+                      className="bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28] focus:border-[#d4a5a5] focus:ring-[#d4a5a5]/20 resize-none min-h-[100px]"
                       placeholder="Tell us a bit about yourself..."
                     />
-                    <span className="text-xs text-[#8a7a7a]">{settings.bio.length}/160 characters</span>
+                    <span className="text-xs text-[#8a7a7a] dark:text-[#9a8a82]">{settings.bio.length}/160 characters</span>
                   </div>
                 </CardContent>
               </Card>
 
               {/* Security */}
-              <Card className="bg-white/90 border-[#e8e0da]/60 shadow-sm">
+              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg flex items-center gap-2">
                     <Shield className="w-5 h-5 text-[#d4a5a5]" />
@@ -498,18 +462,18 @@ export default function SettingsPage() {
                 </CardHeader>
                 <CardContent className="space-y-5">
                   <div className="space-y-2">
-                    <Label htmlFor="current-password" className="text-[#3d3535] font-medium">Current Password</Label>
+                    <Label htmlFor="current-password" className="text-[#3d3535] dark:text-[#e8ddd5] font-medium">Current Password</Label>
                     <div className="relative">
                       <Input
                         id="current-password"
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter current password"
-                        className="bg-white border-[#e8e0da] focus:border-[#d4a5a5] focus:ring-[#d4a5a5]/20 pr-10 h-11"
+                        className="bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28] focus:border-[#d4a5a5] focus:ring-[#d4a5a5]/20 pr-10 h-11"
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8a7a7a] hover:text-[#6a5f5f] transition-colors"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8a7a7a] dark:text-[#9a8a82] hover:text-[#6a5f5f] dark:text-[#b0a098] transition-colors"
                       >
                         {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                       </button>
@@ -517,25 +481,25 @@ export default function SettingsPage() {
                   </div>
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div className="space-y-2">
-                      <Label htmlFor="new-password" className="text-[#3d3535] font-medium">New Password</Label>
+                      <Label htmlFor="new-password" className="text-[#3d3535] dark:text-[#e8ddd5] font-medium">New Password</Label>
                       <Input
                         id="new-password"
                         type="password"
                         placeholder="Enter new password"
-                        className="bg-white border-[#e8e0da] focus:border-[#d4a5a5] focus:ring-[#d4a5a5]/20 h-11"
+                        className="bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28] focus:border-[#d4a5a5] focus:ring-[#d4a5a5]/20 h-11"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="confirm-password" className="text-[#3d3535] font-medium">Confirm Password</Label>
+                      <Label htmlFor="confirm-password" className="text-[#3d3535] dark:text-[#e8ddd5] font-medium">Confirm Password</Label>
                       <Input
                         id="confirm-password"
                         type="password"
                         placeholder="Confirm new password"
-                        className="bg-white border-[#e8e0da] focus:border-[#d4a5a5] focus:ring-[#d4a5a5]/20 h-11"
+                        className="bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28] focus:border-[#d4a5a5] focus:ring-[#d4a5a5]/20 h-11"
                       />
                     </div>
                   </div>
-                  <Button variant="outline" className="border-[#e8e0da] text-[#6a5f5f] bg-transparent hover:bg-[#f5f0eb]">
+                  <Button variant="outline" className="border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] bg-transparent hover:bg-[#f5f0eb] dark:bg-[#231c19]">
                     <Key className="w-4 h-4 mr-2" />
                     Update Password
                   </Button>
@@ -543,7 +507,7 @@ export default function SettingsPage() {
               </Card>
 
               {/* Subscription */}
-              <Card className="bg-white/90 border-[#e8e0da]/60 shadow-sm">
+              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg flex items-center gap-2">
                     <Zap className="w-5 h-5 text-[#d4a5a5]" />
@@ -555,12 +519,12 @@ export default function SettingsPage() {
                   <div className="flex items-center justify-between p-5 bg-gradient-to-r from-[#d4a5a5]/10 to-[#e5c5c5]/10 rounded-xl border border-[#d4a5a5]/20">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-[#3d3535]">Pro Plan</span>
+                        <span className="font-semibold text-[#3d3535] dark:text-[#e8ddd5]">Pro Plan</span>
                         <span className="px-2 py-0.5 bg-[#d4a5a5] text-white text-xs rounded-full">Active</span>
                       </div>
-                      <div className="text-sm text-[#8a7a7a] mt-1">$9/month - Renews Feb 15, 2026</div>
+                      <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82] mt-1">$9/month - Renews Feb 15, 2026</div>
                     </div>
-                    <Button variant="outline" className="border-[#e8e0da] bg-white hover:bg-[#f5f0eb]">
+                    <Button variant="outline" className="border-[#e8e0da] dark:border-[#3a2f28] bg-white dark:bg-[#231c19] hover:bg-[#f5f0eb] dark:bg-[#231c19]">
                       <CreditCard className="w-4 h-4 mr-2" />
                       Manage
                     </Button>
@@ -569,7 +533,7 @@ export default function SettingsPage() {
               </Card>
 
               {/* Connected Accounts */}
-              <Card className="bg-white/90 border-[#e8e0da]/60 shadow-sm">
+              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg flex items-center gap-2">
                     <Link2 className="w-5 h-5 text-[#d4a5a5]" />
@@ -592,7 +556,7 @@ export default function SettingsPage() {
                     description="Not connected"
                     showChevron
                   >
-                    <Button variant="outline" size="sm" className="border-[#e8e0da] text-[#6a5f5f] bg-transparent h-8">
+                    <Button variant="outline" size="sm" className="border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] bg-transparent h-8">
                       Connect
                     </Button>
                   </SettingRow>
@@ -602,7 +566,7 @@ export default function SettingsPage() {
 
             {/* Notifications */}
             <TabsContent value="notifications" className="space-y-6 animate-fade-in">
-              <Card className="bg-white/90 border-[#e8e0da]/60 shadow-sm">
+              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg">Writing Reminders</CardTitle>
                   <CardDescription>Get gentle nudges to keep your journaling habit</CardDescription>
@@ -628,7 +592,7 @@ export default function SettingsPage() {
                         value={settings.reminderTime} 
                         onValueChange={(v) => updateSetting("reminderTime", v)}
                       >
-                        <SelectTrigger className="w-[130px] bg-white border-[#e8e0da] h-10">
+                        <SelectTrigger className="w-[130px] bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28] h-10">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -656,7 +620,7 @@ export default function SettingsPage() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-white/90 border-[#e8e0da]/60 shadow-sm">
+              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg">Communication</CardTitle>
                   <CardDescription>Choose how we contact you</CardDescription>
@@ -708,7 +672,7 @@ export default function SettingsPage() {
 
             {/* Privacy */}
             <TabsContent value="privacy" className="space-y-6 animate-fade-in">
-              <Card className="bg-white/90 border-[#e8e0da]/60 shadow-sm">
+              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg">Entry Privacy</CardTitle>
                   <CardDescription>Control who can see your journal entries</CardDescription>
@@ -723,7 +687,7 @@ export default function SettingsPage() {
                       value={settings.defaultPrivacy} 
                       onValueChange={(v) => updateSetting("defaultPrivacy", v)}
                     >
-                      <SelectTrigger className="w-[140px] bg-white border-[#e8e0da] h-10">
+                      <SelectTrigger className="w-[140px] bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28] h-10">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -769,7 +733,7 @@ export default function SettingsPage() {
 
             {/* Appearance */}
             <TabsContent value="appearance" className="space-y-6 animate-fade-in">
-              <Card className="bg-white/90 border-[#e8e0da]/60 shadow-sm">
+              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg">Theme & Display</CardTitle>
                   <CardDescription>Customize how Unfiltered looks</CardDescription>
@@ -792,7 +756,7 @@ export default function SettingsPage() {
                           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border-2 transition-all ${
                             settings.theme === theme.id
                               ? "border-[#d4a5a5] bg-[#d4a5a5]/10 text-[#d4a5a5]"
-                              : "border-[#e8e0da] text-[#6a5f5f] hover:border-[#d4a5a5]/50"
+                              : "border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] hover:border-[#d4a5a5]/50"
                           }`}
                         >
                           <theme.icon className="w-4 h-4" />
@@ -810,7 +774,7 @@ export default function SettingsPage() {
                       value={settings.language} 
                       onValueChange={(v) => updateSetting("language", v)}
                     >
-                      <SelectTrigger className="w-[140px] bg-white border-[#e8e0da] h-10">
+                      <SelectTrigger className="w-[140px] bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28] h-10">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -830,7 +794,7 @@ export default function SettingsPage() {
                       value={settings.fontSize} 
                       onValueChange={(v) => updateSetting("fontSize", v)}
                     >
-                      <SelectTrigger className="w-[130px] bg-white border-[#e8e0da] h-10">
+                      <SelectTrigger className="w-[130px] bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28] h-10">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -843,7 +807,7 @@ export default function SettingsPage() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-white/90 border-[#e8e0da]/60 shadow-sm">
+              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg">Writing Preferences</CardTitle>
                   <CardDescription>Customize your writing experience</CardDescription>
@@ -887,7 +851,7 @@ export default function SettingsPage() {
                       value={String(settings.wordCountGoal)} 
                       onValueChange={(v) => updateSetting("wordCountGoal", Number(v))}
                     >
-                      <SelectTrigger className="w-[140px] bg-white border-[#e8e0da] h-10">
+                      <SelectTrigger className="w-[140px] bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28] h-10">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -904,33 +868,33 @@ export default function SettingsPage() {
 
             {/* Data */}
             <TabsContent value="data" className="space-y-6 animate-fade-in">
-              <Card className="bg-white/90 border-[#e8e0da]/60 shadow-sm">
+              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg">Export Data</CardTitle>
                   <CardDescription>Download your journal entries</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <Button variant="outline" className="border-[#e8e0da] text-[#6a5f5f] bg-transparent hover:bg-[#f5f0eb] h-12">
+                    <Button variant="outline" className="border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] bg-transparent hover:bg-[#f5f0eb] dark:bg-[#231c19] h-12">
                       <Download className="w-4 h-4 mr-2" />
                       Export as PDF
                     </Button>
-                    <Button variant="outline" className="border-[#e8e0da] text-[#6a5f5f] bg-transparent hover:bg-[#f5f0eb] h-12">
+                    <Button variant="outline" className="border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] bg-transparent hover:bg-[#f5f0eb] dark:bg-[#231c19] h-12">
                       <Download className="w-4 h-4 mr-2" />
                       Export as Markdown
                     </Button>
-                    <Button variant="outline" className="border-[#e8e0da] text-[#6a5f5f] bg-transparent hover:bg-[#f5f0eb] h-12">
+                    <Button variant="outline" className="border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] bg-transparent hover:bg-[#f5f0eb] dark:bg-[#231c19] h-12">
                       <Download className="w-4 h-4 mr-2" />
                       Export as JSON
                     </Button>
                   </div>
-                  <p className="text-sm text-[#8a7a7a]">
+                  <p className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">
                     Your export will include all entries, photos, and metadata.
                   </p>
                 </CardContent>
               </Card>
 
-              <Card className="bg-white/90 border-[#e8e0da]/60 shadow-sm">
+              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg flex items-center gap-2">
                     <Bookmark className="w-5 h-5 text-[#d4a5a5]" />
@@ -939,15 +903,15 @@ export default function SettingsPage() {
                   <CardDescription>Import entries from other apps</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="border-2 border-dashed border-[#e8e0da] rounded-xl p-8 text-center hover:border-[#d4a5a5]/50 transition-colors cursor-pointer">
-                    <Download className="w-10 h-10 text-[#8a7a7a] mx-auto mb-3" />
-                    <p className="font-medium text-[#3d3535] mb-1">Drop files here or click to upload</p>
-                    <p className="text-sm text-[#8a7a7a]">Supports Day One, Journey, or JSON exports</p>
+                  <div className="border-2 border-dashed border-[#e8e0da] dark:border-[#3a2f28] rounded-xl p-8 text-center hover:border-[#d4a5a5]/50 transition-colors cursor-pointer">
+                    <Download className="w-10 h-10 text-[#8a7a7a] dark:text-[#9a8a82] mx-auto mb-3" />
+                    <p className="font-medium text-[#3d3535] dark:text-[#e8ddd5] mb-1">Drop files here or click to upload</p>
+                    <p className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">Supports Day One, Journey, or JSON exports</p>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-white/90 border-red-100 shadow-sm">
+              <Card className="bg-white dark:bg-[#231c19]/90 border-red-100 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg text-red-600 flex items-center gap-2">
                     <AlertTriangle className="w-5 h-5" />
@@ -958,8 +922,8 @@ export default function SettingsPage() {
                 <CardContent className="space-y-4">
                   <div className="flex items-center justify-between p-5 bg-red-50/50 rounded-xl border border-red-100">
                     <div>
-                      <div className="font-medium text-[#3d3535]">Delete All Entries</div>
-                      <div className="text-sm text-[#8a7a7a]">Permanently delete all your journal entries</div>
+                      <div className="font-medium text-[#3d3535] dark:text-[#e8ddd5]">Delete All Entries</div>
+                      <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">Permanently delete all your journal entries</div>
                     </div>
                     <Button variant="outline" className="border-red-200 text-red-600 hover:bg-red-50 bg-transparent">
                       <Trash2 className="w-4 h-4 mr-2" />
@@ -968,8 +932,8 @@ export default function SettingsPage() {
                   </div>
                   <div className="flex items-center justify-between p-5 bg-red-50/50 rounded-xl border border-red-100">
                     <div>
-                      <div className="font-medium text-[#3d3535]">Delete Account</div>
-                      <div className="text-sm text-[#8a7a7a]">Permanently delete your account and all data</div>
+                      <div className="font-medium text-[#3d3535] dark:text-[#e8ddd5]">Delete Account</div>
+                      <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">Permanently delete your account and all data</div>
                     </div>
                     <Button variant="outline" className="border-red-200 text-red-600 hover:bg-red-50 bg-transparent">
                       <Trash2 className="w-4 h-4 mr-2" />
@@ -982,22 +946,22 @@ export default function SettingsPage() {
           </Tabs>
 
           {/* Help & Support */}
-          <div className="mt-8 pt-8 border-t border-[#e8e0da]">
+          <div className="mt-8 pt-8 border-t border-[#e8e0da] dark:border-[#3a2f28]">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#f5f0eb] flex items-center justify-center">
-                  <HelpCircle className="w-5 h-5 text-[#6a5f5f]" />
+                <div className="w-10 h-10 rounded-xl bg-[#f5f0eb] dark:bg-[#231c19] flex items-center justify-center">
+                  <HelpCircle className="w-5 h-5 text-[#6a5f5f] dark:text-[#b0a098]" />
                 </div>
                 <div>
-                  <div className="font-medium text-[#3d3535]">Need help?</div>
-                  <div className="text-sm text-[#8a7a7a]">Check our FAQ or contact support</div>
+                  <div className="font-medium text-[#3d3535] dark:text-[#e8ddd5]">Need help?</div>
+                  <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">Check our FAQ or contact support</div>
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button variant="outline" className="border-[#e8e0da] text-[#6a5f5f] bg-transparent hover:bg-[#f5f0eb]">
+                <Button variant="outline" className="border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] bg-transparent hover:bg-[#f5f0eb] dark:bg-[#231c19]">
                   View FAQ
                 </Button>
-                <Button variant="outline" className="border-[#e8e0da] text-[#6a5f5f] bg-transparent hover:bg-[#f5f0eb]">
+                <Button variant="outline" className="border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] bg-transparent hover:bg-[#f5f0eb] dark:bg-[#231c19]">
                   Contact Support
                 </Button>
               </div>

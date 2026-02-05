@@ -69,6 +69,39 @@ import {
   Eye,
 } from "lucide-react"
 
+// Logo Component
+function LogoMark({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 40 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <rect width="40" height="40" rx="10" fill="url(#logo-gradient)" />
+      <path
+        d="M20 12L14 18L20 24L26 18L20 12Z"
+        stroke="white"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M20 16V28"
+        stroke="white"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <defs>
+        <linearGradient id="logo-gradient" x1="0" y1="0" x2="40" y2="40">
+          <stop offset="0%" stopColor="#d4a5a5" />
+          <stop offset="100%" stopColor="#c49090" />
+        </linearGradient>
+      </defs>
+    </svg>
+  )
+}
+
 // Types
 interface JournalEntry {
   id: string
@@ -98,50 +131,7 @@ interface WritingGoal {
   current: number
 }
 
-// Rising Sun Logo - Compact, refined strokes to match text weight
-// Smaller proportions aligned with title typography
-function LogoMark({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 32 22"
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      aria-label="Unfiltered Logo"
-    >
-      {/* 5 Dotted rays - thin strokes matching text weight */}
-      <g 
-        stroke="#3d3535" 
-        strokeWidth="1.5" 
-        strokeLinecap="round"
-        strokeDasharray="2 1.5"
-        fill="none"
-      >
-        <line x1="16" y1="1" x2="16" y2="7" />
-        <line x1="9" y1="3" x2="11" y2="8" />
-        <line x1="23" y1="3" x2="21" y2="8" />
-        <line x1="3" y1="10" x2="7" y2="11" />
-        <line x1="29" y1="10" x2="25" y2="11" />
-      </g>
-      
-      {/* Half-circle sun */}
-      <path
-        d="M 6 18 A 10 10 0 0 1 26 18 Z"
-        fill="#d4a5a5"
-      />
-      
-      {/* Horizon line */}
-      <line
-        x1="2"
-        y1="18"
-        x2="30"
-        y2="18"
-        stroke="#3d3535"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  )
-}
+
 
 // Enhanced Progress Ring with smoother animation
 function ProgressRing({ 

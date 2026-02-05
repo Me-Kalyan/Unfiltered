@@ -55,45 +55,8 @@ import {
   CheckSquare,
 } from "lucide-react"
 import Link from "next/link"
-
-// Logo Component
-function LogoMark({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 32 22"
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      aria-label="Unfiltered Logo"
-    >
-      <g 
-        stroke="#3d3535" 
-        strokeWidth="1.5" 
-        strokeLinecap="round"
-        strokeDasharray="2 1.5"
-        fill="none"
-      >
-        <line x1="16" y1="1" x2="16" y2="7" />
-        <line x1="9" y1="3" x2="11" y2="8" />
-        <line x1="23" y1="3" x2="21" y2="8" />
-        <line x1="3" y1="10" x2="7" y2="11" />
-        <line x1="29" y1="10" x2="25" y2="11" />
-      </g>
-      <path
-        d="M 6 18 A 10 10 0 0 1 26 18 Z"
-        fill="#d4a5a5"
-      />
-      <line
-        x1="2"
-        y1="18"
-        x2="30"
-        y2="18"
-        stroke="#3d3535"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  )
-}
+import { LogoMark } from "@/components/logo-mark"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 // Toolbar Button Component
 function ToolbarButton({
@@ -119,7 +82,7 @@ function ToolbarButton({
             className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
               active
                 ? "bg-[#d4a5a5] text-white"
-                : "text-[#6a5f5f] hover:bg-[#f0ebe5] hover:text-[#3d3535]"
+                : "text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] hover:text-[#3d3535] dark:text-[#e8ddd5]"
             } ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
           >
             <Icon className="w-4 h-4" />
@@ -230,27 +193,27 @@ export default function EditorPage() {
   })
 
   return (
-    <div className="min-h-screen bg-[#faf8f5] flex flex-col">
+    <div className="min-h-screen bg-[#faf8f5] dark:bg-[#1a1412] flex flex-col">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#faf8f5]/95 backdrop-blur-md border-b border-[#e8e0da]/50">
+      <header className="sticky top-0 z-50 bg-[#faf8f5] dark:bg-[#1a1412]/95 backdrop-blur-md border-b border-[#e8e0da] dark:border-[#3a2f28]/50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <div className="flex items-center justify-between">
             {/* Left: Back & Logo */}
             <div className="flex items-center gap-4">
               <Link 
                 href="/" 
-                className="w-9 h-9 rounded-lg flex items-center justify-center text-[#6a5f5f] hover:bg-[#f0ebe5] hover:text-[#3d3535] transition-colors"
+                className="w-9 h-9 rounded-lg flex items-center justify-center text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] hover:text-[#3d3535] dark:text-[#e8ddd5] transition-colors"
               >
                 <ArrowLeft className="w-5 h-5" />
               </Link>
               <div className="hidden sm:flex items-center gap-2">
                 <LogoMark className="h-7 w-auto" />
-                <span className="font-script text-xl font-semibold text-[#3d3535]">Unfiltered</span>
+                <span className="font-script text-xl font-semibold text-[#3d3535] dark:text-[#e8ddd5]">Unfiltered</span>
               </div>
             </div>
 
             {/* Center: Save Status */}
-            <div className="flex items-center gap-2 text-sm text-[#8a7a7a]">
+            <div className="flex items-center gap-2 text-sm text-[#8a7a7a] dark:text-[#9a8a82]">
               {isSaving ? (
                 <>
                   <div className="w-4 h-4 border-2 border-[#d4a5a5] border-t-transparent rounded-full animate-spin" />
@@ -274,7 +237,7 @@ export default function EditorPage() {
               {/* Privacy Selector */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="text-[#6a5f5f] hover:bg-[#f0ebe5]">
+                  <Button variant="ghost" size="sm" className="text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d]">
                     <PrivacyIcon className="w-4 h-4 mr-1.5" />
                     <span className="hidden sm:inline capitalize">{privacy}</span>
                     <ChevronDown className="w-3 h-3 ml-1" />
@@ -299,11 +262,12 @@ export default function EditorPage() {
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              <Button
-                onClick={handleSave}
-                disabled={isSaving}
-                className="bg-[#d4a5a5] hover:bg-[#c49090] text-white"
-              >
+            <ThemeToggle />
+            <Button
+              onClick={handleSave}
+              disabled={isSaving}
+              className="bg-[#d4a5a5] hover:bg-[#c49090] text-white"
+            >
                 <Save className="w-4 h-4 mr-1.5" />
                 Save
               </Button>
@@ -313,7 +277,7 @@ export default function EditorPage() {
       </header>
 
       {/* Toolbar */}
-      <div className="sticky top-[57px] z-40 bg-[#faf8f5]/95 backdrop-blur-md border-b border-[#e8e0da]/50">
+      <div className="sticky top-[57px] z-40 bg-[#faf8f5] dark:bg-[#1a1412]/95 backdrop-blur-md border-b border-[#e8e0da] dark:border-[#3a2f28]/50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-2">
           <div className="flex items-center gap-1 overflow-x-auto pb-1">
             {/* Text Formatting */}
@@ -327,7 +291,7 @@ export default function EditorPage() {
             {/* Headings */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="h-8 px-2 rounded-lg flex items-center gap-1 text-[#6a5f5f] hover:bg-[#f0ebe5] hover:text-[#3d3535] transition-colors">
+                <button className="h-8 px-2 rounded-lg flex items-center gap-1 text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] hover:text-[#3d3535] dark:text-[#e8ddd5] transition-colors">
                   <Type className="w-4 h-4" />
                   <ChevronDown className="w-3 h-3" />
                 </button>
@@ -397,7 +361,7 @@ export default function EditorPage() {
       {/* Editor Content */}
       <main className="flex-1 max-w-4xl mx-auto w-full px-4 sm:px-6 py-8">
         {/* Date */}
-        <div className="flex items-center gap-2 text-sm text-[#8a7a7a] mb-4">
+        <div className="flex items-center gap-2 text-sm text-[#8a7a7a] dark:text-[#9a8a82] mb-4">
           <Calendar className="w-4 h-4" />
           <span>{currentDate}</span>
         </div>
@@ -408,7 +372,7 @@ export default function EditorPage() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Give your entry a title..."
-          className="w-full text-3xl sm:text-4xl font-bold text-[#3d3535] placeholder:text-[#c4b8b8] bg-transparent border-none outline-none mb-6"
+          className="w-full text-3xl sm:text-4xl font-bold text-[#3d3535] dark:text-[#e8ddd5] placeholder:text-[#c4b8b8] bg-transparent border-none outline-none mb-6"
         />
 
         {/* Tags */}
@@ -417,7 +381,7 @@ export default function EditorPage() {
             <Badge
               key={tag}
               variant="secondary"
-              className="bg-[#f0ebe5] text-[#6a5f5f] hover:bg-[#e8e0da] pl-2 pr-1"
+              className="bg-[#f0ebe5] text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#e8e0da] pl-2 pr-1"
             >
               <Hash className="w-3 h-3 mr-1" />
               {tag}
@@ -440,7 +404,7 @@ export default function EditorPage() {
                   if (e.key === "Escape") setShowTagInput(false)
                 }}
                 placeholder="Add tag..."
-                className="h-7 w-24 text-sm bg-white border-[#e8e0da]"
+                className="h-7 w-24 text-sm bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28]"
                 autoFocus
               />
               <button
@@ -453,7 +417,7 @@ export default function EditorPage() {
           ) : (
             <button
               onClick={() => setShowTagInput(true)}
-              className="flex items-center gap-1 text-sm text-[#8a7a7a] hover:text-[#6a5f5f] transition-colors"
+              className="flex items-center gap-1 text-sm text-[#8a7a7a] dark:text-[#9a8a82] hover:text-[#6a5f5f] dark:text-[#b0a098] transition-colors"
             >
               <Hash className="w-3 h-3" />
               Add tag
@@ -469,18 +433,18 @@ export default function EditorPage() {
           onKeyUp={updateActiveFormats}
           onMouseUp={updateActiveFormats}
           className="min-h-[400px] prose prose-lg max-w-none text-[#4a3f3f] outline-none
-            [&_h1]:text-3xl [&_h1]:font-bold [&_h1]:text-[#3d3535] [&_h1]:mb-4 [&_h1]:mt-6
-            [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-[#3d3535] [&_h2]:mb-3 [&_h2]:mt-5
-            [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-[#3d3535] [&_h3]:mb-2 [&_h3]:mt-4
+            [&_h1]:text-3xl [&_h1]:font-bold [&_h1]:text-[#3d3535] dark:text-[#e8ddd5] [&_h1]:mb-4 [&_h1]:mt-6
+            [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-[#3d3535] dark:text-[#e8ddd5] [&_h2]:mb-3 [&_h2]:mt-5
+            [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-[#3d3535] dark:text-[#e8ddd5] [&_h3]:mb-2 [&_h3]:mt-4
             [&_p]:mb-4 [&_p]:leading-relaxed
-            [&_blockquote]:border-l-4 [&_blockquote]:border-[#d4a5a5] [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-[#6a5f5f]
+            [&_blockquote]:border-l-4 [&_blockquote]:border-[#d4a5a5] [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-[#6a5f5f] dark:text-[#b0a098]
             [&_pre]:bg-[#f0ebe5] [&_pre]:p-4 [&_pre]:rounded-lg [&_pre]:overflow-x-auto
             [&_code]:bg-[#f0ebe5] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm [&_code]:font-mono
             [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4
             [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-4
             [&_li]:mb-1
             [&_a]:text-[#d4a5a5] [&_a]:underline
-            [&_hr]:border-[#e8e0da] [&_hr]:my-6
+            [&_hr]:border-[#e8e0da] dark:border-[#3a2f28] [&_hr]:my-6
             [&_img]:rounded-lg [&_img]:my-4
           "
           data-placeholder="Start writing your thoughts..."
@@ -496,9 +460,9 @@ export default function EditorPage() {
       </main>
 
       {/* Footer Stats */}
-      <footer className="sticky bottom-0 bg-[#faf8f5]/95 backdrop-blur-md border-t border-[#e8e0da]/50">
+      <footer className="sticky bottom-0 bg-[#faf8f5] dark:bg-[#1a1412]/95 backdrop-blur-md border-t border-[#e8e0da] dark:border-[#3a2f28]/50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <div className="flex items-center justify-between text-sm text-[#8a7a7a]">
+          <div className="flex items-center justify-between text-sm text-[#8a7a7a] dark:text-[#9a8a82]">
             <div className="flex items-center gap-4">
               <span>{wordCount} words</span>
               <span>{charCount} characters</span>
