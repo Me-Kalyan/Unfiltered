@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
@@ -36,8 +35,8 @@ import {
   User,
   Calendar,
   Clock,
-  MoreVertical,
-  Edit3,
+  MoreHorizontal,
+  Pencil,
   Trash2,
   X,
   ChevronRight,
@@ -54,13 +53,18 @@ import {
   Download,
   Bookmark,
   BookmarkCheck,
-  Tag,
+  Hash,
   Sparkles,
-  TrendingUp,
   FileText,
   Lightbulb,
-  CheckCircle2,
+  Check,
   PenLine,
+  Home,
+  CalendarDays,
+  FolderOpen,
+  ArrowRight,
+  Zap,
+  Eye,
 } from "lucide-react"
 
 // Types
@@ -92,53 +96,63 @@ interface WritingGoal {
   current: number
 }
 
-// Sunrise Logo Component
-function SunriseLogo({ className = "" }: { className?: string }) {
+// Refined Sunrise Logo with animation
+function SunriseLogo({ className = "", animated = false }: { className?: string; animated?: boolean }) {
   return (
     <svg
       viewBox="0 0 100 100"
-      className={className}
+      className={`${className} ${animated ? "animate-float" : ""}`}
       xmlns="http://www.w3.org/2000/svg"
       aria-label="Unfiltered Logo"
     >
-      {/* Sun rays */}
-      <line x1="50" y1="10" x2="50" y2="25" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-      <line x1="20" y1="30" x2="30" y2="38" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-      <line x1="80" y1="30" x2="70" y2="38" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-      <line x1="10" y1="55" x2="25" y2="55" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-      <line x1="90" y1="55" x2="75" y2="55" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+      <defs>
+        <linearGradient id="sunGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#e5c5c5" />
+          <stop offset="100%" stopColor="#c49090" />
+        </linearGradient>
+      </defs>
+      {/* Sun rays with gradient */}
+      <line x1="50" y1="8" x2="50" y2="24" stroke="url(#sunGradient)" strokeWidth="3" strokeLinecap="round" className="origin-center" />
+      <line x1="18" y1="28" x2="30" y2="38" stroke="url(#sunGradient)" strokeWidth="3" strokeLinecap="round" />
+      <line x1="82" y1="28" x2="70" y2="38" stroke="url(#sunGradient)" strokeWidth="3" strokeLinecap="round" />
+      <line x1="8" y1="55" x2="24" y2="55" stroke="url(#sunGradient)" strokeWidth="3" strokeLinecap="round" />
+      <line x1="92" y1="55" x2="76" y2="55" stroke="url(#sunGradient)" strokeWidth="3" strokeLinecap="round" />
       {/* Half sun */}
       <path
-        d="M 25 70 Q 25 40 50 40 Q 75 40 75 70"
+        d="M 24 70 Q 24 38 50 38 Q 76 38 76 70"
         fill="none"
         stroke="currentColor"
         strokeWidth="4"
         strokeLinecap="round"
       />
       {/* Horizon line */}
-      <line x1="15" y1="70" x2="85" y2="70" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+      <line x1="12" y1="70" x2="88" y2="70" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
     </svg>
   )
 }
 
-// Progress Ring Component
+// Enhanced Progress Ring with smoother animation
 function ProgressRing({ 
   progress, 
   size = 80, 
   strokeWidth = 6,
-  color = "#d4a5a5"
 }: { 
   progress: number
   size?: number
   strokeWidth?: number
-  color?: string
 }) {
   const radius = (size - strokeWidth) / 2
   const circumference = radius * 2 * Math.PI
   const offset = circumference - (progress / 100) * circumference
 
   return (
-    <svg width={size} height={size} className="progress-ring">
+    <svg width={size} height={size} className="progress-ring drop-shadow-sm">
+      <defs>
+        <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#d4a5a5" />
+          <stop offset="100%" stopColor="#c49090" />
+        </linearGradient>
+      </defs>
       <circle
         stroke="#f0ebe5"
         fill="transparent"
@@ -149,7 +163,7 @@ function ProgressRing({
       />
       <circle
         className="progress-ring__circle"
-        stroke={color}
+        stroke="url(#progressGradient)"
         fill="transparent"
         strokeWidth={strokeWidth}
         strokeLinecap="round"
@@ -165,92 +179,103 @@ function ProgressRing({
   )
 }
 
-// Writing Prompt Component
+// Refined Daily Prompt with better typography
 function DailyPrompt({ prompt, onUse }: { prompt: string; onUse: () => void }) {
   return (
-    <Card className="glass-card border-0 overflow-hidden">
-      <CardContent className="p-5">
+    <Card className="glass-card border-0 overflow-hidden card-interactive card-highlight">
+      <CardContent className="p-6">
         <div className="flex items-start gap-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#d4a5a5]/20 text-[#c49090]">
-            <Lightbulb className="h-5 w-5" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30 text-[#c49090] shrink-0">
+            <Lightbulb className="h-6 w-6" />
           </div>
-          <div className="flex-1">
-            <p className="text-xs font-medium uppercase tracking-wider text-[#a08080] mb-2">
-              Today&apos;s Prompt
-            </p>
-            <p className="text-[#4a3f3f] font-medium leading-relaxed">{prompt}</p>
+          <div className="flex-1 min-w-0">
+            <p className="text-subtle mb-2">Today&apos;s Prompt</p>
+            <p className="text-body font-medium leading-relaxed">{prompt}</p>
           </div>
         </div>
-        <Button 
+        <button 
           onClick={onUse}
-          className="mt-4 w-full bg-[#d4a5a5] hover:bg-[#c49090] text-white rounded-lg"
+          className="btn-primary w-full mt-5 flex items-center justify-center gap-2"
         >
-          <PenLine className="h-4 w-4 mr-2" />
-          Write About This
-        </Button>
+          <PenLine className="h-4 w-4" />
+          <span>Write About This</span>
+          <ArrowRight className="h-4 w-4 ml-1 transition-transform group-hover:translate-x-1" />
+        </button>
       </CardContent>
     </Card>
   )
 }
 
-// Stats Card Component
+// Refined Stats Card with better visual hierarchy
 function StatsCard({ 
   icon: Icon, 
   label, 
   value, 
-  subtext 
+  trend,
 }: { 
   icon: React.ElementType
   label: string
   value: string | number
-  subtext?: string
+  trend?: string
 }) {
   return (
-    <Card className="glass-card border-0">
-      <CardContent className="p-4">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#d4a5a5]/20 text-[#c49090]">
+    <Card className="glass-card border-0 card-interactive group">
+      <CardContent className="p-5">
+        <div className="flex items-start justify-between">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30 text-[#c49090] transition-transform duration-300 group-hover:scale-110">
             <Icon className="h-5 w-5" />
           </div>
-          <div>
-            <p className="text-2xl font-bold text-[#3d3535]">{value}</p>
-            <p className="text-xs text-[#8a7a7a]">{label}</p>
-            {subtext && <p className="text-xs text-[#a08080]">{subtext}</p>}
-          </div>
+          {trend && (
+            <span className="text-xs font-medium text-[#8a9a7a] bg-[#8a9a7a]/10 px-2 py-0.5 rounded-full">
+              {trend}
+            </span>
+          )}
+        </div>
+        <div className="mt-4">
+          <p className="text-3xl font-bold text-[#3d3535] tracking-tight">{value}</p>
+          <p className="text-muted mt-0.5">{label}</p>
         </div>
       </CardContent>
     </Card>
   )
 }
 
-// Streak Card Component
+// Enhanced Streak Card with better visuals
 function StreakCard({ streak, goal }: { streak: number; goal: WritingGoal }) {
   const progress = Math.min((goal.current / goal.daily) * 100, 100)
+  const isComplete = progress >= 100
   
   return (
-    <Card className="glass-card border-0 overflow-hidden">
-      <CardContent className="p-5">
+    <Card className="glass-card border-0 overflow-hidden card-interactive card-highlight">
+      <CardContent className="p-6">
         <div className="flex items-center justify-between">
           <div>
-            <div className="flex items-center gap-2 mb-1">
-              <Flame className="h-5 w-5 text-[#e07a5f]" />
-              <span className="text-3xl font-bold text-[#3d3535]">{streak}</span>
+            <div className="flex items-center gap-3 mb-2">
+              <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${isComplete ? "bg-[#e07a5f]/20" : "bg-[#e07a5f]/10"}`}>
+                <Flame className={`h-5 w-5 text-[#e07a5f] ${isComplete ? "animate-bounce-subtle" : ""}`} />
+              </div>
+              <span className="text-4xl font-bold text-[#3d3535] tracking-tight">{streak}</span>
             </div>
-            <p className="text-sm text-[#8a7a7a]">Day Streak</p>
-            <p className="text-xs text-[#a08080] mt-1">Keep it going!</p>
+            <p className="text-muted">Day Streak</p>
+            <p className="text-subtle mt-2">
+              {isComplete ? "Goal reached!" : "Keep going!"}
+            </p>
           </div>
           <div className="relative flex items-center justify-center">
-            <ProgressRing progress={progress} size={70} color="#d4a5a5" />
+            <ProgressRing progress={progress} size={76} />
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-sm font-bold text-[#3d3535]">{goal.current}</span>
+              <span className="text-lg font-bold text-[#3d3535]">{goal.current}</span>
               <span className="text-xs text-[#8a7a7a]">/ {goal.daily}</span>
             </div>
           </div>
         </div>
-        <div className="mt-4 pt-4 border-t border-[#e8e0da]">
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-[#8a7a7a]">Daily Goal</span>
-            <span className="font-medium text-[#4a3f3f]">{goal.daily} words</span>
+        <div className="mt-5 pt-5 border-t border-[#e8e0da]/60">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-muted">
+              <Target className="h-4 w-4" />
+              <span>Daily Goal</span>
+            </div>
+            <span className="font-semibold text-[#4a3f3f]">{goal.daily} words</span>
           </div>
         </div>
       </CardContent>
@@ -258,21 +283,23 @@ function StreakCard({ streak, goal }: { streak: number; goal: WritingGoal }) {
   )
 }
 
-// Entry Card Component
+// Refined Entry Card with polished interactions
 function EntryCard({
   entry,
   onEdit,
   onDelete,
   onToggleFavorite,
+  onView,
   stories,
-  style,
+  className = "",
 }: {
   entry: JournalEntry
   onEdit: () => void
   onDelete: () => void
   onToggleFavorite: () => void
+  onView: () => void
   stories: Story[]
-  style?: React.CSSProperties
+  className?: string
 }) {
   const story = stories.find((s) => s.id === entry.storyId)
   const readingTime = Math.max(1, Math.ceil(entry.wordCount / 200))
@@ -281,30 +308,31 @@ function EntryCard({
 
   return (
     <Card 
-      className="glass-card border-0 group overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] animate-fade-in"
-      style={style}
+      className={`glass-card border-0 group overflow-hidden card-interactive cursor-pointer ${className}`}
+      onClick={onView}
     >
       {entry.photos.length > 0 && (
-        <div className="relative aspect-video overflow-hidden">
+        <div className="relative aspect-[16/10] overflow-hidden">
           <img
             src={entry.photos[0] || "/placeholder.svg"}
             alt={entry.title}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           {entry.photos.length > 1 && (
-            <Badge className="absolute bottom-2 right-2 bg-black/60 text-white border-0">
-              +{entry.photos.length - 1}
+            <Badge className="absolute bottom-3 right-3 bg-black/60 text-white border-0 backdrop-blur-sm">
+              +{entry.photos.length - 1} more
             </Badge>
           )}
-          <div className="absolute top-2 left-2 flex gap-1">
+          <div className="absolute top-3 left-3 flex gap-2">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-[#8a7a7a]">
-                    <PrivacyIcon className="h-3.5 w-3.5" />
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 backdrop-blur-sm text-[#8a7a7a] shadow-sm">
+                    <PrivacyIcon className="h-4 w-4" />
                   </div>
                 </TooltipTrigger>
-                <TooltipContent>
+                <TooltipContent side="bottom">
                   <p className="capitalize">{entry.privacy}</p>
                 </TooltipContent>
               </Tooltip>
@@ -312,40 +340,40 @@ function EntryCard({
           </div>
           <button
             onClick={(e) => { e.stopPropagation(); onToggleFavorite(); }}
-            className="absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 transition-colors hover:bg-white"
+            className="absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 backdrop-blur-sm transition-all hover:bg-white hover:scale-110 active:scale-95 shadow-sm"
           >
             {entry.isFavorite ? (
-              <BookmarkCheck className="h-3.5 w-3.5 text-[#d4a5a5]" />
+              <BookmarkCheck className="h-4 w-4 text-[#d4a5a5]" />
             ) : (
-              <Bookmark className="h-3.5 w-3.5 text-[#8a7a7a]" />
+              <Bookmark className="h-4 w-4 text-[#8a7a7a]" />
             )}
           </button>
         </div>
       )}
 
       <CardContent className="p-5">
-        <div className="mb-3 flex items-start justify-between">
-          <div className="flex-1">
-            <h3 className="font-semibold text-[#3d3535] line-clamp-1 group-hover:text-[#c49090] transition-colors">
+        <div className="mb-3 flex items-start justify-between gap-3">
+          <div className="flex-1 min-w-0">
+            <h3 className="heading-sm line-clamp-1 group-hover:text-[#c49090] transition-colors duration-300">
               {entry.title}
             </h3>
-            <div className="mt-1.5 flex items-center gap-3 text-xs text-[#8a7a7a]">
-              <span className="flex items-center gap-1">
-                <Calendar className="h-3 w-3" />
+            <div className="mt-2 flex items-center gap-3 text-muted">
+              <span className="flex items-center gap-1.5">
+                <CalendarDays className="h-3.5 w-3.5" />
                 {entry.date}
               </span>
-              <span className="flex items-center gap-1">
-                <Clock className="h-3 w-3" />
-                {readingTime} min read
+              <span className="flex items-center gap-1.5">
+                <Clock className="h-3.5 w-3.5" />
+                {readingTime} min
               </span>
             </div>
           </div>
 
           {entry.photos.length === 0 && (
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 shrink-0">
               <button
                 onClick={(e) => { e.stopPropagation(); onToggleFavorite(); }}
-                className="rounded-lg p-1.5 transition-colors hover:bg-[#f0ebe5]"
+                className="btn-icon h-8 w-8"
               >
                 {entry.isFavorite ? (
                   <BookmarkCheck className="h-4 w-4 text-[#d4a5a5]" />
@@ -355,13 +383,17 @@ function EntryCard({
               </button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="rounded-lg p-1.5 opacity-0 transition-all hover:bg-[#f0ebe5] group-hover:opacity-100">
-                    <MoreVertical className="h-4 w-4 text-[#8a7a7a]" />
+                  <button className="btn-icon h-8 w-8 opacity-0 group-hover:opacity-100">
+                    <MoreHorizontal className="h-4 w-4 text-[#8a7a7a]" />
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuItem onClick={onEdit}>
-                    <Edit3 className="mr-2 h-4 w-4" />
+                  <DropdownMenuItem onClick={(e) => { e.stopPropagation(); onView(); }}>
+                    <Eye className="mr-2 h-4 w-4" />
+                    View Entry
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={(e) => { e.stopPropagation(); onEdit(); }}>
+                    <Pencil className="mr-2 h-4 w-4" />
                     Edit Entry
                   </DropdownMenuItem>
                   <DropdownMenuItem>
@@ -369,7 +401,7 @@ function EntryCard({
                     Export
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={onDelete} className="text-red-600">
+                  <DropdownMenuItem onClick={(e) => { e.stopPropagation(); onDelete(); }} className="text-red-600 focus:text-red-600">
                     <Trash2 className="mr-2 h-4 w-4" />
                     Delete
                   </DropdownMenuItem>
@@ -380,43 +412,47 @@ function EntryCard({
         </div>
 
         {entry.content && (
-          <p className="mb-3 text-sm text-[#6a5f5f] line-clamp-3 leading-relaxed">
+          <p className="mb-4 text-body line-clamp-3 opacity-80">
             {entry.content}
           </p>
         )}
 
         {entry.tags.length > 0 && (
-          <div className="mb-3 flex flex-wrap gap-1.5">
+          <div className="mb-4 flex flex-wrap gap-2">
             {entry.tags.slice(0, 3).map((tag) => (
               <Badge 
                 key={tag} 
                 variant="secondary" 
-                className="bg-[#f5f0eb] text-[#8a7a7a] border-0 text-xs font-normal"
+                className="bg-[#f5f0eb] text-[#8a7a7a] border-0 text-xs font-normal px-2.5 py-0.5 hover:bg-[#ebe5df] transition-colors"
               >
-                #{tag}
+                <Hash className="h-3 w-3 mr-1 opacity-60" />
+                {tag}
               </Badge>
             ))}
             {entry.tags.length > 3 && (
-              <Badge variant="secondary" className="bg-[#f5f0eb] text-[#8a7a7a] border-0 text-xs">
+              <Badge variant="secondary" className="bg-[#f5f0eb] text-[#8a7a7a] border-0 text-xs px-2.5 py-0.5">
                 +{entry.tags.length - 3}
               </Badge>
             )}
           </div>
         )}
 
-        <div className="flex items-center justify-between">
-          {story && (
+        <div className="flex items-center justify-between pt-3 border-t border-[#e8e0da]/50">
+          {story ? (
             <div className="flex items-center gap-2">
               <div
-                className="h-2.5 w-2.5 rounded-full"
+                className="h-3 w-3 rounded-full ring-2 ring-white"
                 style={{ backgroundColor: story.coverColor }}
               />
-              <span className="text-xs text-[#8a7a7a]">{story.name}</span>
+              <span className="text-xs text-[#8a7a7a] font-medium">{story.name}</span>
             </div>
+          ) : (
+            <span />
           )}
-          <div className="flex items-center gap-1 text-xs text-[#a08080]">
-            <FileText className="h-3 w-3" />
-            {entry.wordCount} words
+          <div className="flex items-center gap-1.5 text-xs text-[#a08080]">
+            <FileText className="h-3.5 w-3.5" />
+            <span className="font-medium">{entry.wordCount}</span>
+            <span>words</span>
           </div>
         </div>
       </CardContent>
@@ -424,7 +460,7 @@ function EntryCard({
   )
 }
 
-// Calendar Components
+// Calendar Components with refined styling
 function MonthlyCalendar({ entries }: { entries: JournalEntry[] }) {
   const [currentDate, setCurrentDate] = useState(new Date())
   
@@ -451,56 +487,55 @@ function MonthlyCalendar({ entries }: { entries: JournalEntry[] }) {
 
   const days = []
   for (let i = 0; i < firstDayOfMonth; i++) {
-    days.push(<div key={`empty-${i}`} className="h-10" />)
+    days.push(<div key={`empty-${i}`} className="h-11" />)
   }
   
   for (let day = 1; day <= daysInMonth; day++) {
     const dateStr = new Date(currentDate.getFullYear(), currentDate.getMonth(), day)
       .toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
     const hasEntries = entriesByDate.has(dateStr)
-    const entryCount = entriesByDate.get(dateStr) || 0
     const isToday = new Date().toDateString() === new Date(currentDate.getFullYear(), currentDate.getMonth(), day).toDateString()
 
     days.push(
-      <div
+      <button
         key={day}
-        className={`relative flex h-10 items-center justify-center rounded-lg text-sm transition-all cursor-pointer hover:bg-[#f0ebe5] ${
-          isToday ? "bg-[#d4a5a5] text-white font-semibold" : "text-[#4a3f3f]"
-        } ${hasEntries && !isToday ? "font-medium" : ""}`}
+        className={`relative flex h-11 items-center justify-center rounded-xl text-sm font-medium transition-all duration-200 hover:bg-[#f0ebe5] active:scale-95 ${
+          isToday ? "bg-gradient-to-br from-[#d4a5a5] to-[#c49090] text-white shadow-md" : "text-[#4a3f3f]"
+        } ${hasEntries && !isToday ? "font-semibold" : ""}`}
       >
         {day}
         {hasEntries && (
-          <span className={`absolute bottom-1 left-1/2 -translate-x-1/2 h-1.5 w-1.5 rounded-full ${isToday ? "bg-white" : "bg-[#d4a5a5]"}`} />
+          <span className={`absolute bottom-1.5 left-1/2 -translate-x-1/2 h-1.5 w-1.5 rounded-full ${isToday ? "bg-white" : "bg-[#d4a5a5]"}`} />
         )}
-      </div>
+      </button>
     )
   }
 
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
   return (
-    <Card className="glass-card border-0">
-      <CardContent className="p-5">
-        <div className="flex items-center justify-between mb-4">
+    <Card className="glass-card border-0 card-interactive">
+      <CardContent className="p-6">
+        <div className="flex items-center justify-between mb-5">
           <button
             onClick={() => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1))}
-            className="p-2 rounded-lg hover:bg-[#f0ebe5] transition-colors"
+            className="btn-icon"
           >
-            <ChevronLeft className="h-4 w-4 text-[#8a7a7a]" />
+            <ChevronLeft className="h-5 w-5 text-[#8a7a7a]" />
           </button>
-          <h3 className="font-semibold text-[#3d3535]">
+          <h3 className="heading-sm">
             {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
           </h3>
           <button
             onClick={() => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1))}
-            className="p-2 rounded-lg hover:bg-[#f0ebe5] transition-colors"
+            className="btn-icon"
           >
-            <ChevronRight className="h-4 w-4 text-[#8a7a7a]" />
+            <ChevronRight className="h-5 w-5 text-[#8a7a7a]" />
           </button>
         </div>
-        <div className="grid grid-cols-7 gap-1 mb-2">
+        <div className="grid grid-cols-7 gap-1 mb-3">
           {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
-            <div key={i} className="h-8 flex items-center justify-center text-xs font-medium text-[#a08080]">
+            <div key={i} className="h-9 flex items-center justify-center text-xs font-semibold text-[#a08080] uppercase">
               {d}
             </div>
           ))}
@@ -546,10 +581,10 @@ function YearlyHeatmap({ entries }: { entries: JournalEntry[] }) {
         <TooltipProvider key={`${w}-${d}`}>
           <Tooltip>
             <TooltipTrigger asChild>
-              <div className={`h-3 w-3 rounded-sm ${intensity} transition-colors hover:ring-2 hover:ring-[#d4a5a5]/50`} />
+              <div className={`h-3.5 w-3.5 rounded-[3px] ${intensity} transition-all duration-200 hover:ring-2 hover:ring-[#d4a5a5]/50 hover:scale-125 cursor-pointer`} />
             </TooltipTrigger>
             <TooltipContent>
-              <p>{date.toLocaleDateString()}: {count} entries</p>
+              <p className="text-xs">{date.toLocaleDateString()}: {count} {count === 1 ? 'entry' : 'entries'}</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -563,19 +598,27 @@ function YearlyHeatmap({ entries }: { entries: JournalEntry[] }) {
   }
 
   return (
-    <Card className="glass-card border-0">
-      <CardContent className="p-5">
-        <h3 className="font-semibold text-[#3d3535] mb-4">Writing Activity</h3>
-        <div className="flex gap-1 overflow-x-auto pb-2">
+    <Card className="glass-card border-0 card-interactive">
+      <CardContent className="p-6">
+        <div className="flex items-center gap-3 mb-5">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30 text-[#c49090]">
+            <Zap className="h-5 w-5" />
+          </div>
+          <div>
+            <h3 className="heading-sm">Writing Activity</h3>
+            <p className="text-muted">Your year at a glance</p>
+          </div>
+        </div>
+        <div className="flex gap-1 overflow-x-auto pb-3">
           {weeks}
         </div>
-        <div className="flex items-center justify-end gap-2 mt-3 text-xs text-[#8a7a7a]">
+        <div className="flex items-center justify-end gap-3 mt-4 text-xs text-[#8a7a7a]">
           <span>Less</span>
           <div className="flex gap-1">
-            <div className="h-3 w-3 rounded-sm bg-[#f5f0eb]" />
-            <div className="h-3 w-3 rounded-sm bg-[#e5c5c5]" />
-            <div className="h-3 w-3 rounded-sm bg-[#d4a5a5]" />
-            <div className="h-3 w-3 rounded-sm bg-[#c49090]" />
+            <div className="h-3.5 w-3.5 rounded-[3px] bg-[#f5f0eb]" />
+            <div className="h-3.5 w-3.5 rounded-[3px] bg-[#e5c5c5]" />
+            <div className="h-3.5 w-3.5 rounded-[3px] bg-[#d4a5a5]" />
+            <div className="h-3.5 w-3.5 rounded-[3px] bg-[#c49090]" />
           </div>
           <span>More</span>
         </div>
@@ -584,7 +627,7 @@ function YearlyHeatmap({ entries }: { entries: JournalEntry[] }) {
   )
 }
 
-// Entry Editor Sheet
+// Refined Entry Editor with better UX
 function EntryEditor({
   entry,
   stories,
@@ -610,6 +653,7 @@ function EntryEditor({
   const [template, setTemplate] = useState(entry?.template || "")
 
   const wordCount = content.trim().split(/\s+/).filter(Boolean).length
+  const readingTime = Math.max(1, Math.ceil(wordCount / 200))
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
@@ -654,23 +698,23 @@ function EntryEditor({
     { id: "blank", name: "Blank", icon: FileText },
     { id: "daily", name: "Daily Reflection", icon: Sparkles },
     { id: "gratitude", name: "Gratitude", icon: Heart },
-    { id: "goals", name: "Goals & Progress", icon: Target },
+    { id: "goals", name: "Goals", icon: Target },
   ]
 
   return (
     <Sheet open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto bg-[#faf8f5]">
-        <SheetHeader className="mb-6">
-          <SheetTitle className="text-xl text-[#3d3535]">
+      <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto bg-[#faf8f5] border-l border-[#e8e0da]">
+        <SheetHeader className="mb-8">
+          <SheetTitle className="heading-lg">
             {entry ? "Edit Entry" : "New Entry"}
           </SheetTitle>
         </SheetHeader>
 
-        <div className="space-y-6">
+        <div className="space-y-8">
           {/* Templates */}
           {!entry && (
-            <div>
-              <label className="mb-3 block text-sm font-medium text-[#6a5f5f]">
+            <div className="animate-fade-in">
+              <label className="text-subtle block mb-3">
                 Choose Template
               </label>
               <div className="flex gap-2 flex-wrap">
@@ -680,10 +724,10 @@ function EntryEditor({
                     <button
                       key={t.id}
                       onClick={() => setTemplate(t.id)}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition-all ${
+                      className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
                         template === t.id
-                          ? "bg-[#d4a5a5] text-white"
-                          : "bg-white text-[#6a5f5f] hover:bg-[#f0ebe5]"
+                          ? "bg-gradient-to-br from-[#d4a5a5] to-[#c49090] text-white shadow-md"
+                          : "bg-white text-[#6a5f5f] hover:bg-[#f0ebe5] border border-[#e8e0da]"
                       }`}
                     >
                       <Icon className="h-4 w-4" />
@@ -696,32 +740,40 @@ function EntryEditor({
           )}
 
           {/* Title */}
-          <div>
+          <div className="animate-fade-in stagger-1">
             <Input
               placeholder="Give your entry a title..."
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="border-0 border-b border-[#e8e0da] rounded-none px-0 text-xl font-semibold bg-transparent focus-visible:ring-0 focus-visible:border-[#d4a5a5] text-[#3d3535] placeholder:text-[#b0a0a0]"
+              className="border-0 border-b-2 border-[#e8e0da] rounded-none px-0 text-2xl font-bold bg-transparent focus-visible:ring-0 focus-visible:border-[#d4a5a5] text-[#3d3535] placeholder:text-[#c0b0b0] h-auto py-3 tracking-tight"
             />
           </div>
 
           {/* Content */}
-          <div>
+          <div className="animate-fade-in stagger-2">
             <Textarea
               placeholder="Start writing your thoughts..."
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="min-h-[250px] resize-none border-[#e8e0da] bg-white/50 text-[#4a3f3f] text-base leading-relaxed rounded-lg focus-visible:ring-[#d4a5a5] placeholder:text-[#b0a0a0]"
+              className="min-h-[280px] resize-none border-[#e8e0da] bg-white/60 text-[#4a3f3f] text-base leading-relaxed rounded-xl focus-visible:ring-2 focus-visible:ring-[#d4a5a5]/50 placeholder:text-[#c0b0b0] p-5"
             />
-            <div className="mt-2 flex items-center justify-between text-xs text-[#8a7a7a]">
-              <span>{wordCount} words</span>
-              <span>{Math.max(1, Math.ceil(wordCount / 200))} min read</span>
+            <div className="mt-3 flex items-center justify-between text-muted">
+              <div className="flex items-center gap-4">
+                <span className="flex items-center gap-1.5">
+                  <FileText className="h-4 w-4" />
+                  {wordCount} words
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Clock className="h-4 w-4" />
+                  {readingTime} min read
+                </span>
+              </div>
             </div>
           </div>
 
           {/* Photos */}
-          <div>
-            <label className="mb-3 block text-sm font-medium text-[#6a5f5f]">
+          <div className="animate-fade-in stagger-3">
+            <label className="text-subtle block mb-3">
               Photos
             </label>
             <div className="flex flex-wrap gap-3">
@@ -730,34 +782,35 @@ function EntryEditor({
                   <img
                     src={photo || "/placeholder.svg"}
                     alt={`Upload ${index + 1}`}
-                    className="h-20 w-20 rounded-lg object-cover"
+                    className="h-24 w-24 rounded-xl object-cover ring-2 ring-white shadow-md"
                   />
                   <button
                     onClick={() => setPhotos(prev => prev.filter((_, i) => i !== index))}
-                    className="absolute -right-2 -top-2 rounded-full bg-[#3d3535] p-1 text-white opacity-0 transition-opacity group-hover:opacity-100"
+                    className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-[#3d3535] text-white opacity-0 transition-all group-hover:opacity-100 hover:bg-[#2d2525] shadow-lg"
                   >
-                    <X className="h-3 w-3" />
+                    <X className="h-3.5 w-3.5" />
                   </button>
                 </div>
               ))}
-              <label className="flex h-20 w-20 cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-[#d4a5a5]/50 transition-all hover:border-[#d4a5a5] hover:bg-[#d4a5a5]/5">
+              <label className="flex h-24 w-24 cursor-pointer items-center justify-center rounded-xl border-2 border-dashed border-[#d4a5a5]/40 transition-all duration-200 hover:border-[#d4a5a5] hover:bg-[#d4a5a5]/5 group">
                 <input type="file" accept="image/*" multiple onChange={handlePhotoUpload} className="hidden" />
-                <Plus className="h-5 w-5 text-[#d4a5a5]" />
+                <Plus className="h-6 w-6 text-[#d4a5a5] transition-transform group-hover:scale-110" />
               </label>
             </div>
           </div>
 
           {/* Tags */}
-          <div>
-            <label className="mb-3 block text-sm font-medium text-[#6a5f5f]">
+          <div className="animate-fade-in stagger-4">
+            <label className="text-subtle block mb-3">
               Tags
             </label>
-            <div className="flex flex-wrap gap-2 mb-2">
+            <div className="flex flex-wrap gap-2 mb-3">
               {tags.map((tag) => (
-                <Badge key={tag} className="bg-[#f5f0eb] text-[#6a5f5f] border-0 pr-1">
-                  #{tag}
-                  <button onClick={() => setTags(tags.filter(t => t !== tag))} className="ml-1 hover:text-[#c49090]">
-                    <X className="h-3 w-3" />
+                <Badge key={tag} className="bg-[#f5f0eb] text-[#6a5f5f] border-0 pr-1.5 py-1 text-sm group">
+                  <Hash className="h-3 w-3 mr-1 opacity-50" />
+                  {tag}
+                  <button onClick={() => setTags(tags.filter(t => t !== tag))} className="ml-1.5 hover:text-[#c49090] transition-colors">
+                    <X className="h-3.5 w-3.5" />
                   </button>
                 </Badge>
               ))}
@@ -768,17 +821,17 @@ function EntryEditor({
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
-                className="flex-1 bg-white/50 border-[#e8e0da] rounded-lg focus-visible:ring-[#d4a5a5]"
+                className="flex-1 bg-white/60 border-[#e8e0da] rounded-xl focus-visible:ring-2 focus-visible:ring-[#d4a5a5]/50"
               />
-              <Button onClick={addTag} variant="outline" className="border-[#d4a5a5] text-[#c49090] hover:bg-[#d4a5a5]/10 rounded-lg bg-transparent">
-                <Tag className="h-4 w-4" />
-              </Button>
+              <button onClick={addTag} className="btn-secondary px-4">
+                <Hash className="h-4 w-4" />
+              </button>
             </div>
           </div>
 
           {/* Privacy */}
-          <div>
-            <label className="mb-3 block text-sm font-medium text-[#6a5f5f]">
+          <div className="animate-fade-in stagger-5">
+            <label className="text-subtle block mb-3">
               Privacy
             </label>
             <div className="flex gap-2">
@@ -792,10 +845,10 @@ function EntryEditor({
                   <button
                     key={option.value}
                     onClick={() => setPrivacy(option.value as typeof privacy)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition-all ${
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
                       privacy === option.value
-                        ? "bg-[#d4a5a5] text-white"
-                        : "bg-white text-[#6a5f5f] hover:bg-[#f0ebe5]"
+                        ? "bg-gradient-to-br from-[#d4a5a5] to-[#c49090] text-white shadow-md"
+                        : "bg-white text-[#6a5f5f] hover:bg-[#f0ebe5] border border-[#e8e0da]"
                     }`}
                   >
                     <Icon className="h-4 w-4" />
@@ -809,13 +862,13 @@ function EntryEditor({
           {/* Story */}
           {stories.length > 0 && (
             <div>
-              <label className="mb-3 block text-sm font-medium text-[#6a5f5f]">
+              <label className="text-subtle block mb-3">
                 Add to Story
               </label>
               <select
                 value={selectedStory}
                 onChange={(e) => setSelectedStory(e.target.value)}
-                className="w-full rounded-lg border border-[#e8e0da] bg-white/50 px-4 py-2.5 text-sm text-[#4a3f3f] focus:ring-[#d4a5a5] focus:border-[#d4a5a5]"
+                className="w-full rounded-xl border border-[#e8e0da] bg-white/60 px-4 py-3 text-sm text-[#4a3f3f] focus:ring-2 focus:ring-[#d4a5a5]/50 focus:border-[#d4a5a5] transition-all"
               >
                 <option value="">No story</option>
                 {stories.map((story) => (
@@ -826,18 +879,52 @@ function EntryEditor({
           )}
 
           {/* Actions */}
-          <div className="flex justify-end gap-3 pt-4 border-t border-[#e8e0da]">
-            <Button variant="outline" onClick={onClose} className="rounded-lg border-[#e8e0da] text-[#6a5f5f] hover:bg-[#f0ebe5] bg-transparent">
+          <div className="flex justify-end gap-3 pt-6 border-t border-[#e8e0da]">
+            <button onClick={onClose} className="btn-secondary">
               Cancel
-            </Button>
-            <Button onClick={handleSave} className="rounded-lg bg-[#d4a5a5] hover:bg-[#c49090] text-white">
-              <CheckCircle2 className="h-4 w-4 mr-2" />
+            </button>
+            <button onClick={handleSave} className="btn-primary flex items-center gap-2">
+              <Check className="h-4 w-4" />
               {entry ? "Save Changes" : "Create Entry"}
-            </Button>
+            </button>
           </div>
         </div>
       </SheetContent>
     </Sheet>
+  )
+}
+
+// Navigation Item Component
+function NavItem({ 
+  icon: Icon, 
+  label, 
+  isActive, 
+  onClick,
+  badge,
+}: { 
+  icon: React.ElementType
+  label: string
+  isActive: boolean
+  onClick: () => void
+  badge?: number
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 transition-all duration-200 group ${
+        isActive
+          ? "bg-gradient-to-r from-[#d4a5a5] to-[#c49090] text-white shadow-lg shadow-[#d4a5a5]/25"
+          : "text-[#6a5f5f] hover:bg-[#f0ebe5]"
+      }`}
+    >
+      <Icon className={`h-5 w-5 transition-transform duration-200 ${isActive ? "" : "group-hover:scale-110"}`} />
+      <span className="font-medium flex-1 text-left">{label}</span>
+      {badge !== undefined && badge > 0 && (
+        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${isActive ? "bg-white/20" : "bg-[#d4a5a5]/20 text-[#c49090]"}`}>
+          {badge}
+        </span>
+      )}
+    </button>
   )
 }
 
@@ -849,10 +936,11 @@ export default function JournalPlatform() {
   const [editorOpen, setEditorOpen] = useState(false)
   const [editingEntry, setEditingEntry] = useState<JournalEntry | undefined>()
   const [promptToUse, setPromptToUse] = useState("")
+  const [viewingEntry, setViewingEntry] = useState<JournalEntry | undefined>()
 
   const [entries, setEntries] = useState<JournalEntry[]>([])
   const [stories, setStories] = useState<Story[]>([])
-  const [streak, setStreak] = useState(7)
+  const [streak] = useState(7)
   const [writingGoal] = useState<WritingGoal>({ daily: 500, current: 320 })
 
   const dailyPrompts = [
@@ -916,61 +1004,56 @@ export default function JournalPlatform() {
     setEditorOpen(true)
   }
 
+  const navItems = [
+    { id: "home", label: "Home", icon: Home },
+    { id: "entries", label: "All Entries", icon: BookOpen, badge: entries.length },
+    { id: "gallery", label: "Gallery", icon: ImageIcon, badge: totalPhotos },
+    { id: "calendar", label: "Calendar", icon: CalendarDays },
+    { id: "stories", label: "Stories", icon: FolderOpen, badge: stories.length },
+  ]
+
   return (
     <TooltipProvider>
       <div className="min-h-screen bg-[#faf8f5]">
         {/* Mobile Header */}
-        <header className="sticky top-0 z-40 glass border-b border-[#e8e0da] lg:hidden">
-          <div className="flex items-center justify-between px-4 py-3">
-            <button onClick={() => setSidebarOpen(true)} className="p-2 rounded-lg hover:bg-[#f0ebe5] transition-colors">
+        <header className="sticky top-0 z-40 glass border-b border-[#e8e0da]/60 lg:hidden">
+          <div className="flex items-center justify-between px-4 py-4">
+            <button onClick={() => setSidebarOpen(true)} className="btn-icon">
               <Menu className="h-5 w-5 text-[#6a5f5f]" />
             </button>
-            <div className="flex items-center gap-2">
-              <SunriseLogo className="h-7 w-7 text-[#d4a5a5]" />
-              <span className="text-lg font-bold text-[#3d3535]">Unfiltered</span>
+            <div className="flex items-center gap-2.5">
+              <SunriseLogo className="h-8 w-8 text-[#d4a5a5]" />
+              <span className="text-xl font-bold text-[#3d3535] tracking-tight">Unfiltered</span>
             </div>
-            <div className="w-9" />
+            <div className="w-10" />
           </div>
         </header>
 
         {/* Mobile Sidebar Overlay */}
         {sidebarOpen && (
           <div className="fixed inset-0 z-50 lg:hidden">
-            <div className="absolute inset-0 bg-black/20" onClick={() => setSidebarOpen(false)} />
-            <aside className="absolute left-0 top-0 h-full w-72 bg-[#faf8f5] shadow-xl animate-slide-in">
+            <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
+            <aside className="absolute left-0 top-0 h-full w-80 bg-[#faf8f5] shadow-2xl animate-slide-in">
               <div className="flex items-center justify-between p-6 border-b border-[#e8e0da]">
                 <div className="flex items-center gap-3">
-                  <SunriseLogo className="h-8 w-8 text-[#d4a5a5]" />
-                  <span className="text-xl font-bold text-[#3d3535]">Unfiltered</span>
+                  <SunriseLogo className="h-9 w-9 text-[#d4a5a5]" animated />
+                  <span className="text-xl font-bold text-[#3d3535] tracking-tight">Unfiltered</span>
                 </div>
-                <button onClick={() => setSidebarOpen(false)}>
+                <button onClick={() => setSidebarOpen(false)} className="btn-icon">
                   <X className="h-5 w-5 text-[#8a7a7a]" />
                 </button>
               </div>
               <nav className="p-4 space-y-1">
-                {[
-                  { id: "home", label: "Home", icon: Sparkles },
-                  { id: "entries", label: "All Entries", icon: BookOpen },
-                  { id: "gallery", label: "Gallery", icon: ImageIcon },
-                  { id: "calendar", label: "Calendar", icon: Calendar },
-                  { id: "stories", label: "Stories", icon: Layers },
-                ].map((item) => {
-                  const Icon = item.icon
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => { setActiveTab(item.id); setSidebarOpen(false) }}
-                      className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 transition-all ${
-                        activeTab === item.id
-                          ? "bg-[#d4a5a5] text-white"
-                          : "text-[#6a5f5f] hover:bg-[#f0ebe5]"
-                      }`}
-                    >
-                      <Icon className="h-5 w-5" />
-                      <span className="font-medium">{item.label}</span>
-                    </button>
-                  )
-                })}
+                {navItems.map((item) => (
+                  <NavItem
+                    key={item.id}
+                    icon={item.icon}
+                    label={item.label}
+                    isActive={activeTab === item.id}
+                    onClick={() => { setActiveTab(item.id); setSidebarOpen(false) }}
+                    badge={item.badge}
+                  />
+                ))}
               </nav>
             </aside>
           </div>
@@ -979,60 +1062,48 @@ export default function JournalPlatform() {
         {/* Desktop Layout */}
         <div className="hidden lg:flex">
           {/* Desktop Sidebar */}
-          <aside className="fixed left-0 top-0 h-screen w-64 border-r border-[#e8e0da] bg-[#faf8f5] flex flex-col">
-            <div className="flex items-center gap-3 p-6 border-b border-[#e8e0da]">
-              <SunriseLogo className="h-9 w-9 text-[#d4a5a5] animate-float" />
-              <span className="text-xl font-bold text-[#3d3535]">Unfiltered</span>
+          <aside className="fixed left-0 top-0 h-screen w-72 border-r border-[#e8e0da]/60 bg-[#faf8f5] flex flex-col">
+            <div className="flex items-center gap-3 p-6 border-b border-[#e8e0da]/60">
+              <SunriseLogo className="h-10 w-10 text-[#d4a5a5]" animated />
+              <span className="text-2xl font-bold text-[#3d3535] tracking-tight">Unfiltered</span>
             </div>
             
             <nav className="flex-1 p-4 space-y-1">
-              {[
-                { id: "home", label: "Home", icon: Sparkles },
-                { id: "entries", label: "All Entries", icon: BookOpen },
-                { id: "gallery", label: "Gallery", icon: ImageIcon },
-                { id: "calendar", label: "Calendar", icon: Calendar },
-                { id: "stories", label: "Stories", icon: Layers },
-              ].map((item) => {
-                const Icon = item.icon
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveTab(item.id)}
-                    className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 transition-all ${
-                      activeTab === item.id
-                        ? "bg-[#d4a5a5] text-white shadow-md"
-                        : "text-[#6a5f5f] hover:bg-[#f0ebe5]"
-                    }`}
-                  >
-                    <Icon className="h-5 w-5" />
-                    <span className="font-medium">{item.label}</span>
-                  </button>
-                )
-              })}
+              {navItems.map((item) => (
+                <NavItem
+                  key={item.id}
+                  icon={item.icon}
+                  label={item.label}
+                  isActive={activeTab === item.id}
+                  onClick={() => setActiveTab(item.id)}
+                  badge={item.badge}
+                />
+              ))}
             </nav>
 
             {/* Account */}
-            <div className="p-4 border-t border-[#e8e0da]">
+            <div className="p-4 border-t border-[#e8e0da]/60">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="flex w-full items-center gap-3 rounded-lg px-4 py-3 transition-colors hover:bg-[#f0ebe5]">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#d4a5a5]/20">
+                  <button className="flex w-full items-center gap-3 rounded-xl px-4 py-3 transition-all duration-200 hover:bg-[#f0ebe5] group">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/30 to-[#e5c5c5]/40">
                       <User className="h-5 w-5 text-[#c49090]" />
                     </div>
                     <div className="flex-1 text-left">
-                      <p className="text-sm font-medium text-[#3d3535]">Your Account</p>
-                      <p className="text-xs text-[#8a7a7a]">Settings</p>
+                      <p className="text-sm font-semibold text-[#3d3535]">Your Account</p>
+                      <p className="text-xs text-[#8a7a7a]">Settings & more</p>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-[#a08080]" />
+                    <ChevronRight className="h-4 w-4 text-[#a08080] transition-transform group-hover:translate-x-0.5" />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuItem>
-                    <Settings className="mr-2 h-4 w-4" />
+                <DropdownMenuContent align="end" className="w-52">
+                  <DropdownMenuItem className="py-2.5">
+                    <Settings className="mr-3 h-4 w-4" />
                     Settings
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <LogOut className="mr-2 h-4 w-4" />
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="py-2.5 text-red-600 focus:text-red-600">
+                    <LogOut className="mr-3 h-4 w-4" />
                     Sign Out
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -1041,49 +1112,52 @@ export default function JournalPlatform() {
           </aside>
 
           {/* Main Content */}
-          <main className="flex-1 ml-64">
-            <div className="max-w-6xl mx-auto p-6 lg:p-8">
+          <main className="flex-1 ml-72">
+            <div className="max-w-6xl mx-auto p-8">
               {/* Search Bar */}
-              <div className="mb-8">
-                <div className="relative max-w-md">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#a08080]" />
+              <div className="mb-10">
+                <div className="relative max-w-lg">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#a08080]" />
                   <Input
                     placeholder="Search entries, tags..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-11 bg-white/60 border-[#e8e0da] rounded-xl h-11 focus-visible:ring-[#d4a5a5]"
+                    className="pl-12 bg-white/70 border-[#e8e0da] rounded-2xl h-12 text-base focus-visible:ring-2 focus-visible:ring-[#d4a5a5]/50 shadow-sm"
                   />
                 </div>
               </div>
 
               {/* Tab Content */}
               {activeTab === "home" && (
-                <div className="space-y-8 animate-fade-in">
+                <div className="space-y-10 animate-fade-in">
                   <div>
-                    <h1 className="text-3xl font-bold text-[#3d3535] mb-2">Welcome back</h1>
-                    <p className="text-[#8a7a7a]">Ready to capture today&apos;s moments?</p>
+                    <h1 className="heading-xl mb-2">Welcome back</h1>
+                    <p className="text-muted text-lg">Ready to capture today&apos;s moments?</p>
                   </div>
 
                   {/* Stats Row */}
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                     <StreakCard streak={streak} goal={writingGoal} />
-                    <StatsCard icon={BookOpen} label="Total Entries" value={entries.length} />
+                    <StatsCard icon={BookOpen} label="Total Entries" value={entries.length} trend={entries.length > 0 ? "+1 today" : undefined} />
                     <StatsCard icon={FileText} label="Words Written" value={totalWords.toLocaleString()} />
                     <StatsCard icon={Heart} label="Favorites" value={favoriteCount} />
                   </div>
 
                   {/* Prompt and Quick Entry */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     <DailyPrompt prompt={todayPrompt} onUse={usePrompt} />
-                    <Card className="glass-card border-0 flex items-center justify-center min-h-[180px]">
+                    <Card className="glass-card border-0 flex items-center justify-center min-h-[200px] card-interactive">
                       <button
                         onClick={() => setEditorOpen(true)}
-                        className="flex flex-col items-center gap-3 p-6 rounded-2xl transition-all hover:bg-[#d4a5a5]/10"
+                        className="flex flex-col items-center gap-4 p-8 rounded-2xl transition-all duration-300 hover:bg-[#d4a5a5]/10 group"
                       >
-                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#d4a5a5] text-white shadow-lg">
-                          <Plus className="h-7 w-7" />
+                        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d4a5a5] to-[#c49090] text-white shadow-lg shadow-[#d4a5a5]/30 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+                          <Plus className="h-8 w-8" />
                         </div>
-                        <span className="font-semibold text-[#3d3535]">New Entry</span>
+                        <div className="text-center">
+                          <span className="heading-sm block">New Entry</span>
+                          <span className="text-muted">Start writing</span>
+                        </div>
                       </button>
                     </Card>
                   </div>
@@ -1091,14 +1165,14 @@ export default function JournalPlatform() {
                   {/* Recent Entries */}
                   {entries.length > 0 && (
                     <div>
-                      <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-xl font-semibold text-[#3d3535]">Recent Entries</h2>
-                        <Button variant="ghost" onClick={() => setActiveTab("entries")} className="text-[#c49090] hover:text-[#b08080] hover:bg-[#d4a5a5]/10">
+                      <div className="flex items-center justify-between mb-6">
+                        <h2 className="heading-md">Recent Entries</h2>
+                        <button onClick={() => setActiveTab("entries")} className="btn-ghost flex items-center gap-1 text-[#c49090]">
                           View All
-                          <ChevronRight className="h-4 w-4 ml-1" />
-                        </Button>
+                          <ArrowRight className="h-4 w-4" />
+                        </button>
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                         {entries.slice(0, 3).map((entry, i) => (
                           <EntryCard
                             key={entry.id}
@@ -1107,7 +1181,8 @@ export default function JournalPlatform() {
                             onEdit={() => { setEditingEntry(entry); setEditorOpen(true) }}
                             onDelete={() => handleDeleteEntry(entry.id)}
                             onToggleFavorite={() => toggleFavorite(entry.id)}
-                            style={{ animationDelay: `${i * 100}ms` }}
+                            onView={() => setViewingEntry(entry)}
+                            className={`stagger-${i + 1}`}
                           />
                         ))}
                       </div>
@@ -1117,26 +1192,28 @@ export default function JournalPlatform() {
               )}
 
               {activeTab === "entries" && (
-                <div className="space-y-6 animate-fade-in">
+                <div className="space-y-8 animate-fade-in">
                   <div className="flex items-center justify-between">
-                    <h1 className="text-2xl font-bold text-[#3d3535]">All Entries</h1>
-                    <Button onClick={() => setEditorOpen(true)} className="rounded-lg bg-[#d4a5a5] hover:bg-[#c49090] text-white">
-                      <Plus className="h-4 w-4 mr-2" />
+                    <h1 className="heading-lg">All Entries</h1>
+                    <button onClick={() => setEditorOpen(true)} className="btn-primary flex items-center gap-2">
+                      <Plus className="h-4 w-4" />
                       New Entry
-                    </Button>
+                    </button>
                   </div>
 
                   {filteredEntries.length === 0 ? (
-                    <Card className="glass-card border-0 p-12 text-center">
-                      <BookOpen className="h-12 w-12 mx-auto text-[#d4a5a5] mb-4" />
-                      <h3 className="text-lg font-semibold text-[#3d3535] mb-2">No entries yet</h3>
-                      <p className="text-[#8a7a7a] mb-6">Start capturing your thoughts and moments.</p>
-                      <Button onClick={() => setEditorOpen(true)} className="rounded-lg bg-[#d4a5a5] hover:bg-[#c49090] text-white">
+                    <Card className="glass-card border-0 p-16 text-center">
+                      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30 text-[#c49090] mx-auto mb-5">
+                        <BookOpen className="h-8 w-8" />
+                      </div>
+                      <h3 className="heading-md mb-2">No entries yet</h3>
+                      <p className="text-muted mb-8 max-w-sm mx-auto">Start capturing your thoughts and moments. Your journal awaits.</p>
+                      <button onClick={() => setEditorOpen(true)} className="btn-primary">
                         Create Your First Entry
-                      </Button>
+                      </button>
                     </Card>
                   ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                       {filteredEntries.map((entry, i) => (
                         <EntryCard
                           key={entry.id}
@@ -1145,7 +1222,8 @@ export default function JournalPlatform() {
                           onEdit={() => { setEditingEntry(entry); setEditorOpen(true) }}
                           onDelete={() => handleDeleteEntry(entry.id)}
                           onToggleFavorite={() => toggleFavorite(entry.id)}
-                          style={{ animationDelay: `${i * 50}ms` }}
+                          onView={() => setViewingEntry(entry)}
+                          className={`stagger-${(i % 5) + 1}`}
                         />
                       ))}
                     </div>
@@ -1154,32 +1232,33 @@ export default function JournalPlatform() {
               )}
 
               {activeTab === "gallery" && (
-                <div className="space-y-6 animate-fade-in">
-                  <h1 className="text-2xl font-bold text-[#3d3535]">Photo Gallery</h1>
+                <div className="space-y-8 animate-fade-in">
+                  <h1 className="heading-lg">Photo Gallery</h1>
                   
                   {allPhotos.length === 0 ? (
-                    <Card className="glass-card border-0 p-12 text-center">
-                      <ImageIcon className="h-12 w-12 mx-auto text-[#d4a5a5] mb-4" />
-                      <h3 className="text-lg font-semibold text-[#3d3535] mb-2">No photos yet</h3>
-                      <p className="text-[#8a7a7a]">Photos you add to entries will appear here.</p>
+                    <Card className="glass-card border-0 p-16 text-center">
+                      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30 text-[#c49090] mx-auto mb-5">
+                        <ImageIcon className="h-8 w-8" />
+                      </div>
+                      <h3 className="heading-md mb-2">No photos yet</h3>
+                      <p className="text-muted">Photos you add to entries will appear here.</p>
                     </Card>
                   ) : (
-                    <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+                    <div className="columns-2 md:columns-3 lg:columns-4 gap-5 space-y-5">
                       {allPhotos.map((item, i) => (
                         <div
                           key={`${item.entryId}-${item.index}`}
-                          className="break-inside-avoid group relative overflow-hidden rounded-xl animate-scale-in"
-                          style={{ animationDelay: `${i * 50}ms` }}
+                          className={`break-inside-avoid group relative overflow-hidden rounded-2xl animate-scale-in stagger-${(i % 5) + 1} cursor-pointer`}
                         >
                           <img
                             src={item.photo || "/placeholder.svg"}
                             alt={item.entryTitle}
                             className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                            <div className="absolute bottom-0 left-0 right-0 p-4">
-                              <p className="text-white font-medium text-sm truncate">{item.entryTitle}</p>
-                              <p className="text-white/70 text-xs">{item.date}</p>
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div className="absolute bottom-0 left-0 right-0 p-5">
+                              <p className="text-white font-semibold text-sm truncate">{item.entryTitle}</p>
+                              <p className="text-white/70 text-xs mt-1">{item.date}</p>
                             </div>
                           </div>
                         </div>
@@ -1190,8 +1269,8 @@ export default function JournalPlatform() {
               )}
 
               {activeTab === "calendar" && (
-                <div className="space-y-6 animate-fade-in">
-                  <h1 className="text-2xl font-bold text-[#3d3535]">Calendar</h1>
+                <div className="space-y-8 animate-fade-in">
+                  <h1 className="heading-lg">Calendar</h1>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <MonthlyCalendar entries={entries} />
                     <YearlyHeatmap entries={entries} />
@@ -1200,30 +1279,32 @@ export default function JournalPlatform() {
               )}
 
               {activeTab === "stories" && (
-                <div className="space-y-6 animate-fade-in">
+                <div className="space-y-8 animate-fade-in">
                   <div className="flex items-center justify-between">
-                    <h1 className="text-2xl font-bold text-[#3d3535]">Stories</h1>
-                    <Button className="rounded-lg bg-[#d4a5a5] hover:bg-[#c49090] text-white">
-                      <Plus className="h-4 w-4 mr-2" />
+                    <h1 className="heading-lg">Stories</h1>
+                    <button className="btn-primary flex items-center gap-2">
+                      <Plus className="h-4 w-4" />
                       New Story
-                    </Button>
+                    </button>
                   </div>
 
                   {stories.length === 0 ? (
-                    <Card className="glass-card border-0 p-12 text-center">
-                      <Layers className="h-12 w-12 mx-auto text-[#d4a5a5] mb-4" />
-                      <h3 className="text-lg font-semibold text-[#3d3535] mb-2">No stories yet</h3>
-                      <p className="text-[#8a7a7a]">Group related entries into stories and collections.</p>
+                    <Card className="glass-card border-0 p-16 text-center">
+                      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30 text-[#c49090] mx-auto mb-5">
+                        <FolderOpen className="h-8 w-8" />
+                      </div>
+                      <h3 className="heading-md mb-2">No stories yet</h3>
+                      <p className="text-muted max-w-sm mx-auto">Group related entries into stories and collections to organize your journal.</p>
                     </Card>
                   ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                       {stories.map((story) => (
-                        <Card key={story.id} className="glass-card border-0 overflow-hidden group cursor-pointer hover:shadow-lg transition-all">
-                          <div className="h-24" style={{ backgroundColor: story.coverColor }} />
+                        <Card key={story.id} className="glass-card border-0 overflow-hidden group cursor-pointer card-interactive">
+                          <div className="h-28 transition-all duration-300 group-hover:h-32" style={{ backgroundColor: story.coverColor }} />
                           <CardContent className="p-5">
-                            <h3 className="font-semibold text-[#3d3535] group-hover:text-[#c49090] transition-colors">{story.name}</h3>
-                            <p className="text-sm text-[#8a7a7a] mt-1 line-clamp-2">{story.description}</p>
-                            <p className="text-xs text-[#a08080] mt-3">{story.entryCount} entries</p>
+                            <h3 className="heading-sm group-hover:text-[#c49090] transition-colors">{story.name}</h3>
+                            <p className="text-muted mt-2 line-clamp-2">{story.description}</p>
+                            <p className="text-subtle mt-4">{story.entryCount} entries</p>
                           </CardContent>
                         </Card>
                       ))}
@@ -1236,42 +1317,42 @@ export default function JournalPlatform() {
         </div>
 
         {/* Mobile Content */}
-        <div className="lg:hidden p-4">
+        <div className="lg:hidden p-4 pb-24">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="w-full bg-white/60 border border-[#e8e0da] rounded-xl p-1 mb-6">
-              <TabsTrigger value="home" className="flex-1 rounded-lg data-[state=active]:bg-[#d4a5a5] data-[state=active]:text-white">
-                <Sparkles className="h-4 w-4" />
+            <TabsList className="w-full bg-white/70 border border-[#e8e0da] rounded-2xl p-1.5 mb-6 shadow-sm">
+              <TabsTrigger value="home" className="flex-1 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#d4a5a5] data-[state=active]:to-[#c49090] data-[state=active]:text-white data-[state=active]:shadow-md py-2.5">
+                <Home className="h-4 w-4" />
               </TabsTrigger>
-              <TabsTrigger value="entries" className="flex-1 rounded-lg data-[state=active]:bg-[#d4a5a5] data-[state=active]:text-white">
+              <TabsTrigger value="entries" className="flex-1 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#d4a5a5] data-[state=active]:to-[#c49090] data-[state=active]:text-white data-[state=active]:shadow-md py-2.5">
                 <BookOpen className="h-4 w-4" />
               </TabsTrigger>
-              <TabsTrigger value="gallery" className="flex-1 rounded-lg data-[state=active]:bg-[#d4a5a5] data-[state=active]:text-white">
+              <TabsTrigger value="gallery" className="flex-1 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#d4a5a5] data-[state=active]:to-[#c49090] data-[state=active]:text-white data-[state=active]:shadow-md py-2.5">
                 <ImageIcon className="h-4 w-4" />
               </TabsTrigger>
-              <TabsTrigger value="calendar" className="flex-1 rounded-lg data-[state=active]:bg-[#d4a5a5] data-[state=active]:text-white">
-                <Calendar className="h-4 w-4" />
+              <TabsTrigger value="calendar" className="flex-1 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#d4a5a5] data-[state=active]:to-[#c49090] data-[state=active]:text-white data-[state=active]:shadow-md py-2.5">
+                <CalendarDays className="h-4 w-4" />
               </TabsTrigger>
             </TabsList>
 
             <TabsContent value="home" className="space-y-6 animate-fade-in">
               <div>
-                <h1 className="text-2xl font-bold text-[#3d3535] mb-1">Welcome back</h1>
-                <p className="text-sm text-[#8a7a7a]">Ready to capture today&apos;s moments?</p>
+                <h1 className="heading-lg mb-1">Welcome back</h1>
+                <p className="text-muted">Ready to capture today&apos;s moments?</p>
               </div>
               <StreakCard streak={streak} goal={writingGoal} />
               <DailyPrompt prompt={todayPrompt} onUse={usePrompt} />
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-4">
                 <StatsCard icon={BookOpen} label="Entries" value={entries.length} />
                 <StatsCard icon={FileText} label="Words" value={totalWords.toLocaleString()} />
               </div>
             </TabsContent>
 
-            <TabsContent value="entries" className="space-y-4 animate-fade-in">
+            <TabsContent value="entries" className="space-y-5 animate-fade-in">
               <Input
                 placeholder="Search entries..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-white/60 border-[#e8e0da] rounded-xl"
+                className="bg-white/70 border-[#e8e0da] rounded-2xl h-12 shadow-sm"
               />
               {filteredEntries.map((entry) => (
                 <EntryCard
@@ -1281,21 +1362,22 @@ export default function JournalPlatform() {
                   onEdit={() => { setEditingEntry(entry); setEditorOpen(true) }}
                   onDelete={() => handleDeleteEntry(entry.id)}
                   onToggleFavorite={() => toggleFavorite(entry.id)}
+                  onView={() => setViewingEntry(entry)}
                 />
               ))}
             </TabsContent>
 
             <TabsContent value="gallery" className="animate-fade-in">
-              <div className="columns-2 gap-3 space-y-3">
+              <div className="columns-2 gap-4 space-y-4">
                 {allPhotos.map((item, i) => (
-                  <div key={`${item.entryId}-${item.index}`} className="break-inside-avoid rounded-xl overflow-hidden">
+                  <div key={`${item.entryId}-${item.index}`} className="break-inside-avoid rounded-2xl overflow-hidden shadow-sm">
                     <img src={item.photo || "/placeholder.svg"} alt={item.entryTitle} className="w-full object-cover" />
                   </div>
                 ))}
               </div>
             </TabsContent>
 
-            <TabsContent value="calendar" className="space-y-4 animate-fade-in">
+            <TabsContent value="calendar" className="space-y-5 animate-fade-in">
               <MonthlyCalendar entries={entries} />
             </TabsContent>
           </Tabs>
@@ -1306,13 +1388,13 @@ export default function JournalPlatform() {
           <TooltipTrigger asChild>
             <button
               onClick={() => setEditorOpen(true)}
-              className="fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#d4a5a5] text-white shadow-lg transition-all hover:bg-[#c49090] hover:scale-110 hover:shadow-xl active:scale-95 z-50"
+              className="fixed bottom-6 right-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d4a5a5] to-[#c49090] text-white shadow-xl shadow-[#d4a5a5]/30 transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-[#d4a5a5]/40 active:scale-95 z-50 animate-glow"
             >
-              <Plus className="h-6 w-6" />
+              <Plus className="h-7 w-7" />
             </button>
           </TooltipTrigger>
-          <TooltipContent side="left">
-            <p>New Entry</p>
+          <TooltipContent side="left" className="bg-[#3d3535] text-white border-0 px-3 py-2">
+            <p className="font-medium">New Entry</p>
           </TooltipContent>
         </Tooltip>
 
@@ -1325,6 +1407,79 @@ export default function JournalPlatform() {
           isOpen={editorOpen}
           initialPrompt={promptToUse}
         />
+
+        {/* Entry Viewer Sheet */}
+        <Sheet open={!!viewingEntry} onOpenChange={(open) => !open && setViewingEntry(undefined)}>
+          <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto bg-[#faf8f5] border-l border-[#e8e0da]">
+            {viewingEntry && (
+              <>
+                <SheetHeader className="mb-6">
+                  <div className="flex items-center justify-between">
+                    <SheetTitle className="heading-lg pr-8">{viewingEntry.title}</SheetTitle>
+                  </div>
+                  <div className="flex items-center gap-4 text-muted mt-2">
+                    <span className="flex items-center gap-1.5">
+                      <CalendarDays className="h-4 w-4" />
+                      {viewingEntry.date}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Clock className="h-4 w-4" />
+                      {viewingEntry.time}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <FileText className="h-4 w-4" />
+                      {viewingEntry.wordCount} words
+                    </span>
+                  </div>
+                </SheetHeader>
+
+                {viewingEntry.photos.length > 0 && (
+                  <div className="mb-6 -mx-6">
+                    <div className="flex gap-3 overflow-x-auto px-6 pb-2">
+                      {viewingEntry.photos.map((photo, i) => (
+                        <img
+                          key={i}
+                          src={photo || "/placeholder.svg"}
+                          alt={`Photo ${i + 1}`}
+                          className="h-48 w-auto rounded-xl object-cover shadow-md flex-shrink-0"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="prose prose-neutral max-w-none">
+                  <p className="text-body whitespace-pre-wrap leading-relaxed">{viewingEntry.content}</p>
+                </div>
+
+                {viewingEntry.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-8 pt-6 border-t border-[#e8e0da]">
+                    {viewingEntry.tags.map((tag) => (
+                      <Badge key={tag} className="bg-[#f5f0eb] text-[#6a5f5f] border-0 text-sm">
+                        <Hash className="h-3 w-3 mr-1 opacity-50" />
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+
+                <div className="flex gap-3 mt-8 pt-6 border-t border-[#e8e0da]">
+                  <button
+                    onClick={() => { setEditingEntry(viewingEntry); setViewingEntry(undefined); setEditorOpen(true) }}
+                    className="btn-secondary flex items-center gap-2 flex-1"
+                  >
+                    <Pencil className="h-4 w-4" />
+                    Edit
+                  </button>
+                  <button className="btn-secondary flex items-center gap-2">
+                    <Download className="h-4 w-4" />
+                    Export
+                  </button>
+                </div>
+              </>
+            )}
+          </SheetContent>
+        </Sheet>
       </div>
     </TooltipProvider>
   )
