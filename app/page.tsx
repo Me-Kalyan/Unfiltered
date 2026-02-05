@@ -1083,11 +1083,11 @@ export default function JournalPlatform() {
               <div className="p-4 border-t border-[#e8e0da]/60">
                 <Link href="/settings" onClick={() => setSidebarOpen(false)} className="flex w-full items-center gap-3 rounded-xl px-4 py-3 hover:bg-[#f0ebe5] group">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30">
-                    <User className="h-5 w-5 text-[#c49090]" />
+                    <Settings className="h-5 w-5 text-[#c49090]" />
                   </div>
                   <div className="flex-1 text-left">
-                    <p className="text-sm font-semibold text-[#3d3535]">Your Account</p>
-                    <p className="text-xs text-[#8a7a7a]">Settings & more</p>
+                    <p className="text-sm font-semibold text-[#3d3535]">Settings</p>
+                    <p className="text-xs text-[#8a7a7a]">Preferences & account</p>
                   </div>
                   <ChevronRight className="h-4 w-4 text-[#a08080] group-hover:translate-x-0.5" />
                 </Link>
@@ -1121,11 +1121,11 @@ export default function JournalPlatform() {
             <div className="p-4 border-t border-[#e8e0da]/60">
               <Link href="/settings" className="flex w-full items-center gap-3 rounded-xl px-4 py-3 hover:bg-[#f0ebe5] group">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30">
-                  <User className="h-5 w-5 text-[#c49090]" />
+                  <Settings className="h-5 w-5 text-[#c49090]" />
                 </div>
                 <div className="flex-1 text-left">
-                  <p className="text-sm font-semibold text-[#3d3535]">Your Account</p>
-                  <p className="text-xs text-[#8a7a7a]">Settings & more</p>
+                  <p className="text-sm font-semibold text-[#3d3535]">Settings</p>
+                  <p className="text-xs text-[#8a7a7a]">Preferences & account</p>
                 </div>
                 <ChevronRight className="h-4 w-4 text-[#a08080] group-hover:translate-x-0.5" />
               </Link>
