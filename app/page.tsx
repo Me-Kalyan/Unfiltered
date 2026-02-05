@@ -1105,34 +1105,21 @@ export default function JournalPlatform() {
             </nav>
 
             {/* Account */}
-            <div className="p-4 border-t border-[#e8e0da]/60">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button className="flex w-full items-center gap-3 rounded-xl px-4 py-3 transition-all duration-200 hover:bg-[#f0ebe5] group">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/30 to-[#e5c5c5]/40">
-                      <User className="h-5 w-5 text-[#c49090]" />
-                    </div>
-                    <div className="flex-1 text-left">
-                      <p className="text-sm font-semibold text-[#3d3535]">Your Account</p>
-                      <p className="text-xs text-[#8a7a7a]">Settings & more</p>
-                    </div>
-                    <ChevronRight className="h-4 w-4 text-[#a08080] transition-transform group-hover:translate-x-0.5" />
-                  </button>
-                </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-52">
-                <DropdownMenuItem className="py-2.5" asChild>
-                  <Link href="/settings">
-                    <Settings className="mr-3 h-4 w-4" />
-                    Settings
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="py-2.5 text-red-600 focus:text-red-600">
-                  <LogOut className="mr-3 h-4 w-4" />
-                  Sign Out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-              </DropdownMenu>
+            <div className="p-4 border-t border-[#e8e0da]/60 space-y-1">
+              <Link href="/settings" className="flex w-full items-center gap-3 rounded-xl px-4 py-3 hover:bg-[#f0ebe5] group">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/30 to-[#e5c5c5]/40">
+                  <User className="h-5 w-5 text-[#c49090]" />
+                </div>
+                <div className="flex-1 text-left">
+                  <p className="text-sm font-semibold text-[#3d3535]">Your Account</p>
+                  <p className="text-xs text-[#8a7a7a]">Settings & more</p>
+                </div>
+                <ChevronRight className="h-4 w-4 text-[#a08080] group-hover:translate-x-0.5" />
+              </Link>
+              <button className="flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 group">
+                <LogOut className="h-4 w-4" />
+                Sign Out
+              </button>
             </div>
           </aside>
 
