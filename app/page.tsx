@@ -97,46 +97,39 @@ interface WritingGoal {
 }
 
 // Rising Sun Logo - Balanced proportions with tapered rays
-// Clean half-circle sun with 5 straight tapered rays and horizon line
+// Half-circle sun with 5 straight tapered rays and horizon line
 function LogoMark({ className = "" }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 56 36"
+      viewBox="0 0 64 40"
       className={className}
       xmlns="http://www.w3.org/2000/svg"
       aria-label="Unfiltered Logo"
     >
-      <defs>
-        {/* Tapered ray shape - wider at base, pointed at tip */}
-        <polygon id="ray" points="0,0 2,8 -2,8" />
-      </defs>
+      {/* 5 Tapered rays - straight lines, thicker at base */}
+      {/* Center ray */}
+      <path d="M 32 6 L 30.5 16 L 33.5 16 Z" fill="#3d3535" />
+      {/* Inner left ray - 40 degrees */}
+      <path d="M 18 10 L 22 18 L 24.5 16.5 Z" fill="#3d3535" />
+      {/* Inner right ray - 40 degrees */}
+      <path d="M 46 10 L 42 18 L 39.5 16.5 Z" fill="#3d3535" />
+      {/* Outer left ray - 75 degrees */}
+      <path d="M 6 22 L 16 22.5 L 15 25 Z" fill="#3d3535" />
+      {/* Outer right ray - 75 degrees */}
+      <path d="M 58 22 L 48 22.5 L 49 25 Z" fill="#3d3535" />
       
-      {/* 5 Tapered rays radiating from sun center */}
-      <g fill="#3d3535">
-        {/* Center ray */}
-        <use href="#ray" transform="translate(28, 4)" />
-        {/* Inner left ray - 35 degrees */}
-        <use href="#ray" transform="translate(28, 18) rotate(-35) translate(0, -14)" />
-        {/* Inner right ray - 35 degrees */}
-        <use href="#ray" transform="translate(28, 18) rotate(35) translate(0, -14)" />
-        {/* Outer left ray - 70 degrees */}
-        <use href="#ray" transform="translate(28, 18) rotate(-70) translate(0, -14)" />
-        {/* Outer right ray - 70 degrees */}
-        <use href="#ray" transform="translate(28, 18) rotate(70) translate(0, -14)" />
-      </g>
-      
-      {/* Half sun - proper semicircle using arc */}
+      {/* Half sun - smooth semicircle */}
       <path
-        d="M 12 28 A 16 16 0 0 1 44 28 Z"
+        d="M 14 32 A 18 18 0 0 1 50 32 Z"
         fill="#d4a5a5"
       />
       
-      {/* Horizon line */}
+      {/* Horizon line - extends beyond sun */}
       <line
         x1="4"
-        y1="28"
-        x2="52"
-        y2="28"
+        y1="32"
+        x2="60"
+        y2="32"
         stroke="#3d3535"
         strokeWidth="2.5"
         strokeLinecap="round"
