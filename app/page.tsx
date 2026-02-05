@@ -1040,7 +1040,7 @@ export default function JournalPlatform() {
       <div className="min-h-screen bg-[#faf8f5]">
         {/* Mobile Header */}
         <header className="sticky top-0 z-40 glass border-b border-[#e8e0da]/60 lg:hidden">
-          <div className="flex items-center justify-between px-4 py-4">
+          <div className="flex items-center justify-between px-4 py-3">
             <button onClick={() => setSidebarOpen(true)} className="btn-icon">
               <Menu className="h-5 w-5 text-[#6a5f5f]" />
             </button>
@@ -1048,7 +1048,26 @@ export default function JournalPlatform() {
               <LogoMark className="h-8 w-auto" />
               <span className="font-script text-2xl font-semibold text-[#3d3535] leading-none">Unfiltered</span>
             </div>
-            <div className="w-10" />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/25 to-[#e5c5c5]/35 hover:from-[#d4a5a5]/40 hover:to-[#e5c5c5]/50">
+                  <User className="h-4 w-4 text-[#c49090]" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48 mt-1">
+                <DropdownMenuItem asChild className="py-2.5">
+                  <Link href="/settings">
+                    <Settings className="mr-2.5 h-4 w-4" />
+                    Settings
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="py-2.5 text-red-600 focus:text-red-600">
+                  <LogOut className="mr-2.5 h-4 w-4" />
+                  Sign Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </header>
 
@@ -1104,31 +1123,14 @@ export default function JournalPlatform() {
               ))}
             </nav>
 
-            {/* Account */}
-            <div className="p-4 border-t border-[#e8e0da]/60 space-y-1">
-              <Link href="/settings" className="flex w-full items-center gap-3 rounded-xl px-4 py-3 hover:bg-[#f0ebe5] group">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/30 to-[#e5c5c5]/40">
-                  <User className="h-5 w-5 text-[#c49090]" />
-                </div>
-                <div className="flex-1 text-left">
-                  <p className="text-sm font-semibold text-[#3d3535]">Your Account</p>
-                  <p className="text-xs text-[#8a7a7a]">Settings & more</p>
-                </div>
-                <ChevronRight className="h-4 w-4 text-[#a08080] group-hover:translate-x-0.5" />
-              </Link>
-              <button className="flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 group">
-                <LogOut className="h-4 w-4" />
-                Sign Out
-              </button>
-            </div>
           </aside>
 
           {/* Main Content */}
           <main className="flex-1 ml-72">
             <div className="max-w-6xl mx-auto p-8">
-              {/* Search Bar */}
-              <div className="mb-10">
-                <div className="relative max-w-lg">
+              {/* Top Bar: Search + Account */}
+              <div className="flex items-center justify-between gap-6 mb-10">
+                <div className="relative max-w-lg flex-1">
                   <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#a08080]" />
                   <Input
                     placeholder="Search entries, tags..."
@@ -1137,6 +1139,33 @@ export default function JournalPlatform() {
                     className="pl-12 bg-white/70 border-[#e8e0da] rounded-2xl h-12 text-base focus-visible:ring-2 focus-visible:ring-[#d4a5a5]/50 shadow-sm"
                   />
                 </div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="flex items-center gap-3 rounded-2xl px-4 py-2.5 hover:bg-[#f0ebe5] group shrink-0">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/25 to-[#e5c5c5]/35 group-hover:from-[#d4a5a5]/40 group-hover:to-[#e5c5c5]/50">
+                        <User className="h-5 w-5 text-[#c49090]" />
+                      </div>
+                      <div className="text-left hidden xl:block">
+                        <p className="text-sm font-semibold text-[#3d3535]">Your Account</p>
+                        <p className="text-xs text-[#8a7a7a]">Settings & more</p>
+                      </div>
+                      <ChevronRight className="h-4 w-4 text-[#a08080] group-hover:translate-x-0.5 hidden xl:block" />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48 mt-1">
+                    <DropdownMenuItem asChild className="py-2.5">
+                      <Link href="/settings">
+                        <Settings className="mr-2.5 h-4 w-4" />
+                        Settings
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem className="py-2.5 text-red-600 focus:text-red-600">
+                      <LogOut className="mr-2.5 h-4 w-4" />
+                      Sign Out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
 
               {/* Tab Content */}
