@@ -1,5 +1,8 @@
 "use client"
 
+import { useEffect } from "react"
+import Link from "next/link"
+
 import React, { useState, useMemo } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -960,13 +963,13 @@ export default function JournalPlatform() {
     "Who did you connect with today, and how did it feel?",
     "What are you looking forward to tomorrow?",
   ]
-  // Use date-based index to avoid hydration mismatch (same prompt all day)
-  const getDailyPromptIndex = () => {
+  // Use a fixed default prompt for SSR, then update on mount to avoid hydration mismatch
+  const [todayPrompt, setTodayPrompt] = useState(dailyPrompts[0])
+  useEffect(() => {
     const today = new Date()
     const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24))
-    return dayOfYear % dailyPrompts.length
-  }
-  const [todayPrompt] = useState(dailyPrompts[getDailyPromptIndex()])
+    setTodayPrompt(dailyPrompts[dayOfYear % dailyPrompts.length])
+  }, [])
 
   const totalWords = entries.reduce((sum, e) => sum + e.wordCount, 0)
   const totalPhotos = entries.reduce((sum, e) => sum + e.photos.length, 0)
@@ -1020,9 +1023,12 @@ export default function JournalPlatform() {
     setEditorOpen(true)
   }
 
+  const bookmarkedEntries = entries.filter(e => e.isFavorite)
+
   const navItems = [
     { id: "home", label: "Home", icon: Home },
     { id: "entries", label: "All Entries", icon: BookOpen, badge: entries.length },
+    { id: "bookmarks", label: "Bookmarks", icon: Bookmark, badge: bookmarkedEntries.length },
     { id: "gallery", label: "Gallery", icon: ImageIcon, badge: totalPhotos },
     { id: "calendar", label: "Calendar", icon: CalendarDays },
     { id: "stories", label: "Stories", icon: FolderOpen, badge: stories.length },
@@ -1112,17 +1118,19 @@ export default function JournalPlatform() {
                     <ChevronRight className="h-4 w-4 text-[#a08080] transition-transform group-hover:translate-x-0.5" />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-52">
-                  <DropdownMenuItem className="py-2.5">
+              <DropdownMenuContent align="end" className="w-52">
+                <DropdownMenuItem className="py-2.5" asChild>
+                  <Link href="/settings">
                     <Settings className="mr-3 h-4 w-4" />
                     Settings
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem className="py-2.5 text-red-600 focus:text-red-600">
-                    <LogOut className="mr-3 h-4 w-4" />
-                    Sign Out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="py-2.5 text-red-600 focus:text-red-600">
+                  <LogOut className="mr-3 h-4 w-4" />
+                  Sign Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
               </DropdownMenu>
             </div>
           </aside>
@@ -1247,6 +1255,40 @@ export default function JournalPlatform() {
                 </div>
               )}
 
+              {activeTab === "bookmarks" && (
+                <div className="space-y-8 animate-fade-in">
+                  <h1 className="heading-lg">Bookmarks</h1>
+                  
+                  {bookmarkedEntries.length === 0 ? (
+                    <Card className="glass-card p-16 text-center">
+                      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30 text-[#c49090] mx-auto mb-5">
+                        <Bookmark className="h-8 w-8" />
+                      </div>
+                      <h3 className="heading-md mb-2">No bookmarks yet</h3>
+                      <p className="text-muted mb-8 max-w-sm mx-auto">Bookmark your favorite entries to find them quickly. Tap the bookmark icon on any entry.</p>
+                      <button onClick={() => setActiveTab("entries")} className="btn-primary">
+                        Browse Entries
+                      </button>
+                    </Card>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                      {bookmarkedEntries.map((entry, i) => (
+                        <EntryCard
+                          key={entry.id}
+                          entry={entry}
+                          stories={stories}
+                          onEdit={() => { setEditingEntry(entry); setEditorOpen(true) }}
+                          onDelete={() => handleDeleteEntry(entry.id)}
+                          onToggleFavorite={() => toggleFavorite(entry.id)}
+                          onView={() => setViewingEntry(entry)}
+                          className={`stagger-${(i % 5) + 1}`}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
               {activeTab === "gallery" && (
                 <div className="space-y-8 animate-fade-in">
                   <h1 className="heading-lg">Photo Gallery</h1>
@@ -1342,6 +1384,9 @@ export default function JournalPlatform() {
               <TabsTrigger value="entries" className="flex-1 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#d4a5a5] data-[state=active]:to-[#c49090] data-[state=active]:text-white data-[state=active]:shadow-md py-2.5">
                 <BookOpen className="h-4 w-4" />
               </TabsTrigger>
+              <TabsTrigger value="bookmarks" className="flex-1 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#d4a5a5] data-[state=active]:to-[#c49090] data-[state=active]:text-white data-[state=active]:shadow-md py-2.5">
+                <Bookmark className="h-4 w-4" />
+              </TabsTrigger>
               <TabsTrigger value="gallery" className="flex-1 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#d4a5a5] data-[state=active]:to-[#c49090] data-[state=active]:text-white data-[state=active]:shadow-md py-2.5">
                 <ImageIcon className="h-4 w-4" />
               </TabsTrigger>
@@ -1381,6 +1426,30 @@ export default function JournalPlatform() {
                   onView={() => setViewingEntry(entry)}
                 />
               ))}
+            </TabsContent>
+
+            <TabsContent value="bookmarks" className="space-y-5 animate-fade-in">
+              {bookmarkedEntries.length === 0 ? (
+                <Card className="glass-card p-12 text-center">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30 text-[#c49090] mx-auto mb-4">
+                    <Bookmark className="h-7 w-7" />
+                  </div>
+                  <h3 className="heading-sm mb-2">No bookmarks yet</h3>
+                  <p className="text-muted text-sm">Tap the bookmark icon on any entry to save it here.</p>
+                </Card>
+              ) : (
+                bookmarkedEntries.map((entry) => (
+                  <EntryCard
+                    key={entry.id}
+                    entry={entry}
+                    stories={stories}
+                    onEdit={() => { setEditingEntry(entry); setEditorOpen(true) }}
+                    onDelete={() => handleDeleteEntry(entry.id)}
+                    onToggleFavorite={() => toggleFavorite(entry.id)}
+                    onView={() => setViewingEntry(entry)}
+                  />
+                ))
+              )}
             </TabsContent>
 
             <TabsContent value="gallery" className="animate-fade-in">
