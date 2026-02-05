@@ -96,42 +96,50 @@ interface WritingGoal {
   current: number
 }
 
-// Rising Sun Logo - Balanced proportions with tapered rays
-// Half-circle sun with 5 straight tapered rays and horizon line
+// Rising Sun Logo - Perfect half-circle with playful dotted rays
+// Clean geometric sun with 5 dashed/dotted rays for a playful feel
 function LogoMark({ className = "" }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 64 40"
+      viewBox="0 0 80 50"
       className={className}
       xmlns="http://www.w3.org/2000/svg"
       aria-label="Unfiltered Logo"
     >
-      {/* 5 Tapered rays - straight lines, thicker at base */}
-      {/* Center ray */}
-      <path d="M 32 6 L 30.5 16 L 33.5 16 Z" fill="#3d3535" />
-      {/* Inner left ray - 40 degrees */}
-      <path d="M 18 10 L 22 18 L 24.5 16.5 Z" fill="#3d3535" />
-      {/* Inner right ray - 40 degrees */}
-      <path d="M 46 10 L 42 18 L 39.5 16.5 Z" fill="#3d3535" />
-      {/* Outer left ray - 75 degrees */}
-      <path d="M 6 22 L 16 22.5 L 15 25 Z" fill="#3d3535" />
-      {/* Outer right ray - 75 degrees */}
-      <path d="M 58 22 L 48 22.5 L 49 25 Z" fill="#3d3535" />
+      {/* 5 Dotted/dashed rays - playful broken lines */}
+      <g 
+        stroke="#3d3535" 
+        strokeWidth="3.5" 
+        strokeLinecap="round"
+        strokeDasharray="4 3"
+        fill="none"
+      >
+        {/* Center ray */}
+        <line x1="40" y1="4" x2="40" y2="20" />
+        {/* Inner left ray */}
+        <line x1="22" y1="10" x2="28" y2="22" />
+        {/* Inner right ray */}
+        <line x1="58" y1="10" x2="52" y2="22" />
+        {/* Outer left ray */}
+        <line x1="8" y1="26" x2="20" y2="30" />
+        {/* Outer right ray */}
+        <line x1="72" y1="26" x2="60" y2="30" />
+      </g>
       
-      {/* Half sun - smooth semicircle */}
+      {/* Perfect half-circle sun */}
       <path
-        d="M 14 32 A 18 18 0 0 1 50 32 Z"
+        d="M 16 42 A 24 24 0 0 1 64 42 Z"
         fill="#d4a5a5"
       />
       
-      {/* Horizon line - extends beyond sun */}
+      {/* Horizon line */}
       <line
-        x1="4"
-        y1="32"
-        x2="60"
-        y2="32"
+        x1="6"
+        y1="42"
+        x2="74"
+        y2="42"
         stroke="#3d3535"
-        strokeWidth="2.5"
+        strokeWidth="3"
         strokeLinecap="round"
       />
     </svg>
