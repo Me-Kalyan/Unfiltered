@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useEffect, useCallback } from "react"
 import Link from "next/link"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
@@ -243,7 +244,7 @@ function StatsCard({
           )}
         </div>
         <div className="mt-4">
-          <p className="text-3xl font-bold text-[#3d3535] tracking-tight">{value}</p>
+          <p className="text-3xl font-bold text-[#3d3535] dark:text-[#e8ddd5] tracking-tight">{value}</p>
           <p className="text-muted mt-0.5">{label}</p>
         </div>
       </CardContent>
@@ -265,7 +266,7 @@ function StreakCard({ streak, goal }: { streak: number; goal: WritingGoal }) {
               <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${isComplete ? "bg-[#e07a5f]/20" : "bg-[#e07a5f]/10"}`}>
                 <Flame className={`h-5 w-5 text-[#e07a5f] ${isComplete ? "animate-bounce-subtle" : ""}`} />
               </div>
-              <span className="text-4xl font-bold text-[#3d3535] tracking-tight">{streak}</span>
+              <span className="text-4xl font-bold text-[#3d3535] dark:text-[#e8ddd5] tracking-tight">{streak}</span>
             </div>
             <p className="text-muted">Day Streak</p>
             <p className="text-subtle mt-2">
@@ -275,18 +276,18 @@ function StreakCard({ streak, goal }: { streak: number; goal: WritingGoal }) {
           <div className="relative flex items-center justify-center">
             <ProgressRing progress={progress} size={76} />
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-lg font-bold text-[#3d3535]">{goal.current}</span>
-              <span className="text-xs text-[#8a7a7a]">/ {goal.daily}</span>
+              <span className="text-lg font-bold text-[#3d3535] dark:text-[#e8ddd5]">{goal.current}</span>
+              <span className="text-xs text-[#8a7a7a] dark:text-[#9a8a82]">/ {goal.daily}</span>
             </div>
           </div>
         </div>
-        <div className="mt-5 pt-5 border-t border-[#e8e0da]/60">
+        <div className="mt-5 pt-5 border-t border-[#e8e0da] dark:border-[#3a2f28]/60 dark:border-[#2a211d]">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-muted">
               <Target className="h-4 w-4" />
               <span>Daily Goal</span>
             </div>
-            <span className="font-semibold text-[#4a3f3f]">{goal.daily} words</span>
+            <span className="font-semibold text-[#4a3f3f] dark:text-[#d5ccc5]">{goal.daily} words</span>
           </div>
         </div>
       </CardContent>
@@ -338,7 +339,7 @@ function EntryCard({
           <div className="absolute top-3 left-3 flex gap-2">
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 backdrop-blur-sm text-[#8a7a7a] shadow-sm">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 dark:bg-[#231c19]/90 backdrop-blur-sm text-[#8a7a7a] dark:text-[#9a8a82] shadow-sm">
                   <PrivacyIcon className="h-4 w-4" />
                 </div>
               </TooltipTrigger>
@@ -349,12 +350,12 @@ function EntryCard({
           </div>
           <button
             onClick={(e) => { e.stopPropagation(); onToggleFavorite(); }}
-            className="absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 backdrop-blur-sm transition-all hover:bg-white hover:scale-110 active:scale-95 shadow-sm"
+            className="absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 dark:bg-[#231c19]/90 backdrop-blur-sm transition-all hover:bg-white hover:scale-110 active:scale-95 shadow-sm"
           >
             {entry.isFavorite ? (
               <BookmarkCheck className="h-4 w-4 text-[#d4a5a5]" />
             ) : (
-              <Bookmark className="h-4 w-4 text-[#8a7a7a]" />
+              <Bookmark className="h-4 w-4 text-[#8a7a7a] dark:text-[#9a8a82]" />
             )}
           </button>
         </div>
@@ -387,13 +388,13 @@ function EntryCard({
                 {entry.isFavorite ? (
                   <BookmarkCheck className="h-4 w-4 text-[#d4a5a5]" />
                 ) : (
-                  <Bookmark className="h-4 w-4 text-[#8a7a7a]" />
+                  <Bookmark className="h-4 w-4 text-[#8a7a7a] dark:text-[#9a8a82]" />
                 )}
               </button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button className="btn-icon h-8 w-8 opacity-0 group-hover:opacity-100">
-                    <MoreHorizontal className="h-4 w-4 text-[#8a7a7a]" />
+                    <MoreHorizontal className="h-4 w-4 text-[#8a7a7a] dark:text-[#9a8a82]" />
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
@@ -432,28 +433,28 @@ function EntryCard({
               <Badge 
                 key={tag} 
                 variant="secondary" 
-                className="bg-[#f5f0eb] text-[#8a7a7a] border-0 text-xs font-normal px-2.5 py-0.5 hover:bg-[#ebe5df] transition-colors"
+                className="bg-[#f5f0eb] text-[#8a7a7a] dark:text-[#9a8a82] border-0 text-xs font-normal px-2.5 py-0.5 hover:bg-[#ebe5df] transition-colors"
               >
                 <Hash className="h-3 w-3 mr-1 opacity-60" />
                 {tag}
               </Badge>
             ))}
             {entry.tags.length > 3 && (
-              <Badge variant="secondary" className="bg-[#f5f0eb] text-[#8a7a7a] border-0 text-xs px-2.5 py-0.5">
+              <Badge variant="secondary" className="bg-[#f5f0eb] text-[#8a7a7a] dark:text-[#9a8a82] border-0 text-xs px-2.5 py-0.5">
                 +{entry.tags.length - 3}
               </Badge>
             )}
           </div>
         )}
 
-        <div className="flex items-center justify-between pt-3 border-t border-[#e8e0da]/50">
+        <div className="flex items-center justify-between pt-3 border-t border-[#e8e0da] dark:border-[#3a2f28]/50">
           {story ? (
             <div className="flex items-center gap-2">
               <div
                 className="h-3 w-3 rounded-full ring-2 ring-white"
                 style={{ backgroundColor: story.coverColor }}
               />
-              <span className="text-xs text-[#8a7a7a] font-medium">{story.name}</span>
+              <span className="text-xs text-[#8a7a7a] dark:text-[#9a8a82] font-medium">{story.name}</span>
             </div>
           ) : (
             <span />
@@ -508,8 +509,8 @@ function MonthlyCalendar({ entries }: { entries: JournalEntry[] }) {
     days.push(
       <button
         key={day}
-        className={`relative flex h-11 items-center justify-center rounded-xl text-sm font-medium transition-all duration-200 hover:bg-[#f0ebe5] active:scale-95 ${
-          isToday ? "bg-gradient-to-br from-[#d4a5a5] to-[#c49090] text-white shadow-md" : "text-[#4a3f3f]"
+        className={`relative flex h-11 items-center justify-center rounded-xl text-sm font-medium transition-all duration-200 hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] active:scale-95 ${
+          isToday ? "bg-gradient-to-br from-[#d4a5a5] to-[#c49090] text-white shadow-md" : "text-[#4a3f3f] dark:text-[#d5ccc5]"
         } ${hasEntries && !isToday ? "font-semibold" : ""}`}
       >
         {day}
@@ -530,7 +531,7 @@ function MonthlyCalendar({ entries }: { entries: JournalEntry[] }) {
             onClick={() => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1))}
             className="btn-icon"
           >
-            <ChevronLeft className="h-5 w-5 text-[#8a7a7a]" />
+            <ChevronLeft className="h-5 w-5 text-[#8a7a7a] dark:text-[#9a8a82]" />
           </button>
           <h3 className="heading-sm">
             {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
@@ -539,7 +540,7 @@ function MonthlyCalendar({ entries }: { entries: JournalEntry[] }) {
             onClick={() => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1))}
             className="btn-icon"
           >
-            <ChevronRight className="h-5 w-5 text-[#8a7a7a]" />
+            <ChevronRight className="h-5 w-5 text-[#8a7a7a] dark:text-[#9a8a82]" />
           </button>
         </div>
         <div className="grid grid-cols-7 gap-1 mb-3">
@@ -621,7 +622,7 @@ function YearlyHeatmap({ entries }: { entries: JournalEntry[] }) {
         <div className="flex gap-1 overflow-x-auto pb-3">
           {weeks}
         </div>
-        <div className="flex items-center justify-end gap-3 mt-4 text-xs text-[#8a7a7a]">
+        <div className="flex items-center justify-end gap-3 mt-4 text-xs text-[#8a7a7a] dark:text-[#9a8a82]">
           <span>Less</span>
           <div className="flex gap-1">
             <div className="h-3.5 w-3.5 rounded-[3px] bg-[#f5f0eb]" />
@@ -712,7 +713,7 @@ function EntryEditor({
 
   return (
     <Sheet open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto bg-[#faf8f5] border-l border-[#e8e0da]">
+      <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto bg-[#faf8f5] dark:bg-[#1a1412] border-l border-[#e8e0da] dark:border-[#3a2f28]">
         <SheetHeader className="mb-8">
           <SheetTitle className="heading-lg">
             {entry ? "Edit Entry" : "New Entry"}
@@ -736,7 +737,7 @@ function EntryEditor({
                       className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
                         template === t.id
                           ? "bg-gradient-to-br from-[#d4a5a5] to-[#c49090] text-white shadow-md"
-                          : "bg-white text-[#6a5f5f] hover:bg-[#f0ebe5] border border-[#e8e0da]"
+                          : "bg-white text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] border border-[#e8e0da] dark:border-[#3a2f28]"
                       }`}
                     >
                       <Icon className="h-4 w-4" />
@@ -754,7 +755,7 @@ function EntryEditor({
               placeholder="Give your entry a title..."
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="border-0 border-b-2 border-[#e8e0da] rounded-none px-0 text-2xl font-bold bg-transparent focus-visible:ring-0 focus-visible:border-[#d4a5a5] text-[#3d3535] placeholder:text-[#c0b0b0] h-auto py-3 tracking-tight"
+              className="border-0 border-b-2 border-[#e8e0da] dark:border-[#3a2f28] rounded-none px-0 text-2xl font-bold bg-transparent focus-visible:ring-0 focus-visible:border-[#d4a5a5] text-[#3d3535] dark:text-[#e8ddd5] placeholder:text-[#c0b0b0] h-auto py-3 tracking-tight"
             />
           </div>
 
@@ -764,7 +765,7 @@ function EntryEditor({
               placeholder="Start writing your thoughts..."
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="min-h-[280px] resize-none border-[#e8e0da] bg-white/60 text-[#4a3f3f] text-base leading-relaxed rounded-xl focus-visible:ring-2 focus-visible:ring-[#d4a5a5]/50 placeholder:text-[#c0b0b0] p-5"
+              className="min-h-[280px] resize-none border-[#e8e0da] dark:border-[#3a2f28] bg-white/60 text-[#4a3f3f] dark:text-[#d5ccc5] text-base leading-relaxed rounded-xl focus-visible:ring-2 focus-visible:ring-[#d4a5a5]/50 placeholder:text-[#c0b0b0] p-5"
             />
             <div className="mt-3 flex items-center justify-between text-muted">
               <div className="flex items-center gap-4">
@@ -815,7 +816,7 @@ function EntryEditor({
             </label>
             <div className="flex flex-wrap gap-2 mb-3">
               {tags.map((tag) => (
-                <Badge key={tag} className="bg-[#f5f0eb] text-[#6a5f5f] border-0 pr-1.5 py-1 text-sm group">
+                <Badge key={tag} className="bg-[#f5f0eb] text-[#6a5f5f] dark:text-[#b0a098] border-0 pr-1.5 py-1 text-sm group">
                   <Hash className="h-3 w-3 mr-1 opacity-50" />
                   {tag}
                   <button onClick={() => setTags(tags.filter(t => t !== tag))} className="ml-1.5 hover:text-[#c49090] transition-colors">
@@ -830,7 +831,7 @@ function EntryEditor({
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
-                className="flex-1 bg-white/60 border-[#e8e0da] rounded-xl focus-visible:ring-2 focus-visible:ring-[#d4a5a5]/50"
+                className="flex-1 bg-white/60 border-[#e8e0da] dark:border-[#3a2f28] rounded-xl focus-visible:ring-2 focus-visible:ring-[#d4a5a5]/50"
               />
               <button onClick={addTag} className="btn-secondary px-4">
                 <Hash className="h-4 w-4" />
@@ -857,7 +858,7 @@ function EntryEditor({
                     className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
                       privacy === option.value
                         ? "bg-gradient-to-br from-[#d4a5a5] to-[#c49090] text-white shadow-md"
-                        : "bg-white text-[#6a5f5f] hover:bg-[#f0ebe5] border border-[#e8e0da]"
+                        : "bg-white text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] border border-[#e8e0da] dark:border-[#3a2f28]"
                     }`}
                   >
                     <Icon className="h-4 w-4" />
@@ -877,7 +878,7 @@ function EntryEditor({
               <select
                 value={selectedStory}
                 onChange={(e) => setSelectedStory(e.target.value)}
-                className="w-full rounded-xl border border-[#e8e0da] bg-white/60 px-4 py-3 text-sm text-[#4a3f3f] focus:ring-2 focus:ring-[#d4a5a5]/50 focus:border-[#d4a5a5] transition-all"
+                className="w-full rounded-xl border border-[#e8e0da] dark:border-[#3a2f28] bg-white/60 px-4 py-3 text-sm text-[#4a3f3f] dark:text-[#d5ccc5] focus:ring-2 focus:ring-[#d4a5a5]/50 focus:border-[#d4a5a5] transition-all"
               >
                 <option value="">No story</option>
                 {stories.map((story) => (
@@ -888,7 +889,7 @@ function EntryEditor({
           )}
 
           {/* Actions */}
-          <div className="flex justify-end gap-3 pt-6 border-t border-[#e8e0da]">
+          <div className="flex justify-end gap-3 pt-6 border-t border-[#e8e0da] dark:border-[#3a2f28]">
             <button onClick={onClose} className="btn-secondary">
               Cancel
             </button>
@@ -923,13 +924,13 @@ function NavItem({
       className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 transition-all duration-200 group ${
         isActive
           ? "bg-gradient-to-r from-[#d4a5a5] to-[#c49090] text-white shadow-lg shadow-[#d4a5a5]/25"
-          : "text-[#6a5f5f] hover:bg-[#f0ebe5]"
+          : "text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d]"
       }`}
     >
       <Icon className={`h-5 w-5 transition-transform duration-200 ${isActive ? "" : "group-hover:scale-110"}`} />
       <span className="font-medium flex-1 text-left">{label}</span>
       {badge !== undefined && badge > 0 && (
-        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${isActive ? "bg-white/20" : "bg-[#d4a5a5]/20 text-[#c49090]"}`}>
+        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${isActive ? "bg-white/20" : "bg-[#d4a5a5]/20 dark:bg-[#6b4f4f]/20 text-[#c49090]"}`}>
           {badge}
         </span>
       )}
@@ -1037,20 +1038,23 @@ export default function JournalPlatform() {
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen bg-[#faf8f5]">
+      <div className="min-h-screen bg-[#faf8f5] dark:bg-[#1a1412]">
         {/* Mobile Header */}
-        <header className="sticky top-0 z-40 glass border-b border-[#e8e0da]/60 lg:hidden">
+        <header className="sticky top-0 z-40 glass border-b border-[#e8e0da] dark:border-[#3a2f28]/60 dark:border-[#2a211d] lg:hidden">
           <div className="flex items-center justify-between px-4 py-3">
             <button onClick={() => setSidebarOpen(true)} className="btn-icon">
-              <Menu className="h-5 w-5 text-[#6a5f5f]" />
+              <Menu className="h-5 w-5 text-[#6a5f5f] dark:text-[#b0a098]" />
             </button>
             <div className="flex items-center gap-2.5">
               <LogoMark className="h-8 w-auto" />
-              <span className="font-script text-2xl font-semibold text-[#3d3535] leading-none">Unfiltered</span>
+              <span className="font-script text-2xl font-semibold text-[#3d3535] dark:text-[#e8ddd5] leading-none">Unfiltered</span>
             </div>
-            <Link href="/profile" className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/25 to-[#e5c5c5]/35 hover:from-[#d4a5a5]/40 hover:to-[#e5c5c5]/50">
-              <User className="h-4 w-4 text-[#c49090]" />
-            </Link>
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <Link href="/profile" className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/25 to-[#e5c5c5]/35 hover:from-[#d4a5a5]/40 hover:to-[#e5c5c5]/50 dark:from-[#6b4f4f]/30 dark:to-[#5a4040]/40 dark:hover:from-[#6b4f4f]/50 dark:hover:to-[#5a4040]/60">
+                <User className="h-4 w-4 text-[#c49090] dark:text-[#c49090]" />
+              </Link>
+            </div>
           </div>
         </header>
 
@@ -1058,14 +1062,14 @@ export default function JournalPlatform() {
         {sidebarOpen && (
           <div className="fixed inset-0 z-50 lg:hidden">
             <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
-            <aside className="absolute left-0 top-0 h-full w-80 bg-[#faf8f5] shadow-2xl animate-slide-in">
-              <div className="flex items-center justify-between p-6 border-b border-[#e8e0da]">
+            <aside className="absolute left-0 top-0 h-full w-80 bg-[#faf8f5] dark:bg-[#1a1412] shadow-2xl animate-slide-in">
+              <div className="flex items-center justify-between p-6 border-b border-[#e8e0da] dark:border-[#3a2f28]">
                 <div className="flex items-center gap-3">
                   <LogoMark className="h-9 w-auto" />
-                  <span className="font-script text-3xl font-semibold text-[#3d3535] leading-none">Unfiltered</span>
+                  <span className="font-script text-3xl font-semibold text-[#3d3535] dark:text-[#e8ddd5] leading-none">Unfiltered</span>
                 </div>
                 <button onClick={() => setSidebarOpen(false)} className="btn-icon">
-                  <X className="h-5 w-5 text-[#8a7a7a]" />
+                  <X className="h-5 w-5 text-[#8a7a7a] dark:text-[#9a8a82]" />
                 </button>
               </div>
               <nav className="flex-1 p-4 space-y-1">
@@ -1080,14 +1084,14 @@ export default function JournalPlatform() {
                   />
                 ))}
               </nav>
-              <div className="p-4 border-t border-[#e8e0da]/60">
-                <Link href="/settings" onClick={() => setSidebarOpen(false)} className="flex w-full items-center gap-3 rounded-xl px-4 py-3 hover:bg-[#f0ebe5] group">
+              <div className="p-4 border-t border-[#e8e0da] dark:border-[#3a2f28]/60 dark:border-[#2a211d]">
+                <Link href="/settings" onClick={() => setSidebarOpen(false)} className="flex w-full items-center gap-3 rounded-xl px-4 py-3 hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] group">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30">
                     <Settings className="h-5 w-5 text-[#c49090]" />
                   </div>
                   <div className="flex-1 text-left">
-                    <p className="text-sm font-semibold text-[#3d3535]">Settings</p>
-                    <p className="text-xs text-[#8a7a7a]">Preferences & account</p>
+                    <p className="text-sm font-semibold text-[#3d3535] dark:text-[#e8ddd5]">Settings</p>
+                    <p className="text-xs text-[#8a7a7a] dark:text-[#9a8a82]">Preferences & account</p>
                   </div>
                   <ChevronRight className="h-4 w-4 text-[#a08080] group-hover:translate-x-0.5" />
                 </Link>
@@ -1099,10 +1103,10 @@ export default function JournalPlatform() {
         {/* Desktop Layout */}
         <div className="hidden lg:flex">
           {/* Desktop Sidebar */}
-          <aside className="fixed left-0 top-0 h-screen w-72 border-r border-[#e8e0da]/60 bg-[#faf8f5] flex flex-col">
-            <div className="flex items-center gap-3 p-6 border-b border-[#e8e0da]/60">
+          <aside className="fixed left-0 top-0 h-screen w-72 border-r border-[#e8e0da] dark:border-[#3a2f28]/60 dark:border-[#2a211d] dark:border-[#2a211d] bg-[#faf8f5] dark:bg-[#1a1412] dark:bg-[#1a1412] flex flex-col">
+            <div className="flex items-center gap-3 p-6 border-b border-[#e8e0da] dark:border-[#3a2f28]/60 dark:border-[#2a211d]">
               <LogoMark className="h-10 w-auto" />
-              <span className="font-script text-3xl font-semibold text-[#3d3535] leading-none">Unfiltered</span>
+              <span className="font-script text-3xl font-semibold text-[#3d3535] dark:text-[#e8ddd5] leading-none">Unfiltered</span>
             </div>
             
             <nav className="flex-1 p-4 space-y-1">
@@ -1118,14 +1122,14 @@ export default function JournalPlatform() {
               ))}
             </nav>
 
-            <div className="p-4 border-t border-[#e8e0da]/60">
-              <Link href="/settings" className="flex w-full items-center gap-3 rounded-xl px-4 py-3 hover:bg-[#f0ebe5] group">
+            <div className="p-4 border-t border-[#e8e0da] dark:border-[#3a2f28]/60 dark:border-[#2a211d]">
+              <Link href="/settings" className="flex w-full items-center gap-3 rounded-xl px-4 py-3 hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] group">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30">
                   <Settings className="h-5 w-5 text-[#c49090]" />
                 </div>
                 <div className="flex-1 text-left">
-                  <p className="text-sm font-semibold text-[#3d3535]">Settings</p>
-                  <p className="text-xs text-[#8a7a7a]">Preferences & account</p>
+                  <p className="text-sm font-semibold text-[#3d3535] dark:text-[#e8ddd5]">Settings</p>
+                  <p className="text-xs text-[#8a7a7a] dark:text-[#9a8a82]">Preferences & account</p>
                 </div>
                 <ChevronRight className="h-4 w-4 text-[#a08080] group-hover:translate-x-0.5" />
               </Link>
@@ -1143,12 +1147,15 @@ export default function JournalPlatform() {
                     placeholder="Search entries, tags..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-12 bg-white/70 border-[#e8e0da] rounded-2xl h-12 text-base focus-visible:ring-2 focus-visible:ring-[#d4a5a5]/50 shadow-sm"
+                    className="pl-12 bg-white/70 dark:bg-[#231c19]/70 border-[#e8e0da] dark:border-[#3a2f28] rounded-2xl h-12 text-base focus-visible:ring-2 focus-visible:ring-[#d4a5a5]/50 shadow-sm"
                   />
                 </div>
-                <Link href="/profile" className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/25 to-[#e5c5c5]/35 hover:from-[#d4a5a5]/40 hover:to-[#e5c5c5]/50 shrink-0">
-                  <User className="h-5 w-5 text-[#c49090]" />
-                </Link>
+                <div className="flex items-center gap-2 shrink-0">
+                  <ThemeToggle className="h-10 w-10" />
+                  <Link href="/profile" className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/25 to-[#e5c5c5]/35 hover:from-[#d4a5a5]/40 hover:to-[#e5c5c5]/50 dark:from-[#6b4f4f]/30 dark:to-[#5a4040]/40 dark:hover:from-[#6b4f4f]/50 dark:hover:to-[#5a4040]/60">
+                    <User className="h-5 w-5 text-[#c49090]" />
+                  </Link>
+                </div>
               </div>
 
               {/* Tab Content */}
@@ -1377,7 +1384,7 @@ export default function JournalPlatform() {
         {/* Mobile Content */}
         <div className="lg:hidden p-4 pb-24">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="w-full bg-white/70 border border-[#e8e0da] rounded-2xl p-1.5 mb-6 shadow-sm">
+            <TabsList className="w-full bg-white/70 dark:bg-[#231c19]/70 border border-[#e8e0da] dark:border-[#3a2f28] rounded-2xl p-1.5 mb-6 shadow-sm">
               <TabsTrigger value="home" className="flex-1 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#d4a5a5] data-[state=active]:to-[#c49090] data-[state=active]:text-white data-[state=active]:shadow-md py-2.5">
                 <Home className="h-4 w-4" />
               </TabsTrigger>
@@ -1413,7 +1420,7 @@ export default function JournalPlatform() {
                 placeholder="Search entries..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-white/70 border-[#e8e0da] rounded-2xl h-12 shadow-sm"
+                className="bg-white/70 dark:bg-[#231c19]/70 border-[#e8e0da] dark:border-[#3a2f28] rounded-2xl h-12 shadow-sm"
               />
               {filteredEntries.map((entry) => (
                 <EntryCard
@@ -1495,7 +1502,7 @@ export default function JournalPlatform() {
 
         {/* Entry Viewer Sheet */}
         <Sheet open={!!viewingEntry} onOpenChange={(open) => !open && setViewingEntry(undefined)}>
-          <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto bg-[#faf8f5] border-l border-[#e8e0da]">
+          <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto bg-[#faf8f5] dark:bg-[#1a1412] border-l border-[#e8e0da] dark:border-[#3a2f28]">
             {viewingEntry && (
               <>
                 <SheetHeader className="mb-6">
@@ -1538,9 +1545,9 @@ export default function JournalPlatform() {
                 </div>
 
                 {viewingEntry.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-8 pt-6 border-t border-[#e8e0da]">
+                  <div className="flex flex-wrap gap-2 mt-8 pt-6 border-t border-[#e8e0da] dark:border-[#3a2f28]">
                     {viewingEntry.tags.map((tag) => (
-                      <Badge key={tag} className="bg-[#f5f0eb] text-[#6a5f5f] border-0 text-sm">
+                      <Badge key={tag} className="bg-[#f5f0eb] text-[#6a5f5f] dark:text-[#b0a098] border-0 text-sm">
                         <Hash className="h-3 w-3 mr-1 opacity-50" />
                         {tag}
                       </Badge>
@@ -1548,7 +1555,7 @@ export default function JournalPlatform() {
                   </div>
                 )}
 
-                <div className="flex gap-3 mt-8 pt-6 border-t border-[#e8e0da]">
+                <div className="flex gap-3 mt-8 pt-6 border-t border-[#e8e0da] dark:border-[#3a2f28]">
                   <button
                     onClick={() => { setEditingEntry(viewingEntry); setViewingEntry(undefined); setEditorOpen(true) }}
                     className="btn-secondary flex items-center gap-2 flex-1"
