@@ -713,19 +713,36 @@ function EntryEditor({
 
   return (
     <Sheet open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto bg-[#faf8f5] dark:bg-[#1a1412] border-l border-[#e8e0da] dark:border-[#3a2f28]">
-        <SheetHeader className="mb-8">
-          <SheetTitle className="heading-lg">
-            {entry ? "Edit Entry" : "New Entry"}
-          </SheetTitle>
-        </SheetHeader>
+      <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto bg-[#faf8f5] dark:bg-[#1a1412] border-l border-[#e8e0da]/80 dark:border-[#2a211d] p-0">
+        {/* Header */}
+        <div className="sticky top-0 z-10 bg-[#faf8f5]/95 dark:bg-[#1a1412]/95 backdrop-blur-md border-b border-[#e8e0da]/60 dark:border-[#2a211d] px-6 py-5 sm:px-8">
+          <div className="flex items-center justify-between">
+            <SheetHeader className="p-0 space-y-0">
+              <SheetTitle className="text-2xl font-bold tracking-tight text-[#3d3535] dark:text-[#e8ddd5]">
+                {entry ? "Edit Entry" : "New Entry"}
+              </SheetTitle>
+            </SheetHeader>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 text-xs text-[#a08080] dark:text-[#8a7570]">
+                <span className="flex items-center gap-1.5">
+                  <FileText className="h-3.5 w-3.5" />
+                  {wordCount}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Clock className="h-3.5 w-3.5" />
+                  {readingTime}m
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <div className="space-y-8">
+        <div className="px-6 py-6 sm:px-8 space-y-7">
           {/* Templates */}
           {!entry && (
             <div className="animate-fade-in">
               <label className="text-subtle block mb-3">
-                Choose Template
+                Template
               </label>
               <div className="flex gap-2 flex-wrap">
                 {templates.map((t) => {
@@ -736,8 +753,8 @@ function EntryEditor({
                       onClick={() => setTemplate(t.id)}
                       className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
                         template === t.id
-                          ? "bg-gradient-to-br from-[#d4a5a5] to-[#c49090] text-white shadow-md"
-                          : "bg-white text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] border border-[#e8e0da] dark:border-[#3a2f28]"
+                          ? "bg-gradient-to-br from-[#d4a5a5] to-[#c49090] text-white shadow-md shadow-[#d4a5a5]/20"
+                          : "bg-[#f5f0eb] dark:bg-[#231c19] text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#ede5de] dark:hover:bg-[#2a211d] border border-[#e8e0da]/60 dark:border-[#3a2f28]"
                       }`}
                     >
                       <Icon className="h-4 w-4" />
@@ -755,7 +772,7 @@ function EntryEditor({
               placeholder="Give your entry a title..."
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="border-0 border-b-2 border-[#e8e0da] dark:border-[#3a2f28] rounded-none px-0 text-2xl font-bold bg-transparent focus-visible:ring-0 focus-visible:border-[#d4a5a5] text-[#3d3535] dark:text-[#e8ddd5] placeholder:text-[#c0b0b0] h-auto py-3 tracking-tight"
+              className="border-0 border-b-2 border-[#e8e0da] dark:border-[#3a2f28] rounded-none px-0 text-2xl font-bold bg-transparent focus-visible:ring-0 focus-visible:border-[#d4a5a5] text-[#3d3535] dark:text-[#e8ddd5] placeholder:text-[#c0b0b0] dark:placeholder:text-[#5a4a42] h-auto py-3 tracking-tight"
             />
           </div>
 
@@ -765,20 +782,8 @@ function EntryEditor({
               placeholder="Start writing your thoughts..."
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="min-h-[280px] resize-none border-[#e8e0da] dark:border-[#3a2f28] bg-white/60 text-[#4a3f3f] dark:text-[#d5ccc5] text-base leading-relaxed rounded-xl focus-visible:ring-2 focus-visible:ring-[#d4a5a5]/50 placeholder:text-[#c0b0b0] p-5"
+              className="min-h-[300px] resize-none border-[#e8e0da]/80 dark:border-[#3a2f28] bg-[#f5f0eb]/50 dark:bg-[#231c19]/60 text-[#4a3f3f] dark:text-[#d5ccc5] text-base leading-relaxed rounded-2xl focus-visible:ring-2 focus-visible:ring-[#d4a5a5]/40 focus-visible:border-[#d4a5a5]/50 placeholder:text-[#c0b0b0] dark:placeholder:text-[#5a4a42] p-5"
             />
-            <div className="mt-3 flex items-center justify-between text-muted">
-              <div className="flex items-center gap-4">
-                <span className="flex items-center gap-1.5">
-                  <FileText className="h-4 w-4" />
-                  {wordCount} words
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <Clock className="h-4 w-4" />
-                  {readingTime} min read
-                </span>
-              </div>
-            </div>
           </div>
 
           {/* Photos */}
@@ -792,19 +797,19 @@ function EntryEditor({
                   <img
                     src={photo || "/placeholder.svg"}
                     alt={`Upload ${index + 1}`}
-                    className="h-24 w-24 rounded-xl object-cover ring-2 ring-white shadow-md"
+                    className="h-24 w-24 rounded-xl object-cover ring-2 ring-white/80 dark:ring-[#3a2f28] shadow-md"
                   />
                   <button
                     onClick={() => setPhotos(prev => prev.filter((_, i) => i !== index))}
-                    className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-[#3d3535] text-white opacity-0 transition-all group-hover:opacity-100 hover:bg-[#2d2525] shadow-lg"
+                    className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-[#3d3535] dark:bg-[#d4a5a5] text-white dark:text-[#1a1412] opacity-0 transition-all group-hover:opacity-100 hover:bg-[#2d2525] dark:hover:bg-[#c49090] shadow-lg"
                   >
                     <X className="h-3.5 w-3.5" />
                   </button>
                 </div>
               ))}
-              <label className="flex h-24 w-24 cursor-pointer items-center justify-center rounded-xl border-2 border-dashed border-[#d4a5a5]/40 transition-all duration-200 hover:border-[#d4a5a5] hover:bg-[#d4a5a5]/5 group">
+              <label className="flex h-24 w-24 cursor-pointer items-center justify-center rounded-xl border-2 border-dashed border-[#d4a5a5]/30 dark:border-[#6b4f4f]/40 transition-all duration-200 hover:border-[#d4a5a5] dark:hover:border-[#c49090] hover:bg-[#d4a5a5]/5 dark:hover:bg-[#6b4f4f]/10 group">
                 <input type="file" accept="image/*" multiple onChange={handlePhotoUpload} className="hidden" />
-                <Plus className="h-6 w-6 text-[#d4a5a5] transition-transform group-hover:scale-110" />
+                <Plus className="h-6 w-6 text-[#d4a5a5] dark:text-[#8a6a6a] transition-transform group-hover:scale-110" />
               </label>
             </div>
           </div>
@@ -816,7 +821,7 @@ function EntryEditor({
             </label>
             <div className="flex flex-wrap gap-2 mb-3">
               {tags.map((tag) => (
-                <Badge key={tag} className="bg-[#f5f0eb] text-[#6a5f5f] dark:text-[#b0a098] border-0 pr-1.5 py-1 text-sm group">
+                <Badge key={tag} className="bg-[#f5f0eb] dark:bg-[#2a211d] text-[#6a5f5f] dark:text-[#b0a098] border border-[#e8e0da]/60 dark:border-[#3a2f28] pr-1.5 py-1 text-sm group">
                   <Hash className="h-3 w-3 mr-1 opacity-50" />
                   {tag}
                   <button onClick={() => setTags(tags.filter(t => t !== tag))} className="ml-1.5 hover:text-[#c49090] transition-colors">
@@ -831,7 +836,7 @@ function EntryEditor({
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
-                className="flex-1 bg-white/60 border-[#e8e0da] dark:border-[#3a2f28] rounded-xl focus-visible:ring-2 focus-visible:ring-[#d4a5a5]/50"
+                className="flex-1 bg-[#f5f0eb]/50 dark:bg-[#231c19]/60 border-[#e8e0da]/80 dark:border-[#3a2f28] rounded-xl focus-visible:ring-2 focus-visible:ring-[#d4a5a5]/40 placeholder:text-[#c0b0b0] dark:placeholder:text-[#5a4a42]"
               />
               <button onClick={addTag} className="btn-secondary px-4">
                 <Hash className="h-4 w-4" />
@@ -844,7 +849,7 @@ function EntryEditor({
             <label className="text-subtle block mb-3">
               Privacy
             </label>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               {[
                 { value: "private", icon: Lock, label: "Private" },
                 { value: "shared", icon: Users, label: "Shared" },
@@ -857,8 +862,8 @@ function EntryEditor({
                     onClick={() => setPrivacy(option.value as typeof privacy)}
                     className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
                       privacy === option.value
-                        ? "bg-gradient-to-br from-[#d4a5a5] to-[#c49090] text-white shadow-md"
-                        : "bg-white text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] border border-[#e8e0da] dark:border-[#3a2f28]"
+                        ? "bg-gradient-to-br from-[#d4a5a5] to-[#c49090] text-white shadow-md shadow-[#d4a5a5]/20"
+                        : "bg-[#f5f0eb] dark:bg-[#231c19] text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#ede5de] dark:hover:bg-[#2a211d] border border-[#e8e0da]/60 dark:border-[#3a2f28]"
                     }`}
                   >
                     <Icon className="h-4 w-4" />
@@ -878,7 +883,7 @@ function EntryEditor({
               <select
                 value={selectedStory}
                 onChange={(e) => setSelectedStory(e.target.value)}
-                className="w-full rounded-xl border border-[#e8e0da] dark:border-[#3a2f28] bg-white/60 px-4 py-3 text-sm text-[#4a3f3f] dark:text-[#d5ccc5] focus:ring-2 focus:ring-[#d4a5a5]/50 focus:border-[#d4a5a5] transition-all"
+                className="w-full rounded-xl border border-[#e8e0da]/80 dark:border-[#3a2f28] bg-[#f5f0eb]/50 dark:bg-[#231c19]/60 px-4 py-3 text-sm text-[#4a3f3f] dark:text-[#d5ccc5] focus:ring-2 focus:ring-[#d4a5a5]/40 focus:border-[#d4a5a5]/50 transition-all"
               >
                 <option value="">No story</option>
                 {stories.map((story) => (
@@ -887,9 +892,11 @@ function EntryEditor({
               </select>
             </div>
           )}
+        </div>
 
-          {/* Actions */}
-          <div className="flex justify-end gap-3 pt-6 border-t border-[#e8e0da] dark:border-[#3a2f28]">
+        {/* Sticky Footer Actions */}
+        <div className="sticky bottom-0 bg-[#faf8f5]/95 dark:bg-[#1a1412]/95 backdrop-blur-md border-t border-[#e8e0da]/60 dark:border-[#2a211d] px-6 py-4 sm:px-8">
+          <div className="flex justify-end gap-3">
             <button onClick={onClose} className="btn-secondary">
               Cancel
             </button>
