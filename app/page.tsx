@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useMemo, useEffect, useCallback } from "react"
+import React, { useState, useMemo, useEffect, useCallback, useDeferredValue } from "react"
 import Link from "next/link"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
@@ -916,6 +916,7 @@ function NavItem({
   return (
     <button
       onClick={onClick}
+      aria-current={isActive ? "page" : undefined}
       className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 transition-all duration-200 group ${
         isActive
           ? "bg-gradient-to-r from-[#d4a5a5] to-[#c49090] text-white shadow-lg shadow-[#d4a5a5]/25"
@@ -938,6 +939,7 @@ export default function JournalPlatform() {
   const [activeTab, setActiveTab] = useState("home")
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
+  const deferredSearch = useDeferredValue(searchQuery)
   const [editorOpen, setEditorOpen] = useState(false)
   const [editingEntry, setEditingEntry] = useState<JournalEntry | undefined>()
   const [promptToUse, setPromptToUse] = useState("")
@@ -996,14 +998,14 @@ export default function JournalPlatform() {
   }, [])
 
   const filteredEntries = useMemo(() => {
-    if (!searchQuery) return entries
-    const query = searchQuery.toLowerCase()
+    if (!deferredSearch) return entries
+    const query = deferredSearch.toLowerCase()
     return entries.filter((entry) =>
       entry.title.toLowerCase().includes(query) ||
       entry.content.toLowerCase().includes(query) ||
       entry.tags.some(tag => tag.toLowerCase().includes(query))
     )
-  }, [entries, searchQuery])
+  }, [entries, deferredSearch])
 
   const allPhotos = useMemo(() => entries.flatMap((entry) =>
     entry.photos.map((photo, index) => ({
@@ -1037,7 +1039,7 @@ export default function JournalPlatform() {
         {/* Mobile Header */}
         <header className="sticky top-0 z-40 glass border-b border-[#e8e0da] dark:border-[#3a2f28]/60 dark:border-[#2a211d] lg:hidden">
           <div className="flex items-center justify-between px-4 py-3">
-            <button onClick={() => setSidebarOpen(true)} className="btn-icon">
+            <button onClick={() => setSidebarOpen(true)} className="btn-icon" aria-label="Open navigation menu">
               <Menu className="h-5 w-5 text-[#6a5f5f] dark:text-[#b0a098]" />
             </button>
             <div className="flex items-center gap-2.5">
@@ -1063,11 +1065,11 @@ export default function JournalPlatform() {
                   <LogoMark className="h-9 w-auto" />
                   <span className="font-script text-3xl font-semibold text-[#3d3535] dark:text-[#e8ddd5] leading-none">Unfiltered</span>
                 </div>
-                <button onClick={() => setSidebarOpen(false)} className="btn-icon">
+                <button onClick={() => setSidebarOpen(false)} className="btn-icon" aria-label="Close navigation menu">
                   <X className="h-5 w-5 text-[#8a7a7a] dark:text-[#9a8a82]" />
                 </button>
               </div>
-              <nav className="flex-1 p-4 space-y-1">
+              <nav className="flex-1 p-4 space-y-1" aria-label="Main navigation">
                 {navItems.map((item) => (
                   <NavItem
                     key={item.id}
@@ -1104,7 +1106,7 @@ export default function JournalPlatform() {
               <span className="font-script text-3xl font-semibold text-[#3d3535] dark:text-[#e8ddd5] leading-none">Unfiltered</span>
             </div>
             
-            <nav className="flex-1 p-4 space-y-1">
+            <nav className="flex-1 p-4 space-y-1" aria-label="Main navigation">
               {navItems.map((item) => (
                 <NavItem
                   key={item.id}
@@ -1139,10 +1141,11 @@ export default function JournalPlatform() {
                 <div className="relative max-w-lg flex-1">
                   <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#a08080]" />
                   <Input
-                    placeholder="Search entries, tags..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-12 bg-white/70 dark:bg-[#231c19]/70 border-[#e8e0da] dark:border-[#3a2f28] rounded-2xl h-12 text-base focus-visible:ring-2 focus-visible:ring-[#d4a5a5]/50 shadow-sm"
+placeholder="Search entries, tags..."
+  aria-label="Search journal entries"
+  value={searchQuery}
+  onChange={(e) => setSearchQuery(e.target.value)}
+  className="pl-12 bg-white/70 dark:bg-[#231c19]/70 border-[#e8e0da] dark:border-[#3a2f28] rounded-2xl h-12 text-base focus-visible:ring-2 focus-visible:ring-[#d4a5a5]/50 shadow-sm"
                   />
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
@@ -1412,10 +1415,11 @@ export default function JournalPlatform() {
 
             <TabsContent value="entries" className="space-y-5 animate-fade-in">
               <Input
-                placeholder="Search entries..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-white/70 dark:bg-[#231c19]/70 border-[#e8e0da] dark:border-[#3a2f28] rounded-2xl h-12 shadow-sm"
+placeholder="Search entries..."
+  aria-label="Search journal entries"
+  value={searchQuery}
+  onChange={(e) => setSearchQuery(e.target.value)}
+  className="bg-white/70 dark:bg-[#231c19]/70 border-[#e8e0da] dark:border-[#3a2f28] rounded-2xl h-12 shadow-sm"
               />
               {filteredEntries.map((entry) => (
                 <EntryCard

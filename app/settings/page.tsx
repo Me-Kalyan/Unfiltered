@@ -256,6 +256,41 @@ export default function SettingsPage() {
     }, 1000)
   }
 
+  const handleExport = (format: "json" | "markdown" | "pdf") => {
+    const sampleEntries = [
+      { id: "1", title: "Morning Reflection", content: "Today I woke up feeling grateful...", date: "2026-02-06", tags: ["gratitude", "morning"] },
+      { id: "2", title: "Creative Spark", content: "Had an incredible idea for a project...", date: "2026-02-05", tags: ["creativity", "ideas"] },
+    ]
+
+    let content: string
+    let filename: string
+    let mimeType: string
+
+    if (format === "json") {
+      content = JSON.stringify({ entries: sampleEntries, exportedAt: new Date().toISOString(), format: "unfiltered-v1" }, null, 2)
+      filename = `unfiltered-export-${new Date().toISOString().split("T")[0]}.json`
+      mimeType = "application/json"
+    } else if (format === "markdown") {
+      content = sampleEntries.map(e => `# ${e.title}\n\n*${e.date}*\n\nTags: ${e.tags.join(", ")}\n\n${e.content}\n\n---\n`).join("\n")
+      filename = `unfiltered-export-${new Date().toISOString().split("T")[0]}.md`
+      mimeType = "text/markdown"
+    } else {
+      content = sampleEntries.map(e => `${e.title}\n${e.date}\nTags: ${e.tags.join(", ")}\n\n${e.content}\n\n---\n`).join("\n")
+      filename = `unfiltered-export-${new Date().toISOString().split("T")[0]}.txt`
+      mimeType = "text/plain"
+    }
+
+    const blob = new Blob([content], { type: mimeType })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = filename
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }
+
   return (
     <TooltipProvider>
       <div className="min-h-screen bg-[#faf8f5] dark:bg-[#1a1412]">
@@ -266,7 +301,8 @@ export default function SettingsPage() {
               <div className="flex items-center gap-4">
 <button
   onClick={() => router.back()}
-  className="w-10 h-10 rounded-xl flex items-center justify-center text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] hover:text-[#3d3535] dark:text-[#e8ddd5]"
+  aria-label="Go back"
+  className="w-10 h-10 rounded-xl flex items-center justify-center text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] hover:text-[#3d3535] dark:hover:text-[#e8ddd5]"
   >
   <ArrowLeft className="w-5 h-5" />
   </button>
@@ -875,15 +911,15 @@ export default function SettingsPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <Button variant="outline" className="border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] bg-transparent hover:bg-[#f5f0eb] dark:bg-[#231c19] h-12">
+                    <Button variant="outline" onClick={() => handleExport("pdf")} className="border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] bg-transparent hover:bg-[#f5f0eb] dark:bg-[#231c19] h-12">
                       <Download className="w-4 h-4 mr-2" />
                       Export as PDF
                     </Button>
-                    <Button variant="outline" className="border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] bg-transparent hover:bg-[#f5f0eb] dark:bg-[#231c19] h-12">
+                    <Button variant="outline" onClick={() => handleExport("markdown")} className="border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] bg-transparent hover:bg-[#f5f0eb] dark:bg-[#231c19] h-12">
                       <Download className="w-4 h-4 mr-2" />
                       Export as Markdown
                     </Button>
-                    <Button variant="outline" className="border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] bg-transparent hover:bg-[#f5f0eb] dark:bg-[#231c19] h-12">
+                    <Button variant="outline" onClick={() => handleExport("json")} className="border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] bg-transparent hover:bg-[#f5f0eb] dark:bg-[#231c19] h-12">
                       <Download className="w-4 h-4 mr-2" />
                       Export as JSON
                     </Button>
@@ -920,22 +956,22 @@ export default function SettingsPage() {
                   <CardDescription>Irreversible actions - please be careful</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="flex items-center justify-between p-5 bg-red-50/50 rounded-xl border border-red-100">
+                  <div className="flex items-center justify-between p-5 bg-red-50/50 dark:bg-red-950/20 rounded-xl border border-red-100 dark:border-red-900/30">
                     <div>
                       <div className="font-medium text-[#3d3535] dark:text-[#e8ddd5]">Delete All Entries</div>
                       <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">Permanently delete all your journal entries</div>
                     </div>
-                    <Button variant="outline" className="border-red-200 text-red-600 hover:bg-red-50 bg-transparent">
+                    <Button variant="outline" className="border-red-200 dark:border-red-900/40 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 bg-transparent">
                       <Trash2 className="w-4 h-4 mr-2" />
                       Delete All
                     </Button>
                   </div>
-                  <div className="flex items-center justify-between p-5 bg-red-50/50 rounded-xl border border-red-100">
+                  <div className="flex items-center justify-between p-5 bg-red-50/50 dark:bg-red-950/20 rounded-xl border border-red-100 dark:border-red-900/30">
                     <div>
                       <div className="font-medium text-[#3d3535] dark:text-[#e8ddd5]">Delete Account</div>
                       <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">Permanently delete your account and all data</div>
                     </div>
-                    <Button variant="outline" className="border-red-200 text-red-600 hover:bg-red-50 bg-transparent">
+                    <Button variant="outline" className="border-red-200 dark:border-red-900/40 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 bg-transparent">
                       <Trash2 className="w-4 h-4 mr-2" />
                       Delete Account
                     </Button>

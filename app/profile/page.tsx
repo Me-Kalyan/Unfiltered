@@ -44,7 +44,7 @@ function ProgressRing({ progress, size = 80, strokeWidth = 6 }: { progress: numb
   return (
     <svg width={size} height={size} className="progress-ring">
       <circle
-        stroke="#e8e0da"
+        className="stroke-[#e8e0da] dark:stroke-[#3a2f28]"
         fill="transparent"
         strokeWidth={strokeWidth}
         r={radius}
@@ -78,10 +78,10 @@ function AchievementBadge({
 }) {
   return (
     <div className={`flex flex-col items-center gap-2 p-3 rounded-xl transition-all ${
-      unlocked ? "bg-[#d4a5a5]/10" : "bg-[#f0ebe5] opacity-50"
+      unlocked ? "bg-[#d4a5a5]/10" : "bg-[#f0ebe5] dark:bg-[#2a211d] opacity-50"
     }`}>
       <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-        unlocked ? "bg-[#d4a5a5]" : "bg-[#e8e0da]"
+        unlocked ? "bg-[#d4a5a5]" : "bg-[#e8e0da] dark:bg-[#3a2f28]"
       }`}>
         <Icon className={`w-6 h-6 ${unlocked ? "text-white" : "text-[#8a7a7a] dark:text-[#9a8a82]"}`} />
       </div>
@@ -155,7 +155,7 @@ export default function ProfilePage() {
       <header className="sticky top-0 z-50 bg-[#faf8f5] dark:bg-[#1a1412]/80 backdrop-blur-md border-b border-[#e8e0da] dark:border-[#3a2f28]/50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
-<button onClick={() => router.back()} className="flex items-center gap-2 text-[#6a5f5f] dark:text-[#b0a098] hover:text-[#3d3535] dark:text-[#e8ddd5]">
+<button onClick={() => router.back()} aria-label="Back to Journal" className="flex items-center gap-2 text-[#6a5f5f] dark:text-[#b0a098] hover:text-[#3d3535] dark:hover:text-[#e8ddd5]">
   <ArrowLeft className="w-5 h-5" />
   <span className="hidden sm:inline">Back to Journal</span>
   </button>
@@ -182,7 +182,7 @@ export default function ProfilePage() {
                 <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl bg-[#d4a5a5] border-4 border-[#faf8f5] dark:border-[#1a1412] flex items-center justify-center overflow-hidden">
                   <span className="text-4xl font-bold text-white">AC</span>
                 </div>
-                <button className="absolute bottom-2 right-2 w-8 h-8 bg-white dark:bg-[#231c19] rounded-full shadow-md flex items-center justify-center hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] transition-colors">
+                <button aria-label="Change profile photo" className="absolute bottom-2 right-2 w-8 h-8 bg-white dark:bg-[#231c19] rounded-full shadow-md flex items-center justify-center hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] transition-colors">
                   <Camera className="w-4 h-4 text-[#6a5f5f] dark:text-[#b0a098]" />
                 </button>
               </div>
@@ -226,7 +226,7 @@ export default function ProfilePage() {
                   rows={3}
                 />
               ) : (
-                <p className="text-[#4a3f3f] leading-relaxed">{profile.bio}</p>
+                <p className="text-[#4a3f3f] dark:text-[#c5bab2] leading-relaxed">{profile.bio}</p>
               )}
 
               <div className="flex flex-wrap gap-4 text-sm text-[#6a5f5f] dark:text-[#b0a098]">
@@ -264,10 +264,10 @@ export default function ProfilePage() {
 
               {/* Social Links */}
               <div className="flex gap-3">
-                <a href="#" className="w-9 h-9 rounded-lg bg-[#f0ebe5] flex items-center justify-center text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#e8e0da] transition-colors">
+                <a href="#" aria-label="Twitter profile" className="w-9 h-9 rounded-lg bg-[#f0ebe5] dark:bg-[#2a211d] flex items-center justify-center text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#e8e0da] dark:hover:bg-[#362b25] transition-colors">
                   <Twitter className="w-4 h-4" />
                 </a>
-                <a href="#" className="w-9 h-9 rounded-lg bg-[#f0ebe5] flex items-center justify-center text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#e8e0da] transition-colors">
+                <a href="#" aria-label="Instagram profile" className="w-9 h-9 rounded-lg bg-[#f0ebe5] dark:bg-[#2a211d] flex items-center justify-center text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#e8e0da] dark:hover:bg-[#362b25] transition-colors">
                   <Instagram className="w-4 h-4" />
                 </a>
               </div>
@@ -285,7 +285,7 @@ export default function ProfilePage() {
 
         {/* Tabs */}
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="bg-[#f0ebe5] p-1">
+          <TabsList className="bg-[#f0ebe5] dark:bg-[#231c19] p-1">
             <TabsTrigger value="overview" className="data-[state=active]:bg-white dark:bg-[#231c19]">Overview</TabsTrigger>
             <TabsTrigger value="achievements" className="data-[state=active]:bg-white dark:bg-[#231c19]">Achievements</TabsTrigger>
             <TabsTrigger value="activity" className="data-[state=active]:bg-white dark:bg-[#231c19]">Activity</TabsTrigger>
@@ -396,7 +396,7 @@ export default function ProfilePage() {
                   <div className="grid grid-cols-12 gap-1">
                     {Array.from({ length: 84 }).map((_, i) => {
                       const intensity = Math.random()
-                      let bgColor = "bg-[#f0ebe5]"
+                      let bgColor = "bg-[#f0ebe5] dark:bg-[#2a211d]"
                       if (intensity > 0.8) bgColor = "bg-[#d4a5a5]"
                       else if (intensity > 0.6) bgColor = "bg-[#d4a5a5]/70"
                       else if (intensity > 0.4) bgColor = "bg-[#d4a5a5]/40"
@@ -412,7 +412,7 @@ export default function ProfilePage() {
                   <div className="flex items-center justify-end gap-2 mt-2 text-xs text-[#8a7a7a] dark:text-[#9a8a82]">
                     <span>Less</span>
                     <div className="flex gap-1">
-                      <div className="w-3 h-3 rounded-sm bg-[#f0ebe5]" />
+                      <div className="w-3 h-3 rounded-sm bg-[#f0ebe5] dark:bg-[#2a211d]" />
                       <div className="w-3 h-3 rounded-sm bg-[#d4a5a5]/20" />
                       <div className="w-3 h-3 rounded-sm bg-[#d4a5a5]/40" />
                       <div className="w-3 h-3 rounded-sm bg-[#d4a5a5]/70" />
@@ -429,7 +429,7 @@ export default function ProfilePage() {
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-[#6a5f5f] dark:text-[#b0a098]">Morning (6am-12pm)</span>
                       <div className="flex items-center gap-2">
-                        <div className="w-24 h-2 bg-[#e8e0da] rounded-full overflow-hidden">
+                        <div className="w-24 h-2 bg-[#e8e0da] dark:bg-[#3a2f28] rounded-full overflow-hidden">
                           <div className="h-full bg-[#d4a5a5] rounded-full" style={{ width: "65%" }} />
                         </div>
                         <span className="text-sm text-[#3d3535] dark:text-[#e8ddd5] font-medium">65%</span>
@@ -438,7 +438,7 @@ export default function ProfilePage() {
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-[#6a5f5f] dark:text-[#b0a098]">Afternoon (12pm-6pm)</span>
                       <div className="flex items-center gap-2">
-                        <div className="w-24 h-2 bg-[#e8e0da] rounded-full overflow-hidden">
+                        <div className="w-24 h-2 bg-[#e8e0da] dark:bg-[#3a2f28] rounded-full overflow-hidden">
                           <div className="h-full bg-[#d4a5a5] rounded-full" style={{ width: "20%" }} />
                         </div>
                         <span className="text-sm text-[#3d3535] dark:text-[#e8ddd5] font-medium">20%</span>
@@ -447,7 +447,7 @@ export default function ProfilePage() {
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-[#6a5f5f] dark:text-[#b0a098]">Evening (6pm-12am)</span>
                       <div className="flex items-center gap-2">
-                        <div className="w-24 h-2 bg-[#e8e0da] rounded-full overflow-hidden">
+                        <div className="w-24 h-2 bg-[#e8e0da] dark:bg-[#3a2f28] rounded-full overflow-hidden">
                           <div className="h-full bg-[#d4a5a5] rounded-full" style={{ width: "15%" }} />
                         </div>
                         <span className="text-sm text-[#3d3535] dark:text-[#e8ddd5] font-medium">15%</span>

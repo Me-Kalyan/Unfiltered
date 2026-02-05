@@ -37,9 +37,9 @@ function FeatureCard({
   description: string 
 }) {
   return (
-    <Card className="group bg-white/60 border-[#e8e0da] dark:border-[#3a2f28]/60 hover:bg-white hover:shadow-lg hover:shadow-[#d4a5a5]/10 transition-all duration-300 hover:-translate-y-1">
+    <Card className="group bg-white/60 dark:bg-[#231c19]/60 border-[#e8e0da] dark:border-[#3a2f28]/60 hover:bg-white dark:hover:bg-[#2a211d] hover:shadow-lg hover:shadow-[#d4a5a5]/10 transition-all duration-300 hover:-translate-y-1">
       <CardContent className="p-6">
-        <div className="w-12 h-12 rounded-xl bg-[#faf5f0] flex items-center justify-center mb-4 group-hover:bg-[#d4a5a5]/10 transition-colors">
+        <div className="w-12 h-12 rounded-xl bg-[#faf5f0] dark:bg-[#2a211d] flex items-center justify-center mb-4 group-hover:bg-[#d4a5a5]/10 dark:group-hover:bg-[#6b4f4f]/15 transition-colors">
           <Icon className="w-6 h-6 text-[#d4a5a5]" />
         </div>
         <h3 className="text-lg font-semibold text-[#3d3535] dark:text-[#e8ddd5] mb-2">{title}</h3>
@@ -60,10 +60,10 @@ function TestimonialCard({
   role: string
 }) {
   return (
-    <Card className="bg-white/80 border-[#e8e0da] dark:border-[#3a2f28]/60">
+    <Card className="bg-white/80 dark:bg-[#231c19]/80 border-[#e8e0da] dark:border-[#3a2f28]/60">
       <CardContent className="p-6">
         <Quote className="w-8 h-8 text-[#d4a5a5]/40 mb-4" />
-        <p className="text-[#4a3f3f] leading-relaxed mb-4 italic">"{quote}"</p>
+        <p className="text-[#4a3f3f] dark:text-[#c5bab2] leading-relaxed mb-4 italic">"{quote}"</p>
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-[#d4a5a5]/20 flex items-center justify-center">
             <span className="text-sm font-medium text-[#d4a5a5]">{author[0]}</span>
@@ -93,7 +93,7 @@ function PricingCard({
   highlighted?: boolean
 }) {
   return (
-    <Card className={`relative ${highlighted ? 'bg-[#3d3535] text-white border-[#3d3535]' : 'bg-white border-[#e8e0da] dark:border-[#3a2f28]'}`}>
+    <Card className={`relative ${highlighted ? 'bg-[#3d3535] dark:bg-[#2d2525] text-white border-[#3d3535] dark:border-[#2d2525]' : 'bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28]'}`}>
       {highlighted && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2">
           <span className="bg-[#d4a5a5] text-white text-xs font-medium px-3 py-1 rounded-full">
@@ -112,7 +112,7 @@ function PricingCard({
           {features.map((feature, i) => (
             <li key={i} className="flex items-start gap-2">
               <Check className={`w-5 h-5 mt-0.5 flex-shrink-0 ${highlighted ? 'text-[#d4a5a5]' : 'text-[#d4a5a5]'}`} />
-              <span className={`text-sm ${highlighted ? 'text-white/90' : 'text-[#4a3f3f]'}`}>{feature}</span>
+              <span className={`text-sm ${highlighted ? 'text-white/90' : 'text-[#4a3f3f] dark:text-[#c5bab2]'}`}>{feature}</span>
             </li>
           ))}
         </ul>
@@ -148,8 +148,9 @@ export default function LandingPage() {
               <a href="#pricing" className="text-sm text-[#6a5f5f] dark:text-[#b0a098] hover:text-[#3d3535] dark:text-[#e8ddd5] transition-colors">Pricing</a>
             </div>
             <div className="flex items-center gap-3">
+              <ThemeToggle />
               <Link href="/">
-                <Button variant="ghost" className="text-[#6a5f5f] dark:text-[#b0a098] hover:text-[#3d3535] dark:text-[#e8ddd5] hover:bg-[#f0ebe5]">
+                <Button variant="ghost" className="text-[#6a5f5f] dark:text-[#b0a098] hover:text-[#3d3535] dark:hover:text-[#e8ddd5] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d]">
                   Sign In
                 </Button>
               </Link>
@@ -201,15 +202,15 @@ export default function LandingPage() {
 
           {/* Hero Image/Preview */}
           <div className="mt-16 relative animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-            <div className="bg-white rounded-2xl shadow-2xl shadow-[#d4a5a5]/10 border border-[#e8e0da] dark:border-[#3a2f28]/60 overflow-hidden">
-              <div className="bg-[#faf5f0] px-4 py-3 border-b border-[#e8e0da] dark:border-[#3a2f28]/60 flex items-center gap-2">
+            <div className="bg-white dark:bg-[#231c19] rounded-2xl shadow-2xl shadow-[#d4a5a5]/10 dark:shadow-black/20 border border-[#e8e0da] dark:border-[#3a2f28]/60 overflow-hidden">
+              <div className="bg-[#faf5f0] dark:bg-[#2a211d] px-4 py-3 border-b border-[#e8e0da] dark:border-[#3a2f28]/60 flex items-center gap-2">
                 <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-[#e8e0da]" />
-                  <div className="w-3 h-3 rounded-full bg-[#e8e0da]" />
-                  <div className="w-3 h-3 rounded-full bg-[#e8e0da]" />
+                  <div className="w-3 h-3 rounded-full bg-[#e8e0da] dark:bg-[#3a2f28]" />
+                  <div className="w-3 h-3 rounded-full bg-[#e8e0da] dark:bg-[#3a2f28]" />
+                  <div className="w-3 h-3 rounded-full bg-[#e8e0da] dark:bg-[#3a2f28]" />
                 </div>
               </div>
-              <div className="p-8 bg-gradient-to-br from-white to-[#faf8f5]">
+              <div className="p-8 bg-gradient-to-br from-white to-[#faf8f5] dark:from-[#231c19] dark:to-[#1a1412]">
                 <div className="flex gap-6">
                   {/* Sidebar Preview */}
                   <div className="hidden md:block w-48 flex-shrink-0">
@@ -239,7 +240,7 @@ export default function LandingPage() {
                         <h3 className="text-xl font-semibold text-[#3d3535] dark:text-[#e8ddd5]">Good morning</h3>
                         <p className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">What will you write today?</p>
                       </div>
-                      <div className="flex items-center gap-2 bg-[#faf5f0] px-3 py-1.5 rounded-full">
+                      <div className="flex items-center gap-2 bg-[#faf5f0] dark:bg-[#2a211d] px-3 py-1.5 rounded-full">
                         <Zap className="w-4 h-4 text-[#d4a5a5]" />
                         <span className="text-sm font-medium text-[#3d3535] dark:text-[#e8ddd5]">7 day streak</span>
                       </div>
@@ -247,7 +248,7 @@ export default function LandingPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="bg-[#faf8f5] dark:bg-[#1a1412] rounded-xl p-4 border border-[#e8e0da] dark:border-[#3a2f28]/60">
                         <div className="text-xs text-[#8a7a7a] dark:text-[#9a8a82] mb-2">Today's Prompt</div>
-                        <p className="text-sm text-[#4a3f3f]">What small moment made you smile today?</p>
+                        <p className="text-sm text-[#4a3f3f] dark:text-[#c5bab2]">What small moment made you smile today?</p>
                       </div>
                       <div className="bg-[#faf8f5] dark:bg-[#1a1412] rounded-xl p-4 border border-[#e8e0da] dark:border-[#3a2f28]/60">
                         <div className="text-xs text-[#8a7a7a] dark:text-[#9a8a82] mb-2">This Week</div>
@@ -263,7 +264,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 bg-white/50">
+      <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 bg-white/50 dark:bg-[#1e1815]/50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-4">
@@ -333,7 +334,7 @@ export default function LandingPage() {
       </section>
 
       {/* Testimonials */}
-      <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-8 bg-[#faf5f0]">
+      <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-8 bg-[#faf5f0] dark:bg-[#1e1815]">
         <div className="max-w-6xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-4">
@@ -418,7 +419,7 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#3d3535]">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#3d3535] dark:bg-[#231c19]">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
             Start your journaling journey today
