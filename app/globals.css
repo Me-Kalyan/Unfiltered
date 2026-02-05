@@ -187,6 +187,10 @@ body {
 }
 
 /* Typography */
+.font-script {
+  font-family: var(--font-caveat), cursive;
+}
+
 .heading-xl {
   @apply text-3xl md:text-4xl font-bold tracking-tight text-[#3d3535];
   letter-spacing: -0.02em;
