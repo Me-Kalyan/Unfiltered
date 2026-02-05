@@ -73,7 +73,7 @@ export function EntryCard({
     return (
       <div
         onClick={onClick}
-        className="group flex items-center gap-4 p-4 bg-white/60 hover:bg-white rounded-xl border border-[#e8e0da]/60 hover:border-[#d4a5a5]/30 hover:shadow-md transition-all cursor-pointer"
+        className="group flex items-center gap-4 p-4 bg-white/95 hover:bg-white rounded-xl border border-[#ddd4cc] hover:border-[#d4a5a5]/40 hover:shadow-md shadow-sm transition-all cursor-pointer"
       >
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
@@ -99,7 +99,7 @@ export function EntryCard({
     return (
       <Card
         onClick={onClick}
-        className="group overflow-hidden bg-white/80 border-[#e8e0da]/60 hover:border-[#d4a5a5]/30 hover:shadow-xl hover:shadow-[#d4a5a5]/10 transition-all cursor-pointer"
+        className="group overflow-hidden bg-white/95 border-[#ddd4cc] hover:border-[#d4a5a5]/40 shadow-sm hover:shadow-xl hover:shadow-[#d4a5a5]/10 transition-all cursor-pointer"
       >
         {photos.length > 0 && (
           <div className="relative h-48 bg-[#f0ebe5] overflow-hidden">
@@ -208,7 +208,7 @@ export function EntryCard({
   return (
     <Card
       onClick={onClick}
-      className="group bg-white/60 hover:bg-white border-[#e8e0da]/60 hover:border-[#d4a5a5]/30 hover:shadow-lg hover:shadow-[#d4a5a5]/5 transition-all cursor-pointer"
+      className="group bg-white/95 hover:bg-white border-[#ddd4cc] hover:border-[#d4a5a5]/40 shadow-sm hover:shadow-lg hover:shadow-[#d4a5a5]/10 transition-all cursor-pointer"
     >
       <CardContent className="p-5">
         <div className="flex items-start justify-between gap-3 mb-3">

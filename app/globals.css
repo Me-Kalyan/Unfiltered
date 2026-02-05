@@ -247,17 +247,19 @@ body {
 
 /* Glassmorphism */
 .glass {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(180, 160, 150, 0.2);
+  box-shadow: 0 1px 3px rgba(60, 50, 50, 0.05);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(180, 160, 150, 0.22);
+  box-shadow: 0 1px 4px rgba(60, 50, 50, 0.06), 0 0 0 0.5px rgba(180, 160, 150, 0.1);
 }
 
 /* Progress Ring */

@@ -192,7 +192,7 @@ function ProgressRing({
 // Refined Daily Prompt with better typography
 function DailyPrompt({ prompt, onUse }: { prompt: string; onUse: () => void }) {
   return (
-    <Card className="glass-card border-0 overflow-hidden card-interactive card-highlight">
+    <Card className="glass-card overflow-hidden card-interactive card-highlight">
       <CardContent className="p-6">
         <div className="flex items-start gap-4">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30 text-[#c49090] shrink-0">
@@ -229,7 +229,7 @@ function StatsCard({
   trend?: string
 }) {
   return (
-    <Card className="glass-card border-0 card-interactive group">
+    <Card className="glass-card card-interactive group">
       <CardContent className="p-5">
         <div className="flex items-start justify-between">
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30 text-[#c49090] transition-transform duration-300 group-hover:scale-110">
@@ -256,7 +256,7 @@ function StreakCard({ streak, goal }: { streak: number; goal: WritingGoal }) {
   const isComplete = progress >= 100
   
   return (
-    <Card className="glass-card border-0 overflow-hidden card-interactive card-highlight">
+    <Card className="glass-card overflow-hidden card-interactive card-highlight">
       <CardContent className="p-6">
         <div className="flex items-center justify-between">
           <div>
@@ -318,7 +318,7 @@ function EntryCard({
 
   return (
     <Card 
-      className={`glass-card border-0 group overflow-hidden card-interactive cursor-pointer ${className}`}
+      className={`glass-card group overflow-hidden card-interactive cursor-pointer ${className}`}
       onClick={onView}
     >
       {entry.photos.length > 0 && (
@@ -524,7 +524,7 @@ function MonthlyCalendar({ entries }: { entries: JournalEntry[] }) {
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
   return (
-    <Card className="glass-card border-0 card-interactive">
+    <Card className="glass-card card-interactive">
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-5">
           <button
@@ -608,7 +608,7 @@ function YearlyHeatmap({ entries }: { entries: JournalEntry[] }) {
   }
 
   return (
-    <Card className="glass-card border-0 card-interactive">
+    <Card className="glass-card card-interactive">
       <CardContent className="p-6">
         <div className="flex items-center gap-3 mb-5">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30 text-[#c49090]">
@@ -1162,7 +1162,7 @@ export default function JournalPlatform() {
                   {/* Prompt and Quick Entry */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     <DailyPrompt prompt={todayPrompt} onUse={usePrompt} />
-                    <Card className="glass-card border-0 flex items-center justify-center min-h-[200px] card-interactive">
+                    <Card className="glass-card flex items-center justify-center min-h-[200px] card-interactive">
                       <button
                         onClick={() => setEditorOpen(true)}
                         className="flex flex-col items-center gap-4 p-8 rounded-2xl transition-all duration-300 hover:bg-[#d4a5a5]/10 group"
@@ -1218,7 +1218,7 @@ export default function JournalPlatform() {
                   </div>
 
                   {filteredEntries.length === 0 ? (
-                    <Card className="glass-card border-0 p-16 text-center">
+                    <Card className="glass-card p-16 text-center">
                       <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30 text-[#c49090] mx-auto mb-5">
                         <BookOpen className="h-8 w-8" />
                       </div>
@@ -1252,7 +1252,7 @@ export default function JournalPlatform() {
                   <h1 className="heading-lg">Photo Gallery</h1>
                   
                   {allPhotos.length === 0 ? (
-                    <Card className="glass-card border-0 p-16 text-center">
+                    <Card className="glass-card p-16 text-center">
                       <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30 text-[#c49090] mx-auto mb-5">
                         <ImageIcon className="h-8 w-8" />
                       </div>
@@ -1305,7 +1305,7 @@ export default function JournalPlatform() {
                   </div>
 
                   {stories.length === 0 ? (
-                    <Card className="glass-card border-0 p-16 text-center">
+                    <Card className="glass-card p-16 text-center">
                       <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30 text-[#c49090] mx-auto mb-5">
                         <FolderOpen className="h-8 w-8" />
                       </div>
@@ -1315,7 +1315,7 @@ export default function JournalPlatform() {
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                       {stories.map((story) => (
-                        <Card key={story.id} className="glass-card border-0 overflow-hidden group cursor-pointer card-interactive">
+                        <Card key={story.id} className="glass-card overflow-hidden group cursor-pointer card-interactive">
                           <div className="h-28 transition-all duration-300 group-hover:h-32" style={{ backgroundColor: story.coverColor }} />
                           <CardContent className="p-5">
                             <h3 className="heading-sm group-hover:text-[#c49090] transition-colors">{story.name}</h3>
