@@ -96,39 +96,49 @@ interface WritingGoal {
   current: number
 }
 
-// Hand-drawn organic logo mark - an imperfect open circle
-// Represents rawness, openness, and the unfiltered nature of personal writing
-// Inspired by ink brush strokes and the human touch of journaling
+// Rising Sun Logo - Hand-drawn style with organic imperfect strokes
+// Half sun peeking above horizon with 5 expressive rays
+// Each ray has subtle curves to feel hand-drawn, not machine-perfect
 function LogoMark({ className = "" }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 40 40"
+      viewBox="0 0 48 32"
       className={className}
       xmlns="http://www.w3.org/2000/svg"
       aria-label="Unfiltered Logo"
     >
-      {/* 
-        An intentionally imperfect, open circle drawn with a brush-like stroke.
-        The gap represents openness - thoughts flowing freely, unfiltered.
-        The varying stroke width mimics a real pen/brush stroke.
-      */}
+      {/* 5 Hand-drawn rays - slightly curved, organic strokes */}
+      <g fill="none" stroke="#3d3535" strokeWidth="2.5" strokeLinecap="round">
+        {/* Center ray - slight wobble */}
+        <path d="M 24 3 Q 23.5 7 24 11" />
+        {/* Inner left ray */}
+        <path d="M 14 6 Q 15 9 17 12" />
+        {/* Inner right ray */}
+        <path d="M 34 6 Q 33 9 31 12" />
+        {/* Outer left ray */}
+        <path d="M 6 13 Q 8 14 11 15" />
+        {/* Outer right ray */}
+        <path d="M 42 13 Q 40 14 37 15" />
+      </g>
+      
+      {/* Half sun - solid filled, slight organic edge */}
       <path
-        d="M 32 20 
-           C 32 12 26 6 18 6 
-           C 10 6 4 12 4 20 
-           C 4 28 10 34 18 34 
-           C 24 34 28 31 30 27"
+        d="M 8 26 
+           Q 8 14 24 14 
+           Q 40 14 40 26 
+           Z"
+        fill="#d4a5a5"
+        stroke="none"
+      />
+      
+      {/* Horizon line - hand-drawn feel with slight taper */}
+      <path
+        d="M 2 26 Q 24 25.5 46 26"
         fill="none"
         stroke="#3d3535"
-        strokeWidth="3"
+        strokeWidth="2"
         strokeLinecap="round"
-        strokeLinejoin="round"
-        style={{
-          strokeDasharray: "0",
-        }}
       />
-      {/* Small ink dot - like a period, a moment captured */}
-      <circle cx="33" cy="24" r="2.5" fill="#d4a5a5" />
     </svg>
   )
 }
