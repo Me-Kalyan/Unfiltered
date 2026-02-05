@@ -950,7 +950,13 @@ export default function JournalPlatform() {
     "Who did you connect with today, and how did it feel?",
     "What are you looking forward to tomorrow?",
   ]
-  const [todayPrompt] = useState(dailyPrompts[Math.floor(Math.random() * dailyPrompts.length)])
+  // Use date-based index to avoid hydration mismatch (same prompt all day)
+  const getDailyPromptIndex = () => {
+    const today = new Date()
+    const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24))
+    return dayOfYear % dailyPrompts.length
+  }
+  const [todayPrompt] = useState(dailyPrompts[getDailyPromptIndex()])
 
   const totalWords = entries.reduce((sum, e) => sum + e.wordCount, 0)
   const totalPhotos = entries.reduce((sum, e) => sum + e.photos.length, 0)
