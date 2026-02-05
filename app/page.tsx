@@ -96,7 +96,7 @@ interface WritingGoal {
   current: number
 }
 
-// Refined Sunrise Logo with animation
+// Refined Sunrise Logo with prominent rays
 function SunriseLogo({ className = "", animated = false }: { className?: string; animated?: boolean }) {
   return (
     <svg
@@ -105,28 +105,22 @@ function SunriseLogo({ className = "", animated = false }: { className?: string;
       xmlns="http://www.w3.org/2000/svg"
       aria-label="Unfiltered Logo"
     >
-      <defs>
-        <linearGradient id="sunGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#e5c5c5" />
-          <stop offset="100%" stopColor="#c49090" />
-        </linearGradient>
-      </defs>
-      {/* Sun rays with gradient */}
-      <line x1="50" y1="8" x2="50" y2="24" stroke="url(#sunGradient)" strokeWidth="3" strokeLinecap="round" className="origin-center" />
-      <line x1="18" y1="28" x2="30" y2="38" stroke="url(#sunGradient)" strokeWidth="3" strokeLinecap="round" />
-      <line x1="82" y1="28" x2="70" y2="38" stroke="url(#sunGradient)" strokeWidth="3" strokeLinecap="round" />
-      <line x1="8" y1="55" x2="24" y2="55" stroke="url(#sunGradient)" strokeWidth="3" strokeLinecap="round" />
-      <line x1="92" y1="55" x2="76" y2="55" stroke="url(#sunGradient)" strokeWidth="3" strokeLinecap="round" />
-      {/* Half sun */}
+      {/* Sun rays - prominent and visible */}
+      <line x1="50" y1="5" x2="50" y2="22" stroke="#d4a5a5" strokeWidth="4" strokeLinecap="round" />
+      <line x1="22" y1="18" x2="32" y2="30" stroke="#d4a5a5" strokeWidth="4" strokeLinecap="round" />
+      <line x1="78" y1="18" x2="68" y2="30" stroke="#d4a5a5" strokeWidth="4" strokeLinecap="round" />
+      <line x1="8" y1="50" x2="22" y2="50" stroke="#d4a5a5" strokeWidth="4" strokeLinecap="round" />
+      <line x1="92" y1="50" x2="78" y2="50" stroke="#d4a5a5" strokeWidth="4" strokeLinecap="round" />
+      {/* Half sun arc */}
       <path
-        d="M 24 70 Q 24 38 50 38 Q 76 38 76 70"
+        d="M 22 68 Q 22 32 50 32 Q 78 32 78 68"
         fill="none"
-        stroke="currentColor"
-        strokeWidth="4"
+        stroke="#d4a5a5"
+        strokeWidth="5"
         strokeLinecap="round"
       />
       {/* Horizon line */}
-      <line x1="12" y1="70" x2="88" y2="70" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+      <line x1="10" y1="68" x2="90" y2="68" stroke="#d4a5a5" strokeWidth="4" strokeLinecap="round" />
     </svg>
   )
 }
