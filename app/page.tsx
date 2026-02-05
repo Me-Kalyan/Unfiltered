@@ -96,46 +96,39 @@ interface WritingGoal {
   current: number
 }
 
-// Original Sunrise Logo with elegant radiating rays
-function SunriseLogo({ className = "", animated = false }: { className?: string; animated?: boolean }) {
+// Hand-drawn organic logo mark - an imperfect open circle
+// Represents rawness, openness, and the unfiltered nature of personal writing
+// Inspired by ink brush strokes and the human touch of journaling
+function LogoMark({ className = "" }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 120 80"
-      className={`${className} ${animated ? "animate-float" : ""}`}
+      viewBox="0 0 40 40"
+      className={className}
       xmlns="http://www.w3.org/2000/svg"
       aria-label="Unfiltered Logo"
     >
-      <defs>
-        <linearGradient id="sunGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#d4a5a5" />
-          <stop offset="100%" stopColor="#c49090" />
-        </linearGradient>
-      </defs>
-      
-      {/* Radiating sun rays - 7 elegant rays spreading from center */}
-      <g stroke="#d4a5a5" strokeWidth="2.5" strokeLinecap="round">
-        {/* Center ray - top */}
-        <line x1="60" y1="8" x2="60" y2="28" />
-        {/* Inner diagonal rays */}
-        <line x1="38" y1="16" x2="46" y2="32" />
-        <line x1="82" y1="16" x2="74" y2="32" />
-        {/* Outer diagonal rays */}
-        <line x1="20" y1="30" x2="34" y2="40" />
-        <line x1="100" y1="30" x2="86" y2="40" />
-        {/* Horizontal rays */}
-        <line x1="8" y1="52" x2="28" y2="52" />
-        <line x1="112" y1="52" x2="92" y2="52" />
-      </g>
-      
-      {/* Sun half-circle - filled with gradient */}
+      {/* 
+        An intentionally imperfect, open circle drawn with a brush-like stroke.
+        The gap represents openness - thoughts flowing freely, unfiltered.
+        The varying stroke width mimics a real pen/brush stroke.
+      */}
       <path
-        d="M 28 60 A 32 32 0 0 1 92 60"
-        fill="url(#sunGradient)"
-        stroke="none"
+        d="M 32 20 
+           C 32 12 26 6 18 6 
+           C 10 6 4 12 4 20 
+           C 4 28 10 34 18 34 
+           C 24 34 28 31 30 27"
+        fill="none"
+        stroke="#3d3535"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{
+          strokeDasharray: "0",
+        }}
       />
-      
-      {/* Horizon line */}
-      <line x1="16" y1="60" x2="104" y2="60" stroke="#d4a5a5" strokeWidth="2.5" strokeLinecap="round" />
+      {/* Small ink dot - like a period, a moment captured */}
+      <circle cx="33" cy="24" r="2.5" fill="#d4a5a5" />
     </svg>
   )
 }
@@ -1037,7 +1030,7 @@ export default function JournalPlatform() {
               <Menu className="h-5 w-5 text-[#6a5f5f]" />
             </button>
             <div className="flex items-center gap-2.5">
-              <SunriseLogo className="h-8 w-8 text-[#d4a5a5]" />
+              <LogoMark className="h-8 w-8 text-[#d4a5a5]" />
               <span className="text-xl font-bold text-[#3d3535] tracking-tight">Unfiltered</span>
             </div>
             <div className="w-10" />
@@ -1051,7 +1044,7 @@ export default function JournalPlatform() {
             <aside className="absolute left-0 top-0 h-full w-80 bg-[#faf8f5] shadow-2xl animate-slide-in">
               <div className="flex items-center justify-between p-6 border-b border-[#e8e0da]">
                 <div className="flex items-center gap-3">
-                  <SunriseLogo className="h-9 w-9 text-[#d4a5a5]" animated />
+                  <LogoMark className="h-9 w-9 text-[#d4a5a5]" />
                   <span className="text-xl font-bold text-[#3d3535] tracking-tight">Unfiltered</span>
                 </div>
                 <button onClick={() => setSidebarOpen(false)} className="btn-icon">
@@ -1079,7 +1072,7 @@ export default function JournalPlatform() {
           {/* Desktop Sidebar */}
           <aside className="fixed left-0 top-0 h-screen w-72 border-r border-[#e8e0da]/60 bg-[#faf8f5] flex flex-col">
             <div className="flex items-center gap-3 p-6 border-b border-[#e8e0da]/60">
-              <SunriseLogo className="h-10 w-10 text-[#d4a5a5]" animated />
+              <LogoMark className="h-10 w-10 text-[#d4a5a5]" />
               <span className="text-2xl font-bold text-[#3d3535] tracking-tight">Unfiltered</span>
             </div>
             
