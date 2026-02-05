@@ -96,50 +96,45 @@ interface WritingGoal {
   current: number
 }
 
-// Rising Sun Logo - Perfect half-circle with playful dotted rays
-// Clean geometric sun with 5 dashed/dotted rays for a playful feel
+// Rising Sun Logo - Compact, refined strokes to match text weight
+// Smaller proportions aligned with title typography
 function LogoMark({ className = "" }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 80 50"
+      viewBox="0 0 32 22"
       className={className}
       xmlns="http://www.w3.org/2000/svg"
       aria-label="Unfiltered Logo"
     >
-      {/* 5 Dotted/dashed rays - playful broken lines */}
+      {/* 5 Dotted rays - thin strokes matching text weight */}
       <g 
         stroke="#3d3535" 
-        strokeWidth="3.5" 
+        strokeWidth="1.5" 
         strokeLinecap="round"
-        strokeDasharray="4 3"
+        strokeDasharray="2 1.5"
         fill="none"
       >
-        {/* Center ray */}
-        <line x1="40" y1="4" x2="40" y2="20" />
-        {/* Inner left ray */}
-        <line x1="22" y1="10" x2="28" y2="22" />
-        {/* Inner right ray */}
-        <line x1="58" y1="10" x2="52" y2="22" />
-        {/* Outer left ray */}
-        <line x1="8" y1="26" x2="20" y2="30" />
-        {/* Outer right ray */}
-        <line x1="72" y1="26" x2="60" y2="30" />
+        <line x1="16" y1="1" x2="16" y2="7" />
+        <line x1="9" y1="3" x2="11" y2="8" />
+        <line x1="23" y1="3" x2="21" y2="8" />
+        <line x1="3" y1="10" x2="7" y2="11" />
+        <line x1="29" y1="10" x2="25" y2="11" />
       </g>
       
-      {/* Perfect half-circle sun */}
+      {/* Half-circle sun */}
       <path
-        d="M 16 42 A 24 24 0 0 1 64 42 Z"
+        d="M 6 18 A 10 10 0 0 1 26 18 Z"
         fill="#d4a5a5"
       />
       
       {/* Horizon line */}
       <line
-        x1="6"
-        y1="42"
-        x2="74"
-        y2="42"
+        x1="2"
+        y1="18"
+        x2="30"
+        y2="18"
         stroke="#3d3535"
-        strokeWidth="3"
+        strokeWidth="1.5"
         strokeLinecap="round"
       />
     </svg>
@@ -1042,9 +1037,9 @@ export default function JournalPlatform() {
             <button onClick={() => setSidebarOpen(true)} className="btn-icon">
               <Menu className="h-5 w-5 text-[#6a5f5f]" />
             </button>
-            <div className="flex items-center gap-3">
-              <LogoMark className="h-10 w-auto" />
-              <span className="font-script text-2xl font-semibold text-[#3d3535]">Unfiltered</span>
+            <div className="flex items-center gap-2">
+              <LogoMark className="h-5 w-auto" />
+              <span className="font-script text-xl font-semibold text-[#3d3535] leading-none">Unfiltered</span>
             </div>
             <div className="w-10" />
           </div>
@@ -1056,9 +1051,9 @@ export default function JournalPlatform() {
             <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
             <aside className="absolute left-0 top-0 h-full w-80 bg-[#faf8f5] shadow-2xl animate-slide-in">
               <div className="flex items-center justify-between p-6 border-b border-[#e8e0da]">
-                <div className="flex items-center gap-3">
-                  <LogoMark className="h-11 w-auto" />
-                  <span className="font-script text-2xl font-semibold text-[#3d3535]">Unfiltered</span>
+                <div className="flex items-center gap-2">
+                  <LogoMark className="h-6 w-auto" />
+                  <span className="font-script text-2xl font-semibold text-[#3d3535] leading-none">Unfiltered</span>
                 </div>
                 <button onClick={() => setSidebarOpen(false)} className="btn-icon">
                   <X className="h-5 w-5 text-[#8a7a7a]" />
@@ -1084,9 +1079,9 @@ export default function JournalPlatform() {
         <div className="hidden lg:flex">
           {/* Desktop Sidebar */}
           <aside className="fixed left-0 top-0 h-screen w-72 border-r border-[#e8e0da]/60 bg-[#faf8f5] flex flex-col">
-            <div className="flex items-center gap-3 p-6 border-b border-[#e8e0da]/60">
-              <LogoMark className="h-12 w-auto" />
-              <span className="font-script text-3xl font-semibold text-[#3d3535]">Unfiltered</span>
+            <div className="flex items-center gap-2.5 p-6 border-b border-[#e8e0da]/60">
+              <LogoMark className="h-7 w-auto" />
+              <span className="font-script text-2xl font-semibold text-[#3d3535] leading-none">Unfiltered</span>
             </div>
             
             <nav className="flex-1 p-4 space-y-1">
