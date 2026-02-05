@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -239,6 +240,7 @@ function SectionHeader({ title, description }: { title: string; description?: st
 }
 
 export default function SettingsPage() {
+  const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
   const [activeTab, setActiveTab] = useState("account")
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved">("idle")
@@ -299,12 +301,12 @@ export default function SettingsPage() {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <Link 
-                  href="/" 
-                  className="w-10 h-10 rounded-xl flex items-center justify-center text-[#6a5f5f] hover:bg-[#f0ebe5] hover:text-[#3d3535] transition-all"
-                >
-                  <ArrowLeft className="w-5 h-5" />
-                </Link>
+<button
+  onClick={() => router.back()}
+  className="w-10 h-10 rounded-xl flex items-center justify-center text-[#6a5f5f] hover:bg-[#f0ebe5] hover:text-[#3d3535]"
+  >
+  <ArrowLeft className="w-5 h-5" />
+  </button>
                 <div className="flex items-center gap-2.5">
                   <LogoMark className="h-8 w-auto" />
                   <span className="font-script text-2xl font-semibold text-[#3d3535]">Unfiltered</span>

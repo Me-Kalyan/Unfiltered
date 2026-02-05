@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -158,6 +159,7 @@ function StatCard({
 }
 
 export default function ProfilePage() {
+  const router = useRouter()
   const [isEditing, setIsEditing] = useState(false)
   const [profile, setProfile] = useState({
     name: "Alexandra Chen",
@@ -190,10 +192,10 @@ export default function ProfilePage() {
       <header className="sticky top-0 z-50 bg-[#faf8f5]/80 backdrop-blur-md border-b border-[#e8e0da]/50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2 text-[#6a5f5f] hover:text-[#3d3535] transition-colors">
-              <ArrowLeft className="w-5 h-5" />
-              <span className="hidden sm:inline">Back to Journal</span>
-            </Link>
+<button onClick={() => router.back()} className="flex items-center gap-2 text-[#6a5f5f] hover:text-[#3d3535]">
+  <ArrowLeft className="w-5 h-5" />
+  <span className="hidden sm:inline">Back to Journal</span>
+  </button>
             <div className="flex items-center gap-2.5">
               <LogoMark className="h-8 w-auto" />
               <span className="font-script text-2xl font-semibold text-[#3d3535]">Unfiltered</span>

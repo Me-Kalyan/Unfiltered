@@ -12,6 +12,13 @@ body {
   }
 }
 
+/* Loading bar for route transitions */
+@keyframes loading-bar {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+  100% { transform: translateX(200%); }
+}
+
 /* Custom Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(12px); }
