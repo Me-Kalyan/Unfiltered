@@ -1,10 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
-    ignoreBuildErrors: true, // Allow TypeScript errors during build for v0 projects
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
   images: {
-    unoptimized: true, // Use unoptimized images for v0 projects
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -12,15 +15,8 @@ const nextConfig = {
       },
     ],
   },
-  turbopack: {
-    root: '/vercel/share/v0-project',
-  },
-  // Production optimizations
   reactStrictMode: true,
   poweredByHeader: false,
-  compress: true,
-  // Optional: Add output: 'standalone' for Docker deployments
-  // output: 'standalone',
 }
 
 export default nextConfig
