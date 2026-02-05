@@ -582,22 +582,20 @@ function YearlyHeatmap({ entries }: { entries: JournalEntry[] }) {
       const key = date.toISOString().split('T')[0]
       const count = entriesByDate.get(key) || 0
       
-      let intensity = "bg-[#f5f0eb]"
-      if (count >= 3) intensity = "bg-[#c49090]"
-      else if (count >= 2) intensity = "bg-[#d4a5a5]"
-      else if (count >= 1) intensity = "bg-[#e5c5c5]"
+      let intensity = "bg-[#f0ebe5] dark:bg-[#2a221e]"
+      if (count >= 3) intensity = "bg-[#c49090] dark:bg-[#a06060]"
+      else if (count >= 2) intensity = "bg-[#d4a5a5] dark:bg-[#8a5a5a]"
+      else if (count >= 1) intensity = "bg-[#e5c5c5] dark:bg-[#6b4545]"
 
       week.push(
-        <TooltipProvider key={`${w}-${d}`}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className={`h-3.5 w-3.5 rounded-[3px] ${intensity} transition-all duration-200 hover:ring-2 hover:ring-[#d4a5a5]/50 hover:scale-125 cursor-pointer`} />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p className="text-xs">{date.toLocaleDateString()}: {count} {count === 1 ? 'entry' : 'entries'}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <Tooltip key={`${w}-${d}`}>
+          <TooltipTrigger asChild>
+            <div className={`h-3.5 w-3.5 rounded-[3px] ${intensity} transition-colors duration-200 hover:ring-2 hover:ring-[#d4a5a5]/50 dark:hover:ring-[#c49090]/50 hover:scale-110 cursor-pointer`} />
+          </TooltipTrigger>
+          <TooltipContent>
+            <p className="text-xs">{date.toLocaleDateString()}: {count} {count === 1 ? 'entry' : 'entries'}</p>
+          </TooltipContent>
+        </Tooltip>
       )
     }
     weeks.push(
@@ -611,7 +609,7 @@ function YearlyHeatmap({ entries }: { entries: JournalEntry[] }) {
     <Card className="glass-card card-interactive">
       <CardContent className="p-6">
         <div className="flex items-center gap-3 mb-5">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30 text-[#c49090]">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30 dark:from-[#6b4f4f]/25 dark:to-[#5a4040]/35 text-[#c49090]">
             <Zap className="h-5 w-5" />
           </div>
           <div>
@@ -625,10 +623,10 @@ function YearlyHeatmap({ entries }: { entries: JournalEntry[] }) {
         <div className="flex items-center justify-end gap-3 mt-4 text-xs text-[#8a7a7a] dark:text-[#9a8a82]">
           <span>Less</span>
           <div className="flex gap-1">
-            <div className="h-3.5 w-3.5 rounded-[3px] bg-[#f5f0eb]" />
-            <div className="h-3.5 w-3.5 rounded-[3px] bg-[#e5c5c5]" />
-            <div className="h-3.5 w-3.5 rounded-[3px] bg-[#d4a5a5]" />
-            <div className="h-3.5 w-3.5 rounded-[3px] bg-[#c49090]" />
+            <div className="h-3.5 w-3.5 rounded-[3px] bg-[#f0ebe5] dark:bg-[#2a221e]" />
+            <div className="h-3.5 w-3.5 rounded-[3px] bg-[#e5c5c5] dark:bg-[#6b4545]" />
+            <div className="h-3.5 w-3.5 rounded-[3px] bg-[#d4a5a5] dark:bg-[#8a5a5a]" />
+            <div className="h-3.5 w-3.5 rounded-[3px] bg-[#c49090] dark:bg-[#a06060]" />
           </div>
           <span>More</span>
         </div>
