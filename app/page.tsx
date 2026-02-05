@@ -1048,26 +1048,9 @@ export default function JournalPlatform() {
               <LogoMark className="h-8 w-auto" />
               <span className="font-script text-2xl font-semibold text-[#3d3535] leading-none">Unfiltered</span>
             </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/25 to-[#e5c5c5]/35 hover:from-[#d4a5a5]/40 hover:to-[#e5c5c5]/50">
-                  <User className="h-4 w-4 text-[#c49090]" />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48 mt-1">
-                <DropdownMenuItem asChild className="py-2.5">
-                  <Link href="/settings">
-                    <Settings className="mr-2.5 h-4 w-4" />
-                    Settings
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="py-2.5 text-red-600 focus:text-red-600">
-                  <LogOut className="mr-2.5 h-4 w-4" />
-                  Sign Out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Link href="/profile" className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/25 to-[#e5c5c5]/35 hover:from-[#d4a5a5]/40 hover:to-[#e5c5c5]/50">
+              <User className="h-4 w-4 text-[#c49090]" />
+            </Link>
           </div>
         </header>
 
@@ -1085,7 +1068,7 @@ export default function JournalPlatform() {
                   <X className="h-5 w-5 text-[#8a7a7a]" />
                 </button>
               </div>
-              <nav className="p-4 space-y-1">
+              <nav className="flex-1 p-4 space-y-1">
                 {navItems.map((item) => (
                   <NavItem
                     key={item.id}
@@ -1097,6 +1080,18 @@ export default function JournalPlatform() {
                   />
                 ))}
               </nav>
+              <div className="p-4 border-t border-[#e8e0da]/60">
+                <Link href="/settings" onClick={() => setSidebarOpen(false)} className="flex w-full items-center gap-3 rounded-xl px-4 py-3 hover:bg-[#f0ebe5] group">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30">
+                    <User className="h-5 w-5 text-[#c49090]" />
+                  </div>
+                  <div className="flex-1 text-left">
+                    <p className="text-sm font-semibold text-[#3d3535]">Your Account</p>
+                    <p className="text-xs text-[#8a7a7a]">Settings & more</p>
+                  </div>
+                  <ChevronRight className="h-4 w-4 text-[#a08080] group-hover:translate-x-0.5" />
+                </Link>
+              </div>
             </aside>
           </div>
         )}
@@ -1123,6 +1118,18 @@ export default function JournalPlatform() {
               ))}
             </nav>
 
+            <div className="p-4 border-t border-[#e8e0da]/60">
+              <Link href="/settings" className="flex w-full items-center gap-3 rounded-xl px-4 py-3 hover:bg-[#f0ebe5] group">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30">
+                  <User className="h-5 w-5 text-[#c49090]" />
+                </div>
+                <div className="flex-1 text-left">
+                  <p className="text-sm font-semibold text-[#3d3535]">Your Account</p>
+                  <p className="text-xs text-[#8a7a7a]">Settings & more</p>
+                </div>
+                <ChevronRight className="h-4 w-4 text-[#a08080] group-hover:translate-x-0.5" />
+              </Link>
+            </div>
           </aside>
 
           {/* Main Content */}
@@ -1139,33 +1146,9 @@ export default function JournalPlatform() {
                     className="pl-12 bg-white/70 border-[#e8e0da] rounded-2xl h-12 text-base focus-visible:ring-2 focus-visible:ring-[#d4a5a5]/50 shadow-sm"
                   />
                 </div>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <button className="flex items-center gap-3 rounded-2xl px-4 py-2.5 hover:bg-[#f0ebe5] group shrink-0">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/25 to-[#e5c5c5]/35 group-hover:from-[#d4a5a5]/40 group-hover:to-[#e5c5c5]/50">
-                        <User className="h-5 w-5 text-[#c49090]" />
-                      </div>
-                      <div className="text-left hidden xl:block">
-                        <p className="text-sm font-semibold text-[#3d3535]">Your Account</p>
-                        <p className="text-xs text-[#8a7a7a]">Settings & more</p>
-                      </div>
-                      <ChevronRight className="h-4 w-4 text-[#a08080] group-hover:translate-x-0.5 hidden xl:block" />
-                    </button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-48 mt-1">
-                    <DropdownMenuItem asChild className="py-2.5">
-                      <Link href="/settings">
-                        <Settings className="mr-2.5 h-4 w-4" />
-                        Settings
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem className="py-2.5 text-red-600 focus:text-red-600">
-                      <LogOut className="mr-2.5 h-4 w-4" />
-                      Sign Out
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <Link href="/profile" className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/25 to-[#e5c5c5]/35 hover:from-[#d4a5a5]/40 hover:to-[#e5c5c5]/50 shrink-0">
+                  <User className="h-5 w-5 text-[#c49090]" />
+                </Link>
               </div>
 
               {/* Tab Content */}
