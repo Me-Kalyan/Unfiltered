@@ -96,31 +96,46 @@ interface WritingGoal {
   current: number
 }
 
-// Refined Sunrise Logo with prominent rays
+// Original Sunrise Logo with elegant radiating rays
 function SunriseLogo({ className = "", animated = false }: { className?: string; animated?: boolean }) {
   return (
     <svg
-      viewBox="0 0 100 100"
+      viewBox="0 0 120 80"
       className={`${className} ${animated ? "animate-float" : ""}`}
       xmlns="http://www.w3.org/2000/svg"
       aria-label="Unfiltered Logo"
     >
-      {/* Sun rays - prominent and visible */}
-      <line x1="50" y1="5" x2="50" y2="22" stroke="#d4a5a5" strokeWidth="4" strokeLinecap="round" />
-      <line x1="22" y1="18" x2="32" y2="30" stroke="#d4a5a5" strokeWidth="4" strokeLinecap="round" />
-      <line x1="78" y1="18" x2="68" y2="30" stroke="#d4a5a5" strokeWidth="4" strokeLinecap="round" />
-      <line x1="8" y1="50" x2="22" y2="50" stroke="#d4a5a5" strokeWidth="4" strokeLinecap="round" />
-      <line x1="92" y1="50" x2="78" y2="50" stroke="#d4a5a5" strokeWidth="4" strokeLinecap="round" />
-      {/* Half sun arc */}
+      <defs>
+        <linearGradient id="sunGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#d4a5a5" />
+          <stop offset="100%" stopColor="#c49090" />
+        </linearGradient>
+      </defs>
+      
+      {/* Radiating sun rays - 7 elegant rays spreading from center */}
+      <g stroke="#d4a5a5" strokeWidth="2.5" strokeLinecap="round">
+        {/* Center ray - top */}
+        <line x1="60" y1="8" x2="60" y2="28" />
+        {/* Inner diagonal rays */}
+        <line x1="38" y1="16" x2="46" y2="32" />
+        <line x1="82" y1="16" x2="74" y2="32" />
+        {/* Outer diagonal rays */}
+        <line x1="20" y1="30" x2="34" y2="40" />
+        <line x1="100" y1="30" x2="86" y2="40" />
+        {/* Horizontal rays */}
+        <line x1="8" y1="52" x2="28" y2="52" />
+        <line x1="112" y1="52" x2="92" y2="52" />
+      </g>
+      
+      {/* Sun half-circle - filled with gradient */}
       <path
-        d="M 22 68 Q 22 32 50 32 Q 78 32 78 68"
-        fill="none"
-        stroke="#d4a5a5"
-        strokeWidth="5"
-        strokeLinecap="round"
+        d="M 28 60 A 32 32 0 0 1 92 60"
+        fill="url(#sunGradient)"
+        stroke="none"
       />
+      
       {/* Horizon line */}
-      <line x1="10" y1="68" x2="90" y2="68" stroke="#d4a5a5" strokeWidth="4" strokeLinecap="round" />
+      <line x1="16" y1="60" x2="104" y2="60" stroke="#d4a5a5" strokeWidth="2.5" strokeLinecap="round" />
     </svg>
   )
 }
