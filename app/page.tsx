@@ -96,47 +96,49 @@ interface WritingGoal {
   current: number
 }
 
-// Rising Sun Logo - Hand-drawn style with organic imperfect strokes
-// Half sun peeking above horizon with 5 expressive rays
-// Each ray has subtle curves to feel hand-drawn, not machine-perfect
+// Rising Sun Logo - Balanced proportions with tapered rays
+// Clean half-circle sun with 5 straight tapered rays and horizon line
 function LogoMark({ className = "" }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 48 32"
+      viewBox="0 0 56 36"
       className={className}
       xmlns="http://www.w3.org/2000/svg"
       aria-label="Unfiltered Logo"
     >
-      {/* 5 Hand-drawn rays - slightly curved, organic strokes */}
-      <g fill="none" stroke="#3d3535" strokeWidth="2.5" strokeLinecap="round">
-        {/* Center ray - slight wobble */}
-        <path d="M 24 3 Q 23.5 7 24 11" />
-        {/* Inner left ray */}
-        <path d="M 14 6 Q 15 9 17 12" />
-        {/* Inner right ray */}
-        <path d="M 34 6 Q 33 9 31 12" />
-        {/* Outer left ray */}
-        <path d="M 6 13 Q 8 14 11 15" />
-        {/* Outer right ray */}
-        <path d="M 42 13 Q 40 14 37 15" />
+      <defs>
+        {/* Tapered ray shape - wider at base, pointed at tip */}
+        <polygon id="ray" points="0,0 2,8 -2,8" />
+      </defs>
+      
+      {/* 5 Tapered rays radiating from sun center */}
+      <g fill="#3d3535">
+        {/* Center ray */}
+        <use href="#ray" transform="translate(28, 4)" />
+        {/* Inner left ray - 35 degrees */}
+        <use href="#ray" transform="translate(28, 18) rotate(-35) translate(0, -14)" />
+        {/* Inner right ray - 35 degrees */}
+        <use href="#ray" transform="translate(28, 18) rotate(35) translate(0, -14)" />
+        {/* Outer left ray - 70 degrees */}
+        <use href="#ray" transform="translate(28, 18) rotate(-70) translate(0, -14)" />
+        {/* Outer right ray - 70 degrees */}
+        <use href="#ray" transform="translate(28, 18) rotate(70) translate(0, -14)" />
       </g>
       
-      {/* Half sun - solid filled, slight organic edge */}
+      {/* Half sun - proper semicircle using arc */}
       <path
-        d="M 8 26 
-           Q 8 14 24 14 
-           Q 40 14 40 26 
-           Z"
+        d="M 12 28 A 16 16 0 0 1 44 28 Z"
         fill="#d4a5a5"
-        stroke="none"
       />
       
-      {/* Horizon line - hand-drawn feel with slight taper */}
-      <path
-        d="M 2 26 Q 24 25.5 46 26"
-        fill="none"
+      {/* Horizon line */}
+      <line
+        x1="4"
+        y1="28"
+        x2="52"
+        y2="28"
         stroke="#3d3535"
-        strokeWidth="2"
+        strokeWidth="2.5"
         strokeLinecap="round"
       />
     </svg>
