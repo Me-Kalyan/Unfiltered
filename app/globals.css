@@ -71,22 +71,27 @@ body {
 
 .animate-fade-in {
   animation: fadeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: opacity, transform;
 }
 
 .animate-fade-in-up {
   animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: opacity, transform;
 }
 
 .animate-slide-in {
   animation: slideIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: opacity, transform;
 }
 
 .animate-slide-in-right {
   animation: slideInRight 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: opacity, transform;
 }
 
 .animate-scale-in {
   animation: scaleIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: opacity, transform;
 }
 
 .animate-pulse-ring {
@@ -162,8 +167,10 @@ body {
 
 /* Card Styles */
 .card-interactive {
-  @apply transition-all duration-300 ease-out;
+  @apply duration-300 ease-out;
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
   @apply hover:shadow-xl hover:shadow-[#d4a5a5]/10 hover:-translate-y-1;
+  will-change: transform, box-shadow;
 }
 
 .card-highlight {
@@ -271,9 +278,13 @@ body {
   transition: stroke-dashoffset 0.5s ease-out;
 }
 
-/* Smooth transitions for all interactive elements */
-button, a, input, textarea, select {
-  transition: all 0.2s ease-out;
+/* Smooth transitions for interactive elements - specific properties to avoid layout thrashing */
+button, a {
+  transition: color 0.2s ease-out, background-color 0.2s ease-out, border-color 0.2s ease-out, box-shadow 0.2s ease-out, transform 0.15s ease-out, opacity 0.2s ease-out;
+}
+
+input, textarea, select {
+  transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out;
 }
 
 /* Custom scrollbar */

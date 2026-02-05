@@ -1,9 +1,7 @@
 "use client"
 
-import { useEffect } from "react"
+import React, { useState, useMemo, useEffect, useCallback } from "react"
 import Link from "next/link"
-
-import React, { useState, useMemo } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
@@ -338,18 +336,16 @@ function EntryCard({
             </Badge>
           )}
           <div className="absolute top-3 left-3 flex gap-2">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 backdrop-blur-sm text-[#8a7a7a] shadow-sm">
-                    <PrivacyIcon className="h-4 w-4" />
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent side="bottom">
-                  <p className="capitalize">{entry.privacy}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 backdrop-blur-sm text-[#8a7a7a] shadow-sm">
+                  <PrivacyIcon className="h-4 w-4" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                <p className="capitalize">{entry.privacy}</p>
+              </TooltipContent>
+            </Tooltip>
           </div>
           <button
             onClick={(e) => { e.stopPropagation(); onToggleFavorite(); }}
@@ -971,11 +967,11 @@ export default function JournalPlatform() {
     setTodayPrompt(dailyPrompts[dayOfYear % dailyPrompts.length])
   }, [])
 
-  const totalWords = entries.reduce((sum, e) => sum + e.wordCount, 0)
-  const totalPhotos = entries.reduce((sum, e) => sum + e.photos.length, 0)
-  const favoriteCount = entries.filter(e => e.isFavorite).length
+  const totalWords = useMemo(() => entries.reduce((sum, e) => sum + e.wordCount, 0), [entries])
+  const totalPhotos = useMemo(() => entries.reduce((sum, e) => sum + e.photos.length, 0), [entries])
+  const favoriteCount = useMemo(() => entries.filter(e => e.isFavorite).length, [entries])
 
-  const handleSaveEntry = (entryData: Omit<JournalEntry, "id"> & { id?: string }) => {
+  const handleSaveEntry = useCallback((entryData: Omit<JournalEntry, "id"> & { id?: string }) => {
     if (entryData.id) {
       setEntries((prev) => prev.map((e) => (e.id === entryData.id ? { ...entryData, id: e.id } : e)))
     } else {
@@ -987,28 +983,33 @@ export default function JournalPlatform() {
     }
     setEditingEntry(undefined)
     setPromptToUse("")
-  }
+  }, [])
 
-  const handleDeleteEntry = (id: string) => {
-    const entry = entries.find((e) => e.id === id)
-    setEntries((prev) => prev.filter((e) => e.id !== id))
-    if (entry?.storyId) {
-      setStories((prev) => prev.map((s) => s.id === entry.storyId ? { ...s, entryCount: Math.max(0, s.entryCount - 1) } : s))
-    }
-  }
+  const handleDeleteEntry = useCallback((id: string) => {
+    setEntries((prev) => {
+      const entry = prev.find((e) => e.id === id)
+      if (entry?.storyId) {
+        setStories((prevStories) => prevStories.map((s) => s.id === entry.storyId ? { ...s, entryCount: Math.max(0, s.entryCount - 1) } : s))
+      }
+      return prev.filter((e) => e.id !== id)
+    })
+  }, [])
 
-  const toggleFavorite = (id: string) => {
+  const toggleFavorite = useCallback((id: string) => {
     setEntries((prev) => prev.map((e) => e.id === id ? { ...e, isFavorite: !e.isFavorite } : e))
-  }
+  }, [])
 
-  const filteredEntries = entries.filter((entry) => {
-    const matchesSearch = entry.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      entry.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      entry.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-    return matchesSearch
-  })
+  const filteredEntries = useMemo(() => {
+    if (!searchQuery) return entries
+    const query = searchQuery.toLowerCase()
+    return entries.filter((entry) =>
+      entry.title.toLowerCase().includes(query) ||
+      entry.content.toLowerCase().includes(query) ||
+      entry.tags.some(tag => tag.toLowerCase().includes(query))
+    )
+  }, [entries, searchQuery])
 
-  const allPhotos = entries.flatMap((entry) =>
+  const allPhotos = useMemo(() => entries.flatMap((entry) =>
     entry.photos.map((photo, index) => ({
       photo,
       entryId: entry.id,
@@ -1016,14 +1017,14 @@ export default function JournalPlatform() {
       date: entry.date,
       index,
     }))
-  )
+  ), [entries])
 
-  const usePrompt = () => {
+  const usePrompt = useCallback(() => {
     setPromptToUse(todayPrompt)
     setEditorOpen(true)
-  }
+  }, [todayPrompt])
 
-  const bookmarkedEntries = entries.filter(e => e.isFavorite)
+  const bookmarkedEntries = useMemo(() => entries.filter(e => e.isFavorite), [entries])
 
   const navItems = [
     { id: "home", label: "Home", icon: Home },
