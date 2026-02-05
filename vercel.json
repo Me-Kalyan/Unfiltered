@@ -1,0 +1,4 @@
+{
+  "installCommand": "rm -f node_modules && pnpm install --no-frozen-lockfile",
+  "framework": "nextjs"
+}
