@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useEffect, useCallback, useDeferredValue } from "react"
 import Link from "next/link"
+import { LogoMark } from "@/components/logo-mark"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -68,39 +69,6 @@ import {
   Zap,
   Eye,
 } from "lucide-react"
-
-// Logo Component
-function LogoMark({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 40 40"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-    >
-      <rect width="40" height="40" rx="10" fill="url(#logo-gradient)" />
-      <path
-        d="M20 12L14 18L20 24L26 18L20 12Z"
-        stroke="white"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M20 16V28"
-        stroke="white"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <defs>
-        <linearGradient id="logo-gradient" x1="0" y1="0" x2="40" y2="40">
-          <stop offset="0%" stopColor="#d4a5a5" />
-          <stop offset="100%" stopColor="#c49090" />
-        </linearGradient>
-      </defs>
-    </svg>
-  )
-}
 
 // Types
 interface JournalEntry {
