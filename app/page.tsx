@@ -1037,9 +1037,9 @@ export default function JournalPlatform() {
             <button onClick={() => setSidebarOpen(true)} className="btn-icon">
               <Menu className="h-5 w-5 text-[#6a5f5f]" />
             </button>
-            <div className="flex items-center gap-2">
-              <LogoMark className="h-5 w-auto" />
-              <span className="font-script text-xl font-semibold text-[#3d3535] leading-none">Unfiltered</span>
+            <div className="flex items-center gap-2.5">
+              <LogoMark className="h-8 w-auto" />
+              <span className="font-script text-2xl font-semibold text-[#3d3535] leading-none">Unfiltered</span>
             </div>
             <div className="w-10" />
           </div>
@@ -1051,9 +1051,9 @@ export default function JournalPlatform() {
             <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
             <aside className="absolute left-0 top-0 h-full w-80 bg-[#faf8f5] shadow-2xl animate-slide-in">
               <div className="flex items-center justify-between p-6 border-b border-[#e8e0da]">
-                <div className="flex items-center gap-2">
-                  <LogoMark className="h-6 w-auto" />
-                  <span className="font-script text-2xl font-semibold text-[#3d3535] leading-none">Unfiltered</span>
+                <div className="flex items-center gap-3">
+                  <LogoMark className="h-9 w-auto" />
+                  <span className="font-script text-3xl font-semibold text-[#3d3535] leading-none">Unfiltered</span>
                 </div>
                 <button onClick={() => setSidebarOpen(false)} className="btn-icon">
                   <X className="h-5 w-5 text-[#8a7a7a]" />
@@ -1079,9 +1079,9 @@ export default function JournalPlatform() {
         <div className="hidden lg:flex">
           {/* Desktop Sidebar */}
           <aside className="fixed left-0 top-0 h-screen w-72 border-r border-[#e8e0da]/60 bg-[#faf8f5] flex flex-col">
-            <div className="flex items-center gap-2.5 p-6 border-b border-[#e8e0da]/60">
-              <LogoMark className="h-7 w-auto" />
-              <span className="font-script text-2xl font-semibold text-[#3d3535] leading-none">Unfiltered</span>
+            <div className="flex items-center gap-3 p-6 border-b border-[#e8e0da]/60">
+              <LogoMark className="h-10 w-auto" />
+              <span className="font-script text-3xl font-semibold text-[#3d3535] leading-none">Unfiltered</span>
             </div>
             
             <nav className="flex-1 p-4 space-y-1">
