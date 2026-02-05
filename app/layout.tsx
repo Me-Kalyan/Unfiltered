@@ -8,8 +8,8 @@ const _geist = Geist({ subsets: ['latin'] })
 const _geistMono = Geist_Mono({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Unfiltered - Authentic Stories, Honest Perspectives',
-  description: 'A personal lifestyle journal sharing genuine experiences and perspectives on everyday life.',
+  title: 'Unfiltered - Your Personal Journal',
+  description: 'Write entries, upload photos, and tell your stories with Unfiltered - a personal journaling platform.',
   generator: 'v0.app',
 }
 
