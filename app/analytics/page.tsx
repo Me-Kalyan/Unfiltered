@@ -230,6 +230,7 @@ export default function AnalyticsPage() {
             <div className="flex items-center gap-4">
               <Link 
                 href="/" 
+                aria-label="Back to journal"
                 className="w-9 h-9 rounded-lg flex items-center justify-center text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] hover:text-[#3d3535] dark:text-[#e8ddd5] transition-colors"
               >
                 <ArrowLeft className="w-5 h-5" />
