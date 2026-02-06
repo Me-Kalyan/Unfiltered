@@ -134,6 +134,12 @@ export default function ProfilePage() {
     instagram: "alex.creates",
     joinedDate: "January 2024",
   })
+  const websiteHref =
+    profile.website.startsWith("http://") || profile.website.startsWith("https://")
+      ? profile.website
+      : `https://${profile.website}`
+  const twitterHandle = profile.twitter.replace(/^@/, "")
+  const instagramHandle = profile.instagram.replace(/^@/, "")
 
   const stats = {
     entries: 147,
@@ -251,7 +257,7 @@ export default function ProfilePage() {
                       className="h-8 w-40 bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28]"
                     />
                   ) : (
-                    <a href={`https://${profile.website}`} className="text-[#d4a5a5] hover:underline">
+                    <a href={websiteHref} target="_blank" rel="noreferrer" className="text-[#d4a5a5] hover:underline">
                       {profile.website}
                     </a>
                   )}
@@ -264,10 +270,10 @@ export default function ProfilePage() {
 
               {/* Social Links */}
               <div className="flex gap-3">
-                <a href="#" aria-label="Twitter profile" className="w-9 h-9 rounded-lg bg-[#f0ebe5] dark:bg-[#2a211d] flex items-center justify-center text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#e8e0da] dark:hover:bg-[#362b25] transition-colors">
+                <a href={`https://x.com/${twitterHandle}`} target="_blank" rel="noreferrer" aria-label="Twitter profile" className="w-9 h-9 rounded-lg bg-[#f0ebe5] dark:bg-[#2a211d] flex items-center justify-center text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#e8e0da] dark:hover:bg-[#362b25] transition-colors">
                   <Twitter className="w-4 h-4" />
                 </a>
-                <a href="#" aria-label="Instagram profile" className="w-9 h-9 rounded-lg bg-[#f0ebe5] dark:bg-[#2a211d] flex items-center justify-center text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#e8e0da] dark:hover:bg-[#362b25] transition-colors">
+                <a href={`https://instagram.com/${instagramHandle}`} target="_blank" rel="noreferrer" aria-label="Instagram profile" className="w-9 h-9 rounded-lg bg-[#f0ebe5] dark:bg-[#2a211d] flex items-center justify-center text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#e8e0da] dark:hover:bg-[#362b25] transition-colors">
                   <Instagram className="w-4 h-4" />
                 </a>
               </div>
