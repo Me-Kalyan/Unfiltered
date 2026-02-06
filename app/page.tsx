@@ -1003,9 +1003,9 @@ export default function JournalPlatform() {
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen bg-[#faf8f5] dark:bg-[#1a1412]">
+      <div className="min-h-screen bg-[var(--warm-bg)] dark:bg-[#120f0d]">
         {/* Mobile Header */}
-        <header className="sticky top-0 z-40 glass border-b border-[#e8e0da] dark:border-[#3a2f28]/60 dark:border-[#2a211d] lg:hidden">
+        <header className="sticky top-0 z-40 glass border-b border-[#decfbe] dark:border-[#2f251f] lg:hidden">
           <div className="flex items-center justify-between px-4 py-3">
             <button onClick={() => setSidebarOpen(true)} className="btn-icon" aria-label="Open navigation menu">
               <Menu className="h-5 w-5 text-[#6a5f5f] dark:text-[#b0a098]" />
@@ -1027,8 +1027,8 @@ export default function JournalPlatform() {
         {sidebarOpen && (
           <div className="fixed inset-0 z-50 lg:hidden">
             <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
-            <aside className="absolute left-0 top-0 h-full w-80 bg-[#faf8f5] dark:bg-[#1a1412] shadow-2xl animate-slide-in">
-              <div className="flex items-center justify-between p-6 border-b border-[#e8e0da] dark:border-[#3a2f28]">
+            <aside className="absolute left-0 top-0 h-full w-80 bg-[var(--warm-bg)] dark:bg-[#120f0d] shadow-2xl animate-slide-in">
+              <div className="flex items-center justify-between p-6 border-b border-[#decfbe] dark:border-[#2f251f]">
                 <div className="flex items-center gap-3">
                   <LogoMark className="h-9 w-auto" />
                   <span className="font-script text-3xl font-semibold text-[#3d3535] dark:text-[#e8ddd5] leading-none">Unfiltered</span>
@@ -1049,7 +1049,7 @@ export default function JournalPlatform() {
                   />
                 ))}
               </nav>
-              <div className="p-4 border-t border-[#e8e0da] dark:border-[#3a2f28]/60 dark:border-[#2a211d]">
+              <div className="p-4 border-t border-[#decfbe] dark:border-[#2f251f]">
                 <Link href="/settings" onClick={() => setSidebarOpen(false)} className="flex w-full items-center gap-3 rounded-xl px-4 py-3 hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] group">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30">
                     <Settings className="h-5 w-5 text-[#c49090]" />
@@ -1068,8 +1068,8 @@ export default function JournalPlatform() {
         {/* Desktop Layout */}
         <div className="hidden lg:flex">
           {/* Desktop Sidebar */}
-          <aside className="fixed left-0 top-0 h-screen w-72 border-r border-[#e8e0da] dark:border-[#3a2f28]/60 dark:border-[#2a211d] dark:border-[#2a211d] bg-[#faf8f5] dark:bg-[#1a1412] dark:bg-[#1a1412] flex flex-col">
-            <div className="flex items-center gap-3 p-6 border-b border-[#e8e0da] dark:border-[#3a2f28]/60 dark:border-[#2a211d]">
+          <aside className="fixed left-0 top-0 h-screen w-72 border-r border-[#decfbe] dark:border-[#2f251f] bg-[var(--warm-bg)] dark:bg-[#120f0d] flex flex-col">
+            <div className="flex items-center gap-3 p-6 border-b border-[#decfbe] dark:border-[#2f251f]">
               <LogoMark className="h-10 w-auto" />
               <span className="font-script text-3xl font-semibold text-[#3d3535] dark:text-[#e8ddd5] leading-none">Unfiltered</span>
             </div>
@@ -1087,7 +1087,7 @@ export default function JournalPlatform() {
               ))}
             </nav>
 
-            <div className="p-4 border-t border-[#e8e0da] dark:border-[#3a2f28]/60 dark:border-[#2a211d]">
+            <div className="p-4 border-t border-[#decfbe] dark:border-[#2f251f]">
               <Link href="/settings" className="flex w-full items-center gap-3 rounded-xl px-4 py-3 hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d] group">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a5a5]/20 to-[#e5c5c5]/30">
                   <Settings className="h-5 w-5 text-[#c49090]" />
@@ -1105,7 +1105,7 @@ export default function JournalPlatform() {
           <main className="flex-1 ml-72">
             <div className="max-w-6xl mx-auto p-8">
               {/* Top Bar: Search + Account */}
-              <div className="flex items-center justify-between gap-6 mb-10">
+              <div className="flex items-center justify-between gap-6 mb-8">
                 <div className="relative max-w-lg flex-1">
                   <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#a08080]" />
                   <Input
@@ -1113,7 +1113,7 @@ placeholder="Search entries, tags..."
   aria-label="Search journal entries"
   value={searchQuery}
   onChange={(e) => setSearchQuery(e.target.value)}
-  className="pl-12 bg-white/70 dark:bg-[#231c19]/70 border-[#e8e0da] dark:border-[#3a2f28] rounded-2xl h-12 text-base focus-visible:ring-2 focus-visible:ring-[#d4a5a5]/50 shadow-sm"
+  className="pl-12 bg-[var(--warm-surface)] dark:bg-[#1d1713] border-[#decfbe] dark:border-[#342a24] rounded-2xl h-12 text-base focus-visible:ring-2 focus-visible:ring-[#c67a53]/40 shadow-sm"
                   />
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
@@ -1128,32 +1128,46 @@ placeholder="Search entries, tags..."
               {activeTab === "home" && (
                 <div className="space-y-10 animate-fade-in">
                   <div>
-                    <h1 className="heading-xl mb-2">Welcome back</h1>
-                    <p className="text-muted text-lg">Ready to capture today&apos;s moments?</p>
+                    <h1 className="font-editorial text-4xl font-semibold tracking-tight text-[#2a211c] dark:text-[#efe0cf] mb-2">Welcome back</h1>
+                    <p className="text-muted text-lg">Your writing ritual is waiting. Pick up where you left off.</p>
                   </div>
 
-                  {/* Stats Row */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                  {/* Core Momentum Row */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     <StreakCard streak={streak} goal={writingGoal} />
                     <StatsCard icon={BookOpen} label="Total Entries" value={entries.length} trend={entries.length > 0 ? "+1 today" : undefined} />
                     <StatsCard icon={FileText} label="Words Written" value={totalWords.toLocaleString()} />
-                    <StatsCard icon={Heart} label="Favorites" value={favoriteCount} />
                   </div>
+
+                  <Card className="glass-card border-[#decfbe] dark:border-[#342a24]">
+                    <CardContent className="p-5 flex flex-wrap items-center justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <div className="h-10 w-10 rounded-xl bg-[#ecd9c8] dark:bg-[#30231c] flex items-center justify-center">
+                          <Heart className="h-4 w-4 text-[#c67a53]" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-[#3d3535] dark:text-[#e8ddd5]">Bookmarked Entries</p>
+                          <p className="text-xs text-[#8a7a7a] dark:text-[#9a8a82]">{favoriteCount} saved for quick revisit</p>
+                        </div>
+                      </div>
+                      <button onClick={() => setActiveTab("bookmarks")} className="btn-secondary px-4 py-2 text-sm">Open Bookmarks</button>
+                    </CardContent>
+                  </Card>
 
                   {/* Prompt and Quick Entry */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     <DailyPrompt prompt={todayPrompt} onUse={usePrompt} />
-                    <Card className="glass-card flex items-center justify-center min-h-[200px] card-interactive">
+                    <Card className="glass-card flex items-center justify-center min-h-[200px] card-interactive border-[#decfbe] dark:border-[#342a24]">
                       <button
                         onClick={() => setEditorOpen(true)}
-                        className="flex flex-col items-center gap-4 p-8 rounded-2xl transition-all duration-300 hover:bg-[#d4a5a5]/10 group"
+                        className="flex w-full flex-col items-center gap-3 p-8 rounded-2xl transition-all duration-300 hover:bg-[#d4a5a5]/10 group"
                       >
-                        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d4a5a5] to-[#c49090] text-white shadow-lg shadow-[#d4a5a5]/30 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
-                          <Plus className="h-8 w-8" />
+                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#c67a53] text-white shadow-lg shadow-[#c67a53]/25 transition-transform duration-300 group-hover:scale-105">
+                          <PenLine className="h-7 w-7" />
                         </div>
                         <div className="text-center">
-                          <span className="heading-sm block">New Entry</span>
-                          <span className="text-muted">Start writing</span>
+                          <span className="heading-sm block">Continue Writing</span>
+                          <span className="text-muted">Capture today&apos;s thoughts in one click</span>
                         </div>
                       </button>
                     </Card>
@@ -1169,8 +1183,8 @@ placeholder="Search entries, tags..."
                           <ArrowRight className="h-4 w-4" />
                         </button>
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                        {entries.slice(0, 3).map((entry, i) => (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        {entries.slice(0, 2).map((entry, i) => (
                           <EntryCard
                             key={entry.id}
                             entry={entry}
@@ -1184,6 +1198,13 @@ placeholder="Search entries, tags..."
                         ))}
                       </div>
                     </div>
+                  )}
+                  {entries.length === 0 && (
+                    <Card className="glass-card border-[#decfbe] dark:border-[#342a24] p-12 text-center">
+                      <h3 className="heading-md mb-2">Your journal is ready</h3>
+                      <p className="text-muted mb-6">Start with today&apos;s prompt or create your first free-form entry.</p>
+                      <button onClick={() => setEditorOpen(true)} className="btn-primary">Write First Entry</button>
+                    </Card>
                   )}
                 </div>
               )}
@@ -1350,7 +1371,7 @@ placeholder="Search entries, tags..."
         {/* Mobile Content */}
         <div className="lg:hidden p-4 pb-24">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="w-full bg-white/70 dark:bg-[#231c19]/70 border border-[#e8e0da] dark:border-[#3a2f28] rounded-2xl p-1.5 mb-6 shadow-sm">
+            <TabsList className="w-full bg-[var(--warm-surface)] dark:bg-[#1d1713] border border-[#decfbe] dark:border-[#342a24] rounded-2xl p-1.5 mb-6 shadow-sm">
               <TabsTrigger value="home" className="flex-1 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#d4a5a5] data-[state=active]:to-[#c49090] data-[state=active]:text-white data-[state=active]:shadow-md py-2.5">
                 <Home className="h-4 w-4" />
               </TabsTrigger>
@@ -1370,8 +1391,8 @@ placeholder="Search entries, tags..."
 
             <TabsContent value="home" className="space-y-6 animate-fade-in">
               <div>
-                <h1 className="heading-lg mb-1">Welcome back</h1>
-                <p className="text-muted">Ready to capture today&apos;s moments?</p>
+                <h1 className="font-editorial text-3xl font-semibold mb-1">Welcome back</h1>
+                <p className="text-muted">Write a little, every day.</p>
               </div>
               <StreakCard streak={streak} goal={writingGoal} />
               <DailyPrompt prompt={todayPrompt} onUse={usePrompt} />
@@ -1387,7 +1408,7 @@ placeholder="Search entries..."
   aria-label="Search journal entries"
   value={searchQuery}
   onChange={(e) => setSearchQuery(e.target.value)}
-  className="bg-white/70 dark:bg-[#231c19]/70 border-[#e8e0da] dark:border-[#3a2f28] rounded-2xl h-12 shadow-sm"
+  className="bg-[var(--warm-surface)] dark:bg-[#1d1713] border-[#decfbe] dark:border-[#342a24] rounded-2xl h-12 shadow-sm"
               />
               {filteredEntries.map((entry) => (
                 <EntryCard
@@ -1439,6 +1460,7 @@ placeholder="Search entries..."
             <TabsContent value="calendar" className="space-y-5 animate-fade-in">
               <MonthlyCalendar entries={entries} />
             </TabsContent>
+
           </Tabs>
         </div>
 
