@@ -1,459 +1,326 @@
-"use client"
-
-import React, { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent } from "@/components/ui/card"
+import type { Metadata } from "next"
+import Link from "next/link"
 import {
-  BookOpen,
+  ArrowRight,
+  BarChart3,
+  Check,
   ImageIcon,
   Lock,
-  Sparkles,
   PenLine,
-  ArrowRight,
-  Check,
-  Star,
-  Zap,
-  Shield,
-  Smartphone,
-  Users,
-  BarChart3,
-  Bell,
-  Layers,
   Quote,
+  Smartphone,
+  Sparkles,
+  WandSparkles,
 } from "lucide-react"
-import Link from "next/link"
+
 import { LogoMark } from "@/components/logo-mark"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
 
-// Feature Card Component
-function FeatureCard({ 
-  icon: Icon, 
-  title, 
-  description 
-}: { 
-  icon: React.ElementType
-  title: string
-  description: string 
-}) {
-  return (
-    <Card className="group bg-white/60 dark:bg-[#231c19]/60 border-[#e8e0da] dark:border-[#3a2f28]/60 hover:bg-white dark:hover:bg-[#2a211d] hover:shadow-lg hover:shadow-[#d4a5a5]/10 transition-all duration-300 hover:-translate-y-1">
-      <CardContent className="p-6">
-        <div className="w-12 h-12 rounded-xl bg-[#faf5f0] dark:bg-[#2a211d] flex items-center justify-center mb-4 group-hover:bg-[#d4a5a5]/10 dark:group-hover:bg-[#6b4f4f]/15 transition-colors">
-          <Icon className="w-6 h-6 text-[#d4a5a5]" />
-        </div>
-        <h3 className="text-lg font-semibold text-[#3d3535] dark:text-[#e8ddd5] mb-2">{title}</h3>
-        <p className="text-[#6a5f5f] dark:text-[#b0a098] text-sm leading-relaxed">{description}</p>
-      </CardContent>
-    </Card>
-  )
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
+
+export const metadata: Metadata = {
+  title: "Landing",
+  description:
+    "Unfiltered is a private journaling app for daily reflection, writing streaks, and memorable stories.",
+  alternates: {
+    canonical: "/landing",
+  },
+  openGraph: {
+    title: "Unfiltered - Private Journaling, Reimagined",
+    description:
+      "Capture thoughts, photos, and stories in a calm writing space built for consistency.",
+    url: `${siteUrl}/landing`,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Unfiltered - Private Journaling, Reimagined",
+    description:
+      "Capture thoughts, photos, and stories in a calm writing space built for consistency.",
+  },
 }
 
-// Testimonial Card
-function TestimonialCard({
-  quote,
-  author,
-  role,
-}: {
-  quote: string
-  author: string
-  role: string
-}) {
-  return (
-    <Card className="bg-white/80 dark:bg-[#231c19]/80 border-[#e8e0da] dark:border-[#3a2f28]/60">
-      <CardContent className="p-6">
-        <Quote className="w-8 h-8 text-[#d4a5a5]/40 mb-4" />
-        <p className="text-[#4a3f3f] dark:text-[#c5bab2] leading-relaxed mb-4 italic">"{quote}"</p>
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-[#d4a5a5]/20 flex items-center justify-center">
-            <span className="text-sm font-medium text-[#d4a5a5]">{author[0]}</span>
-          </div>
-          <div>
-            <p className="text-sm font-medium text-[#3d3535] dark:text-[#e8ddd5]">{author}</p>
-            <p className="text-xs text-[#8a7a7a] dark:text-[#9a8a82]">{role}</p>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  )
-}
+const features = [
+  {
+    title: "Focused Writing",
+    description: "A distraction-light editor with autosave and clear typography.",
+    icon: PenLine,
+  },
+  {
+    title: "Memory With Photos",
+    description: "Attach moments to entries and build visual story threads over time.",
+    icon: ImageIcon,
+  },
+  {
+    title: "Private by Default",
+    description: "Your journal is protected with clear privacy settings and secure storage.",
+    icon: Lock,
+  },
+  {
+    title: "Habit Momentum",
+    description: "Track streaks, writing goals, and personal progress without pressure.",
+    icon: BarChart3,
+  },
+  {
+    title: "Cross-Device",
+    description: "Write from desktop or mobile with a clean responsive experience.",
+    icon: Smartphone,
+  },
+  {
+    title: "Prompted Reflection",
+    description: "Use gentle prompts when you need ideas and start writing faster.",
+    icon: WandSparkles,
+  },
+]
 
-// Pricing Card
-function PricingCard({
-  name,
-  price,
-  description,
-  features,
-  highlighted = false,
-}: {
-  name: string
-  price: string
-  description: string
-  features: string[]
-  highlighted?: boolean
-}) {
-  return (
-    <Card className={`relative ${highlighted ? 'bg-[#3d3535] dark:bg-[#2d2525] text-white border-[#3d3535] dark:border-[#2d2525]' : 'bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28]'}`}>
-      {highlighted && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-          <span className="bg-[#d4a5a5] text-white text-xs font-medium px-3 py-1 rounded-full">
-            Most Popular
-          </span>
-        </div>
-      )}
-      <CardContent className="p-6">
-        <h3 className={`text-xl font-bold mb-1 ${highlighted ? 'text-white' : 'text-[#3d3535] dark:text-[#e8ddd5]'}`}>{name}</h3>
-        <p className={`text-sm mb-4 ${highlighted ? 'text-white/70' : 'text-[#8a7a7a] dark:text-[#9a8a82]'}`}>{description}</p>
-        <div className="mb-6">
-          <span className={`text-4xl font-bold ${highlighted ? 'text-white' : 'text-[#3d3535] dark:text-[#e8ddd5]'}`}>{price}</span>
-          {price !== "Free" && <span className={`text-sm ${highlighted ? 'text-white/70' : 'text-[#8a7a7a] dark:text-[#9a8a82]'}`}>/month</span>}
-        </div>
-        <ul className="space-y-3 mb-6">
-          {features.map((feature, i) => (
-            <li key={i} className="flex items-start gap-2">
-              <Check className={`w-5 h-5 mt-0.5 flex-shrink-0 ${highlighted ? 'text-[#d4a5a5]' : 'text-[#d4a5a5]'}`} />
-              <span className={`text-sm ${highlighted ? 'text-white/90' : 'text-[#4a3f3f] dark:text-[#c5bab2]'}`}>{feature}</span>
-            </li>
-          ))}
-        </ul>
-        <Button 
-          className={`w-full ${highlighted 
-            ? 'bg-[#d4a5a5] hover:bg-[#c49090] text-white' 
-            : 'bg-[#3d3535] hover:bg-[#2d2525] text-white'
-          }`}
-        >
-          Get Started
-        </Button>
-      </CardContent>
-    </Card>
-  )
-}
+const testimonials = [
+  {
+    quote:
+      "It made journaling finally stick for me. The flow is calm and fast, so I write every day.",
+    name: "Riya P.",
+    role: "Product Designer",
+  },
+  {
+    quote:
+      "I can capture rough thoughts instantly and polish them later. The mobile layout is excellent.",
+    name: "Marco L.",
+    role: "Founder",
+  },
+  {
+    quote:
+      "The streaks and analytics are useful, but the app still feels personal, not gamified.",
+    name: "Anika T.",
+    role: "Teacher",
+  },
+]
+
+const stats = [
+  { label: "Active writers", value: "50K+" },
+  { label: "Entries written", value: "2M+" },
+  { label: "Avg. weekly streak", value: "5.8 days" },
+  { label: "App satisfaction", value: "4.9/5" },
+]
 
 export default function LandingPage() {
-  const [email, setEmail] = useState("")
+  const year = new Date().getFullYear()
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "Unfiltered",
+    applicationCategory: "LifestyleApplication",
+    url: `${siteUrl}/landing`,
+    operatingSystem: "Web, iOS, Android",
+    description:
+      "Unfiltered is a private journaling app for daily reflection, writing streaks, and memorable stories.",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+  }
 
   return (
-    <div className="min-h-screen bg-[#faf8f5] dark:bg-[#1a1412]">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#faf8f5] dark:bg-[#1a1412]/80 backdrop-blur-md border-b border-[#e8e0da] dark:border-[#3a2f28]/50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-2.5">
-              <LogoMark className="h-8 w-auto" />
-              <span className="font-script text-2xl font-semibold text-[#3d3535] dark:text-[#e8ddd5]">Unfiltered</span>
-            </div>
-            <div className="hidden md:flex items-center gap-8">
-              <a href="#features" className="text-sm text-[#6a5f5f] dark:text-[#b0a098] hover:text-[#3d3535] dark:text-[#e8ddd5] transition-colors">Features</a>
-              <a href="#testimonials" className="text-sm text-[#6a5f5f] dark:text-[#b0a098] hover:text-[#3d3535] dark:text-[#e8ddd5] transition-colors">Testimonials</a>
-              <a href="#pricing" className="text-sm text-[#6a5f5f] dark:text-[#b0a098] hover:text-[#3d3535] dark:text-[#e8ddd5] transition-colors">Pricing</a>
-            </div>
-            <div className="flex items-center gap-3">
-              <ThemeToggle />
-              <Link href="/">
-                <Button variant="ghost" className="text-[#6a5f5f] dark:text-[#b0a098] hover:text-[#3d3535] dark:hover:text-[#e8ddd5] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d]">
-                  Sign In
-                </Button>
-              </Link>
-              <Link href="/">
-                <Button className="bg-[#3d3535] hover:bg-[#2d2525] text-white">
-                  Start Writing
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-[#f7f4ed] text-[#1f1a17] dark:bg-[#130f0d] dark:text-[#f1e6d8]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-[#d4a5a5]/10 text-[#c49090] px-4 py-2 rounded-full text-sm font-medium mb-6 animate-fade-in">
-              <Sparkles className="w-4 h-4" />
-              Your personal space for authentic expression
-            </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-6 leading-tight animate-fade-in stagger-1" style={{ animationDelay: '0.1s' }}>
-              Write freely.<br />
-              <span className="text-[#d4a5a5]">Live authentically.</span>
-            </h1>
-            <p className="text-lg sm:text-xl text-[#6a5f5f] dark:text-[#b0a098] mb-8 leading-relaxed animate-fade-in stagger-2" style={{ animationDelay: '0.2s' }}>
-              Unfiltered is a beautiful, private journal where you can capture your thoughts, 
-              photos, and stories without judgment. Start your journey of self-discovery today.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in stagger-3" style={{ animationDelay: '0.3s' }}>
-              <div className="flex w-full sm:w-auto">
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="rounded-r-none border-r-0 bg-white border-[#e8e0da] dark:border-[#3a2f28] focus:border-[#d4a5a5] h-12 w-full sm:w-72"
-                />
-                <Button className="rounded-l-none bg-[#d4a5a5] hover:bg-[#c49090] text-white h-12 px-6">
-                  Get Started Free
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </div>
-            </div>
-            <p className="text-sm text-[#8a7a7a] dark:text-[#9a8a82] mt-4 animate-fade-in stagger-4" style={{ animationDelay: '0.4s' }}>
-              Free forever. No credit card required.
-            </p>
-          </div>
-
-          {/* Hero Image/Preview */}
-          <div className="mt-16 relative animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-            <div className="bg-white dark:bg-[#231c19] rounded-2xl shadow-2xl shadow-[#d4a5a5]/10 dark:shadow-black/20 border border-[#e8e0da] dark:border-[#3a2f28]/60 overflow-hidden">
-              <div className="bg-[#faf5f0] dark:bg-[#2a211d] px-4 py-3 border-b border-[#e8e0da] dark:border-[#3a2f28]/60 flex items-center gap-2">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-[#e8e0da] dark:bg-[#3a2f28]" />
-                  <div className="w-3 h-3 rounded-full bg-[#e8e0da] dark:bg-[#3a2f28]" />
-                  <div className="w-3 h-3 rounded-full bg-[#e8e0da] dark:bg-[#3a2f28]" />
-                </div>
-              </div>
-              <div className="p-8 bg-gradient-to-br from-white to-[#faf8f5] dark:from-[#231c19] dark:to-[#1a1412]">
-                <div className="flex gap-6">
-                  {/* Sidebar Preview */}
-                  <div className="hidden md:block w-48 flex-shrink-0">
-                    <div className="flex items-center gap-2 mb-6">
-                      <LogoMark className="h-6 w-auto" />
-                      <span className="font-script text-lg font-semibold text-[#3d3535] dark:text-[#e8ddd5]">Unfiltered</span>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 bg-[#d4a5a5]/10 text-[#d4a5a5] px-3 py-2 rounded-lg text-sm">
-                        <PenLine className="w-4 h-4" />
-                        <span>Entries</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-[#8a7a7a] dark:text-[#9a8a82] px-3 py-2 text-sm">
-                        <ImageIcon className="w-4 h-4" />
-                        <span>Photos</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-[#8a7a7a] dark:text-[#9a8a82] px-3 py-2 text-sm">
-                        <Layers className="w-4 h-4" />
-                        <span>Stories</span>
-                      </div>
-                    </div>
-                  </div>
-                  {/* Content Preview */}
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-6">
-                      <div>
-                        <h3 className="text-xl font-semibold text-[#3d3535] dark:text-[#e8ddd5]">Good morning</h3>
-                        <p className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">What will you write today?</p>
-                      </div>
-                      <div className="flex items-center gap-2 bg-[#faf5f0] dark:bg-[#2a211d] px-3 py-1.5 rounded-full">
-                        <Zap className="w-4 h-4 text-[#d4a5a5]" />
-                        <span className="text-sm font-medium text-[#3d3535] dark:text-[#e8ddd5]">7 day streak</span>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="bg-[#faf8f5] dark:bg-[#1a1412] rounded-xl p-4 border border-[#e8e0da] dark:border-[#3a2f28]/60">
-                        <div className="text-xs text-[#8a7a7a] dark:text-[#9a8a82] mb-2">Today's Prompt</div>
-                        <p className="text-sm text-[#4a3f3f] dark:text-[#c5bab2]">What small moment made you smile today?</p>
-                      </div>
-                      <div className="bg-[#faf8f5] dark:bg-[#1a1412] rounded-xl p-4 border border-[#e8e0da] dark:border-[#3a2f28]/60">
-                        <div className="text-xs text-[#8a7a7a] dark:text-[#9a8a82] mb-2">This Week</div>
-                        <p className="text-2xl font-bold text-[#3d3535] dark:text-[#e8ddd5]">2,847 <span className="text-sm font-normal text-[#8a7a7a] dark:text-[#9a8a82]">words</span></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 bg-white/50 dark:bg-[#1e1815]/50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-4">
-              Everything you need to journal mindfully
-            </h2>
-            <p className="text-[#6a5f5f] dark:text-[#b0a098]">
-              Powerful features designed to help you reflect, grow, and express yourself authentically.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <FeatureCard
-              icon={PenLine}
-              title="Rich Text Editor"
-              description="Write beautifully with markdown support, formatting tools, and auto-save that never loses your words."
-            />
-            <FeatureCard
-              icon={ImageIcon}
-              title="Photo Memories"
-              description="Attach photos to your entries and create visual stories of your most precious moments."
-            />
-            <FeatureCard
-              icon={Lock}
-              title="Private & Secure"
-              description="Your journal is yours alone. End-to-end encryption keeps your thoughts completely private."
-            />
-            <FeatureCard
-              icon={BarChart3}
-              title="Writing Insights"
-              description="Track your writing habits, word counts, and streaks. See how your practice grows over time."
-            />
-            <FeatureCard
-              icon={Bell}
-              title="Gentle Reminders"
-              description="Set daily prompts and reminders that encourage consistent journaling without pressure."
-            />
-            <FeatureCard
-              icon={Smartphone}
-              title="Write Anywhere"
-              description="Access your journal from any device. Your entries sync seamlessly across all platforms."
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Social Proof / Stats */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-3xl sm:text-4xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-1">50K+</div>
-              <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">Active Writers</div>
-            </div>
-            <div>
-              <div className="text-3xl sm:text-4xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-1">2M+</div>
-              <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">Entries Written</div>
-            </div>
-            <div>
-              <div className="text-3xl sm:text-4xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-1">4.9</div>
-              <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">App Store Rating</div>
-            </div>
-            <div>
-              <div className="text-3xl sm:text-4xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-1">99.9%</div>
-              <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">Uptime</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-8 bg-[#faf5f0] dark:bg-[#1e1815]">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-4">
-              Loved by journalers worldwide
-            </h2>
-            <p className="text-[#6a5f5f] dark:text-[#b0a098]">
-              See what our community has to say about their journaling journey.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <TestimonialCard
-              quote="Unfiltered has completely changed my morning routine. The daily prompts help me start each day with intention and clarity."
-              author="Sarah M."
-              role="Writer & Teacher"
-            />
-            <TestimonialCard
-              quote="Finally, a journal app that feels personal. The design is beautiful and the writing experience is incredibly smooth."
-              author="James K."
-              role="Software Engineer"
-            />
-            <TestimonialCard
-              quote="I've tried many journaling apps, but Unfiltered is the only one that stuck. The streak feature keeps me motivated!"
-              author="Emily R."
-              role="Wellness Coach"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing */}
-      <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-4">
-              Simple, honest pricing
-            </h2>
-            <p className="text-[#6a5f5f] dark:text-[#b0a098]">
-              Start free and upgrade when you need more. No hidden fees, cancel anytime.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <PricingCard
-              name="Free"
-              price="Free"
-              description="Perfect for getting started"
-              features={[
-                "Unlimited entries",
-                "5 photo uploads/month",
-                "Basic writing prompts",
-                "7-day entry history",
-                "Mobile & web access"
-              ]}
-            />
-            <PricingCard
-              name="Pro"
-              price="$9"
-              description="For dedicated journalers"
-              features={[
-                "Everything in Free",
-                "Unlimited photos",
-                "Advanced analytics",
-                "Multiple journals",
-                "Export to PDF/Markdown",
-                "Priority support"
-              ]}
-              highlighted
-            />
-            <PricingCard
-              name="Lifetime"
-              price="$99"
-              description="One-time payment"
-              features={[
-                "Everything in Pro",
-                "Lifetime access",
-                "Early access to features",
-                "End-to-end encryption",
-                "API access"
-              ]}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#3d3535] dark:bg-[#231c19]">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Start your journaling journey today
-          </h2>
-          <p className="text-white/70 mb-8 text-lg">
-            Join thousands of writers who have made Unfiltered part of their daily practice.
-          </p>
-          <Link href="/">
-            <Button size="lg" className="bg-[#d4a5a5] hover:bg-[#c49090] text-white h-12 px-8">
-              Start Writing Free
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
+      <header className="sticky top-0 z-50 border-b border-[#d9cfc4]/80 bg-[#f7f4ed]/80 backdrop-blur dark:border-[#31261f] dark:bg-[#130f0d]/85">
+        <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          <Link href="/landing" className="flex items-center gap-2.5" aria-label="Unfiltered home">
+            <LogoMark className="h-8 w-auto" />
+            <span className="font-script text-2xl font-semibold">Unfiltered</span>
           </Link>
-        </div>
-      </section>
 
-      {/* Footer */}
-      <footer className="py-12 px-4 sm:px-6 lg:px-8 bg-[#faf8f5] dark:bg-[#1a1412] border-t border-[#e8e0da] dark:border-[#3a2f28]">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-2.5">
-              <LogoMark className="h-8 w-auto" />
-              <span className="font-script text-2xl font-semibold text-[#3d3535] dark:text-[#e8ddd5]">Unfiltered</span>
+          <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
+            <a href="#features" className="text-sm font-medium text-[#4e4037] transition-colors hover:text-[#8f4f31] dark:text-[#c6aea0] dark:hover:text-[#f5c4a9]">Features</a>
+            <a href="#reviews" className="text-sm font-medium text-[#4e4037] transition-colors hover:text-[#8f4f31] dark:text-[#c6aea0] dark:hover:text-[#f5c4a9]">Reviews</a>
+            <a href="#pricing" className="text-sm font-medium text-[#4e4037] transition-colors hover:text-[#8f4f31] dark:text-[#c6aea0] dark:hover:text-[#f5c4a9]">Pricing</a>
+          </nav>
+
+          <div className="hidden items-center gap-3 md:flex">
+            <ThemeToggle />
+            <Link href="/">
+              <Button variant="ghost" className="text-[#4e4037] hover:bg-[#efe4d7] dark:text-[#dbc6bb] dark:hover:bg-[#2a211c]">Sign in</Button>
+            </Link>
+            <Link href="/">
+              <Button className="bg-[#1f1a17] text-[#f7f4ed] hover:bg-[#3a2c24] dark:bg-[#eab18e] dark:text-[#1f1a17] dark:hover:bg-[#f6c8ab]">Start writing</Button>
+            </Link>
+          </div>
+
+          <details className="relative md:hidden">
+            <summary className="list-none rounded-lg border border-[#d9cfc4] px-3 py-2 text-sm font-medium dark:border-[#31261f]">Menu</summary>
+            <div className="absolute right-0 mt-2 w-56 rounded-xl border border-[#d9cfc4] bg-[#fffaf4] p-3 shadow-xl dark:border-[#31261f] dark:bg-[#1b1512]">
+              <div className="mb-3 flex items-center justify-end"><ThemeToggle /></div>
+              <div className="flex flex-col gap-2 text-sm">
+                <a href="#features" className="rounded-lg px-2 py-1.5 hover:bg-[#efe4d7] dark:hover:bg-[#2a211c]">Features</a>
+                <a href="#reviews" className="rounded-lg px-2 py-1.5 hover:bg-[#efe4d7] dark:hover:bg-[#2a211c]">Reviews</a>
+                <a href="#pricing" className="rounded-lg px-2 py-1.5 hover:bg-[#efe4d7] dark:hover:bg-[#2a211c]">Pricing</a>
+                <Link href="/" className="rounded-lg px-2 py-1.5 hover:bg-[#efe4d7] dark:hover:bg-[#2a211c]">Sign in</Link>
+                <Link href="/" className="rounded-lg bg-[#1f1a17] px-2 py-1.5 text-[#f7f4ed] dark:bg-[#eab18e] dark:text-[#1f1a17]">Start writing</Link>
+              </div>
             </div>
-            <div className="flex items-center gap-6 text-sm text-[#6a5f5f] dark:text-[#b0a098]">
-              <a href="#" className="hover:text-[#3d3535] dark:text-[#e8ddd5] transition-colors">Privacy</a>
-              <a href="#" className="hover:text-[#3d3535] dark:text-[#e8ddd5] transition-colors">Terms</a>
-              <a href="#" className="hover:text-[#3d3535] dark:text-[#e8ddd5] transition-colors">Contact</a>
-              <a href="#" className="hover:text-[#3d3535] dark:text-[#e8ddd5] transition-colors">Blog</a>
+          </details>
+        </div>
+      </header>
+
+      <main>
+        <section className="relative overflow-hidden px-4 pb-16 pt-16 sm:px-6 md:pb-24 md:pt-24 lg:px-8">
+          <div className="pointer-events-none absolute inset-0 -z-10">
+            <div className="absolute -left-16 top-8 h-72 w-72 rounded-full bg-[#f7b38c]/25 blur-3xl dark:bg-[#8f4f31]/30" />
+            <div className="absolute right-0 top-24 h-72 w-72 rounded-full bg-[#b8d5b3]/20 blur-3xl dark:bg-[#5f7d5f]/20" />
+          </div>
+
+          <div className="mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-2">
+            <div>
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#d9cfc4] bg-[#fffaf4] px-4 py-2 text-sm text-[#5f4d42] dark:border-[#3a2f29] dark:bg-[#1b1512] dark:text-[#d9c4b7]">
+                <Sparkles className="h-4 w-4 text-[#d68052]" />
+                Designed for thoughtful daily writing
+              </div>
+
+              <h1 className="text-balance text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+                Journal with clarity.
+                <span className="block text-[#8f4f31] dark:text-[#f3b18a]">Grow with consistency.</span>
+              </h1>
+              <p className="mt-5 max-w-xl text-lg leading-relaxed text-[#5f4d42] dark:text-[#ceb8ab]">
+                Unfiltered gives you a calm writing surface, rich entry history, and practical insights that keep your journaling habit alive.
+              </p>
+
+              <form className="mt-8 flex w-full flex-col gap-3 sm:max-w-md sm:flex-row" aria-label="Start free">
+                <Input type="email" inputMode="email" autoComplete="email" placeholder="you@example.com" className="h-12 border-[#d9cfc4] bg-[#fffaf4] dark:border-[#3a2f29] dark:bg-[#1b1512]" />
+                <Button type="submit" className="h-12 bg-[#1f1a17] text-[#f7f4ed] hover:bg-[#3a2c24] dark:bg-[#eab18e] dark:text-[#1f1a17] dark:hover:bg-[#f6c8ab]">
+                  Start free
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </form>
+              <p className="mt-3 text-sm text-[#766257] dark:text-[#ad9588]">No credit card required. Free plan available forever.</p>
             </div>
-            <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">
-              2024 Unfiltered. All rights reserved.
+
+            <Card className="overflow-hidden border-[#d9cfc4] bg-[#fffaf4] shadow-2xl shadow-[#a67052]/10 dark:border-[#3a2f29] dark:bg-[#1b1512]">
+              <CardContent className="p-0">
+                <div className="border-b border-[#e3d8cc] bg-[#f6eee4] px-5 py-3 dark:border-[#332922] dark:bg-[#201915]">
+                  <p className="text-sm font-medium text-[#5f4d42] dark:text-[#ceb8ab]">Today&apos;s reflection</p>
+                </div>
+                <div className="space-y-4 p-5 sm:p-6">
+                  <p className="text-lg leading-relaxed">What changed in the way you handled stress this week, and what triggered that shift?</p>
+                  <div className="rounded-xl border border-[#e3d8cc] bg-[#f7f4ed] p-4 dark:border-[#332922] dark:bg-[#130f0d]">
+                    <p className="text-sm text-[#6f5c51] dark:text-[#bfa89b]">Draft preview</p>
+                    <p className="mt-2 text-sm leading-relaxed text-[#4e4037] dark:text-[#dbc6bb]">I noticed I paused before reacting today. The habit of writing every morning seems to be rewiring how I respond...</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    {stats.slice(0, 2).map((stat) => (
+                      <div key={stat.label} className="rounded-xl border border-[#e3d8cc] bg-[#fff] p-3 dark:border-[#332922] dark:bg-[#181210]">
+                        <p className="text-xs text-[#6f5c51] dark:text-[#bfa89b]">{stat.label}</p>
+                        <p className="mt-1 text-2xl font-semibold">{stat.value}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        <section className="border-y border-[#e3d8cc] bg-[#fffaf4] px-4 py-12 dark:border-[#2f241f] dark:bg-[#181210] sm:px-6 lg:px-8">
+          <div className="mx-auto grid w-full max-w-6xl grid-cols-2 gap-6 md:grid-cols-4">
+            {stats.map((stat) => (
+              <div key={stat.label}>
+                <p className="text-2xl font-semibold sm:text-3xl">{stat.value}</p>
+                <p className="mt-1 text-sm text-[#6f5c51] dark:text-[#bfa89b]">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="features" className="px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+          <div className="mx-auto w-full max-w-6xl">
+            <h2 className="text-center text-3xl font-bold sm:text-4xl">A better writing stack for everyday life</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-center text-[#6f5c51] dark:text-[#bfa89b]">
+              Purpose-built tools to make journaling easier to start and easier to sustain.
+            </p>
+            <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {features.map((feature) => (
+                <Card key={feature.title} className="border-[#ded2c7] bg-[#fffaf4] transition-transform hover:-translate-y-1 dark:border-[#332922] dark:bg-[#1b1512]">
+                  <CardContent className="p-5">
+                    <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#f1e4d6] dark:bg-[#31261f]">
+                      <feature.icon className="h-5 w-5 text-[#8f4f31] dark:text-[#f3b18a]" />
+                    </div>
+                    <h3 className="text-lg font-semibold">{feature.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-[#6f5c51] dark:text-[#bfa89b]">{feature.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
+        </section>
+
+        <section id="reviews" className="bg-[#f1e6d9] px-4 py-16 dark:bg-[#19110e] sm:px-6 md:py-20 lg:px-8">
+          <div className="mx-auto w-full max-w-6xl">
+            <h2 className="text-center text-3xl font-bold sm:text-4xl">Trusted by daily journalers</h2>
+            <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
+              {testimonials.map((item) => (
+                <Card key={item.name} className="border-[#d9cfc4] bg-[#fffaf4] dark:border-[#332922] dark:bg-[#1b1512]">
+                  <CardContent className="p-5">
+                    <Quote className="h-6 w-6 text-[#8f4f31] dark:text-[#f3b18a]" />
+                    <p className="mt-4 text-sm leading-relaxed text-[#4e4037] dark:text-[#dbc6bb]">{item.quote}</p>
+                    <p className="mt-4 font-medium">{item.name}</p>
+                    <p className="text-sm text-[#6f5c51] dark:text-[#bfa89b]">{item.role}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="pricing" className="px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+          <div className="mx-auto w-full max-w-4xl rounded-2xl border border-[#d9cfc4] bg-[#fffaf4] p-6 dark:border-[#332922] dark:bg-[#1b1512] sm:p-8">
+            <p className="text-sm font-medium uppercase tracking-wider text-[#8f4f31] dark:text-[#f3b18a]">Simple pricing</p>
+            <h2 className="mt-2 text-3xl font-bold">Start free, upgrade when it helps</h2>
+            <p className="mt-3 text-[#6f5c51] dark:text-[#bfa89b]">All plans include core journaling, entry history, and cross-device access.</p>
+            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <Card className="border-[#ded2c7] bg-[#fff] dark:border-[#332922] dark:bg-[#181210]">
+                <CardContent className="p-5">
+                  <p className="text-sm text-[#6f5c51] dark:text-[#bfa89b]">Free</p>
+                  <p className="mt-1 text-3xl font-semibold">$0</p>
+                  <ul className="mt-4 space-y-2 text-sm">
+                    <li className="flex items-center gap-2"><Check className="h-4 w-4 text-[#8f4f31]" />Unlimited entries</li>
+                    <li className="flex items-center gap-2"><Check className="h-4 w-4 text-[#8f4f31]" />Basic prompts</li>
+                    <li className="flex items-center gap-2"><Check className="h-4 w-4 text-[#8f4f31]" />Web and mobile</li>
+                  </ul>
+                </CardContent>
+              </Card>
+              <Card className="border-[#8f4f31] bg-[#1f1a17] text-[#fffaf4] dark:bg-[#eab18e] dark:text-[#1f1a17]">
+                <CardContent className="p-5">
+                  <p className="text-sm opacity-85">Pro</p>
+                  <p className="mt-1 text-3xl font-semibold">$9/mo</p>
+                  <ul className="mt-4 space-y-2 text-sm">
+                    <li className="flex items-center gap-2"><Check className="h-4 w-4" />Advanced insights</li>
+                    <li className="flex items-center gap-2"><Check className="h-4 w-4" />Unlimited photos</li>
+                    <li className="flex items-center gap-2"><Check className="h-4 w-4" />Priority support</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t border-[#d9cfc4] px-4 py-8 dark:border-[#31261f] sm:px-6 lg:px-8">
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-4 sm:flex-row">
+          <div className="flex items-center gap-2.5">
+            <LogoMark className="h-7 w-auto" />
+            <span className="font-script text-xl font-semibold">Unfiltered</span>
+          </div>
+          <div className="flex items-center gap-5 text-sm text-[#6f5c51] dark:text-[#bfa89b]">
+            <Link href="/">Privacy</Link>
+            <Link href="/">Terms</Link>
+            <Link href="/">Contact</Link>
+          </div>
+          <p className="text-sm text-[#6f5c51] dark:text-[#bfa89b]">{year} Unfiltered. All rights reserved.</p>
         </div>
       </footer>
     </div>

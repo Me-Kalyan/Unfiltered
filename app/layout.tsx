@@ -4,8 +4,10 @@ import { Geist, Geist_Mono, Caveat } from 'next/font/google'
 
 import './globals.css'
 
-const _geist = Geist({ subsets: ['latin'] })
-const _geistMono = Geist_Mono({ subsets: ['latin'] })
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+
+const geist = Geist({ subsets: ['latin'], variable: '--font-geist-sans' })
+const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono' })
 const caveat = Caveat({ 
   subsets: ['latin'],
   variable: '--font-caveat',
@@ -24,6 +26,7 @@ export const viewport = {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default: 'Unfiltered - Your Personal Journal',
     template: '%s | Unfiltered'
@@ -57,6 +60,10 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  alternates: {
+    canonical: '/',
+  },
+  category: 'productivity',
   generator: 'v0.app',
 }
 
@@ -74,7 +81,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`font-sans antialiased ${caveat.variable}`}>{children}</body>
+      <body className={`${geist.variable} ${geistMono.variable} ${caveat.variable} font-sans antialiased`}>{children}</body>
     </html>
   )
 }
