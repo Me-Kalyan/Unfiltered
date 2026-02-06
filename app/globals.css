@@ -8,6 +8,18 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+:root {
+  --warm-bg: #f7f2e9;
+  --warm-surface: #fffaf4;
+  --warm-ink: #251d18;
+  --warm-muted: #6f5c51;
+  --warm-accent: #925434;
+  --warm-border: #decfbe;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -205,6 +217,10 @@ body {
 /* Typography */
 .font-script {
   font-family: var(--font-caveat), cursive;
+}
+
+.font-editorial {
+  font-family: var(--font-editorial), Georgia, serif;
 }
 
 .heading-xl {
