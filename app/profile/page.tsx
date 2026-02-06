@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -155,10 +155,23 @@ export default function ProfilePage() {
     { id: 3, title: "Grateful", date: "2 days ago", preview: "Three things I'm grateful for today..." },
   ]
 
+  const activityCells = useMemo(
+    () =>
+      Array.from({ length: 84 }, (_, i) => {
+        const intensity = ((i * 37 + 17) % 100) / 100
+        if (intensity > 0.8) return "bg-[#d4a5a5]"
+        if (intensity > 0.6) return "bg-[#d4a5a5]/70"
+        if (intensity > 0.4) return "bg-[#d4a5a5]/40"
+        if (intensity > 0.2) return "bg-[#d4a5a5]/20"
+        return "bg-[#f0ebe5] dark:bg-[#2a211d]"
+      }),
+    []
+  )
+
   return (
-    <div className="min-h-screen bg-[#faf8f5] dark:bg-[#1a1412]">
+    <div className="min-h-screen bg-[var(--warm-bg)] dark:bg-[#120f0d]">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#faf8f5] dark:bg-[#1a1412]/80 backdrop-blur-md border-b border-[#e8e0da] dark:border-[#3a2f28]/50">
+      <header className="sticky top-0 z-50 bg-[var(--warm-bg)]/90 dark:bg-[#120f0d]/80 backdrop-blur-md border-b border-[#decfbe] dark:border-[#2f251f]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
 <button onClick={() => router.back()} aria-label="Back to Journal" className="flex items-center gap-2 text-[#6a5f5f] dark:text-[#b0a098] hover:text-[#3d3535] dark:hover:text-[#e8ddd5]">
@@ -196,15 +209,15 @@ export default function ProfilePage() {
               {/* Name & Actions */}
               <div className="flex-1 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <h1 className="text-2xl font-bold text-[#3d3535] dark:text-[#e8ddd5]">{profile.name}</h1>
+                  <h1 className="font-editorial text-3xl font-semibold text-[#3d3535] dark:text-[#e8ddd5]">{profile.name}</h1>
                   <p className="text-[#8a7a7a] dark:text-[#9a8a82]">@{profile.username}</p>
                 </div>
                 <Button
                   onClick={() => setIsEditing(!isEditing)}
                   variant={isEditing ? "default" : "outline"}
                   className={isEditing 
-                    ? "bg-[#d4a5a5] hover:bg-[#c49090] text-white" 
-                    : "border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d]"
+                    ? "bg-[#c67a53] hover:bg-[#af6744] text-white" 
+                    : "border-[#decfbe] dark:border-[#342a24] text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d]"
                   }
                 >
                   {isEditing ? (
@@ -291,7 +304,7 @@ export default function ProfilePage() {
 
         {/* Tabs */}
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="bg-[#f0ebe5] dark:bg-[#231c19] p-1">
+          <TabsList className="bg-[var(--warm-surface)] dark:bg-[#1d1713] border border-[#decfbe] dark:border-[#342a24] p-1">
             <TabsTrigger value="overview" className="data-[state=active]:bg-white dark:bg-[#231c19]">Overview</TabsTrigger>
             <TabsTrigger value="achievements" className="data-[state=active]:bg-white dark:bg-[#231c19]">Achievements</TabsTrigger>
             <TabsTrigger value="activity" className="data-[state=active]:bg-white dark:bg-[#231c19]">Activity</TabsTrigger>
@@ -300,7 +313,7 @@ export default function ProfilePage() {
           {/* Overview Tab */}
           <TabsContent value="overview" className="space-y-6">
             {/* Writing Goals */}
-            <Card className="bg-white dark:bg-[#231c19]/80 border-[#e8e0da] dark:border-[#3a2f28]/60">
+            <Card className="bg-[var(--warm-surface)] dark:bg-[#1b1512] border-[#decfbe] dark:border-[#342a24]">
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg flex items-center gap-2">
                   <Target className="w-5 h-5 text-[#d4a5a5]" />
@@ -327,7 +340,7 @@ export default function ProfilePage() {
             </Card>
 
             {/* Recent Entries */}
-            <Card className="bg-white dark:bg-[#231c19]/80 border-[#e8e0da] dark:border-[#3a2f28]/60">
+            <Card className="bg-[var(--warm-surface)] dark:bg-[#1b1512] border-[#decfbe] dark:border-[#342a24]">
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg">Recent Entries</CardTitle>
               </CardHeader>
@@ -353,7 +366,7 @@ export default function ProfilePage() {
 
           {/* Achievements Tab */}
           <TabsContent value="achievements">
-            <Card className="bg-white dark:bg-[#231c19]/80 border-[#e8e0da] dark:border-[#3a2f28]/60">
+            <Card className="bg-[var(--warm-surface)] dark:bg-[#1b1512] border-[#decfbe] dark:border-[#342a24]">
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg flex items-center gap-2">
                   <Award className="w-5 h-5 text-[#d4a5a5]" />
@@ -388,7 +401,7 @@ export default function ProfilePage() {
 
           {/* Activity Tab */}
           <TabsContent value="activity">
-            <Card className="bg-white dark:bg-[#231c19]/80 border-[#e8e0da] dark:border-[#3a2f28]/60">
+            <Card className="bg-[var(--warm-surface)] dark:bg-[#1b1512] border-[#decfbe] dark:border-[#342a24]">
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg flex items-center gap-2">
                   <Clock className="w-5 h-5 text-[#d4a5a5]" />
@@ -400,20 +413,9 @@ export default function ProfilePage() {
                 <div className="mb-6">
                   <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82] mb-3">Last 12 weeks</div>
                   <div className="grid grid-cols-12 gap-1">
-                    {Array.from({ length: 84 }).map((_, i) => {
-                      const intensity = Math.random()
-                      let bgColor = "bg-[#f0ebe5] dark:bg-[#2a211d]"
-                      if (intensity > 0.8) bgColor = "bg-[#d4a5a5]"
-                      else if (intensity > 0.6) bgColor = "bg-[#d4a5a5]/70"
-                      else if (intensity > 0.4) bgColor = "bg-[#d4a5a5]/40"
-                      else if (intensity > 0.2) bgColor = "bg-[#d4a5a5]/20"
-                      return (
-                        <div
-                          key={i}
-                          className={`w-full aspect-square rounded-sm ${bgColor}`}
-                        />
-                      )
-                    })}
+                    {activityCells.map((bgColor, i) => (
+                      <div key={i} className={`w-full aspect-square rounded-sm ${bgColor}`} />
+                    ))}
                   </div>
                   <div className="flex items-center justify-end gap-2 mt-2 text-xs text-[#8a7a7a] dark:text-[#9a8a82]">
                     <span>Less</span>

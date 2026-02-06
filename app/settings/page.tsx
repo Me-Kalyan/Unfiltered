@@ -109,7 +109,7 @@ function SettingRow({
   showChevron?: boolean
 }) {
   const content = (
-    <div className={`flex items-center justify-between py-4 border-b border-[#e8e0da] dark:border-[#3a2f28]/60 last:border-0 ${onClick ? 'cursor-pointer hover:bg-[#f5f0eb] dark:bg-[#231c19]/50 -mx-4 px-4 rounded-lg transition-colors' : ''}`}>
+    <div className={`flex items-center justify-between py-4 border-b border-[#decfbe] dark:border-[#342a24]/60 last:border-0 ${onClick ? 'cursor-pointer hover:bg-[#f5f0eb] dark:hover:bg-[#231c19]/50 -mx-4 px-4 rounded-lg transition-colors' : ''}`}>
       <div className="flex items-center gap-3 flex-1 min-w-0">
         {Icon && (
           <div className="w-10 h-10 rounded-xl bg-[#f5f0eb] dark:bg-[#231c19] flex items-center justify-center flex-shrink-0">
@@ -150,7 +150,7 @@ function AccountCard({
     <button
       type="button"
       onClick={onClick}
-      className="w-full flex items-center gap-4 p-4 bg-white dark:bg-[#231c19]/90 border border-[#e8e0da] dark:border-[#3a2f28] rounded-xl hover:bg-[#f5f0eb] dark:bg-[#231c19]/50 hover:border-[#d4a5a5]/30 transition-all duration-200 group"
+      className="w-full flex items-center gap-4 p-4 bg-[var(--warm-surface)] dark:bg-[#1b1512] border border-[#decfbe] dark:border-[#342a24] rounded-xl hover:bg-[#f5f0eb] dark:hover:bg-[#231c19]/50 hover:border-[#d4a5a5]/30 transition-all duration-200 group"
     >
       <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#f0ebe5] to-[#e8e0da] flex items-center justify-center overflow-hidden flex-shrink-0">
         {avatarUrl ? (
@@ -293,9 +293,9 @@ export default function SettingsPage() {
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen bg-[#faf8f5] dark:bg-[#1a1412]">
+      <div className="min-h-screen bg-[var(--warm-bg)] dark:bg-[#120f0d]">
         {/* Header */}
-        <header className="sticky top-0 z-50 bg-[#faf8f5] dark:bg-[#1a1412]/90 backdrop-blur-md border-b border-[#e8e0da] dark:border-[#3a2f28]/50">
+        <header className="sticky top-0 z-50 bg-[var(--warm-bg)]/90 dark:bg-[#120f0d]/90 backdrop-blur-md border-b border-[#decfbe] dark:border-[#342a24]/50">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
@@ -317,7 +317,7 @@ export default function SettingsPage() {
                 <Button 
                   onClick={handleSave}
                   disabled={saveStatus === "saving"}
-                  className="bg-[#d4a5a5] hover:bg-[#c49090] text-white transition-all"
+                  className="bg-[#c67a53] hover:bg-[#af6744] text-white transition-all"
                 >
                   {saveStatus === "saving" ? (
                     <>
@@ -344,7 +344,7 @@ export default function SettingsPage() {
         <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
           {/* Page Title */}
           <div className="mb-6">
-            <h1 className="text-2xl sm:text-3xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-2">Settings</h1>
+            <h1 className="font-editorial text-3xl sm:text-4xl font-semibold text-[#3d3535] dark:text-[#e8ddd5] mb-2">Settings</h1>
             <p className="text-[#6a5f5f] dark:text-[#b0a098]">Manage your account settings and preferences.</p>
           </div>
 
@@ -359,7 +359,7 @@ export default function SettingsPage() {
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="bg-[#f0ebe5]/80 p-1.5 rounded-xl flex-wrap h-auto gap-1 w-full sm:w-auto">
+            <TabsList className="bg-[var(--warm-surface)] border border-[#decfbe] dark:bg-[#1d1713] dark:border-[#342a24] p-1.5 rounded-xl flex-wrap h-auto gap-1 w-full sm:w-auto">
               <TabsTrigger 
                 value="account" 
                 className="data-[state=active]:bg-white dark:bg-[#231c19] data-[state=active]:shadow-sm rounded-lg px-4 py-2.5 transition-all"
@@ -400,7 +400,7 @@ export default function SettingsPage() {
             {/* Account Settings */}
             <TabsContent value="account" className="space-y-6 animate-fade-in">
               {/* Profile Photo */}
-              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
+              <Card className="bg-[var(--warm-surface)] dark:bg-[#1b1512] border-[#decfbe] dark:border-[#342a24]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg">Profile Photo</CardTitle>
                   <CardDescription>Upload a photo to personalize your account</CardDescription>
@@ -434,7 +434,7 @@ export default function SettingsPage() {
               </Card>
 
               {/* Profile Information */}
-              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
+              <Card className="bg-[var(--warm-surface)] dark:bg-[#1b1512] border-[#decfbe] dark:border-[#342a24]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg">Profile Information</CardTitle>
                   <CardDescription>Update your personal details</CardDescription>
@@ -488,7 +488,7 @@ export default function SettingsPage() {
               </Card>
 
               {/* Security */}
-              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
+              <Card className="bg-[var(--warm-surface)] dark:bg-[#1b1512] border-[#decfbe] dark:border-[#342a24]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg flex items-center gap-2">
                     <Shield className="w-5 h-5 text-[#d4a5a5]" />
@@ -543,7 +543,7 @@ export default function SettingsPage() {
               </Card>
 
               {/* Subscription */}
-              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
+              <Card className="bg-[var(--warm-surface)] dark:bg-[#1b1512] border-[#decfbe] dark:border-[#342a24]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg flex items-center gap-2">
                     <Zap className="w-5 h-5 text-[#d4a5a5]" />
@@ -569,7 +569,7 @@ export default function SettingsPage() {
               </Card>
 
               {/* Connected Accounts */}
-              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
+              <Card className="bg-[var(--warm-surface)] dark:bg-[#1b1512] border-[#decfbe] dark:border-[#342a24]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg flex items-center gap-2">
                     <Link2 className="w-5 h-5 text-[#d4a5a5]" />
@@ -602,7 +602,7 @@ export default function SettingsPage() {
 
             {/* Notifications */}
             <TabsContent value="notifications" className="space-y-6 animate-fade-in">
-              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
+              <Card className="bg-[var(--warm-surface)] dark:bg-[#1b1512] border-[#decfbe] dark:border-[#342a24]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg">Writing Reminders</CardTitle>
                   <CardDescription>Get gentle nudges to keep your journaling habit</CardDescription>
@@ -656,7 +656,7 @@ export default function SettingsPage() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
+              <Card className="bg-[var(--warm-surface)] dark:bg-[#1b1512] border-[#decfbe] dark:border-[#342a24]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg">Communication</CardTitle>
                   <CardDescription>Choose how we contact you</CardDescription>
@@ -708,7 +708,7 @@ export default function SettingsPage() {
 
             {/* Privacy */}
             <TabsContent value="privacy" className="space-y-6 animate-fade-in">
-              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
+              <Card className="bg-[var(--warm-surface)] dark:bg-[#1b1512] border-[#decfbe] dark:border-[#342a24]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg">Entry Privacy</CardTitle>
                   <CardDescription>Control who can see your journal entries</CardDescription>
@@ -769,7 +769,7 @@ export default function SettingsPage() {
 
             {/* Appearance */}
             <TabsContent value="appearance" className="space-y-6 animate-fade-in">
-              <Card className="bg-white dark:bg-[#231c19]/90 border-[#e8e0da] dark:border-[#3a2f28]/60 shadow-sm">
+              <Card className="bg-[var(--warm-surface)] dark:bg-[#1b1512] border-[#decfbe] dark:border-[#342a24]/60 shadow-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg">Theme & Display</CardTitle>
                   <CardDescription>Customize how Unfiltered looks</CardDescription>
@@ -982,7 +982,7 @@ export default function SettingsPage() {
           </Tabs>
 
           {/* Help & Support */}
-          <div className="mt-8 pt-8 border-t border-[#e8e0da] dark:border-[#3a2f28]">
+          <div className="mt-8 pt-8 border-t border-[#decfbe] dark:border-[#342a24]">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-[#f5f0eb] dark:bg-[#231c19] flex items-center justify-center">
