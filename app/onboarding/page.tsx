@@ -1,381 +1,300 @@
 "use client"
 
-import React, { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
+import React, { useMemo, useState } from "react"
+import Link from "next/link"
 import {
-  PenLine,
-  ArrowRight,
   ArrowLeft,
+  ArrowRight,
+  Bell,
+  BookOpen,
   Check,
+  Clock3,
+  Compass,
+  Lock,
+  Moon,
   Sparkles,
   Sun,
-  Moon,
-  Sunset,
   Target,
-  BookOpen,
-  ImageIcon,
-  Bell,
   User,
-  Lock,
-  Globe,
 } from "lucide-react"
-import Link from "next/link"
+
 import { LogoMark } from "@/components/logo-mark"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Progress } from "@/components/ui/progress"
 
 interface OnboardingData {
   name: string
-  journalName: string
-  writingTime: string
-  goal: string
-  privacy: string
+  intent: "reflection" | "gratitude" | "clarity" | "creativity"
+  cadence: "daily" | "weekday" | "three-times"
+  writingWindow: "morning" | "evening"
+  promptStyle: "gentle" | "direct" | "story"
+  privacy: "private" | "shared"
   reminders: boolean
 }
 
-const STEPS = [
+const steps = [
   { id: 1, title: "Welcome" },
   { id: 2, title: "Your Name" },
-  { id: 3, title: "Journal Setup" },
-  { id: 4, title: "Writing Time" },
-  { id: 5, title: "Goals" },
+  { id: 3, title: "Intent" },
+  { id: 4, title: "Cadence" },
+  { id: 5, title: "Prompt Style" },
   { id: 6, title: "Privacy" },
-  { id: 7, title: "Ready" },
+  { id: 7, title: "Launch" },
 ]
 
 export default function OnboardingPage() {
-  const [currentStep, setCurrentStep] = useState(1)
+  const [step, setStep] = useState(1)
   const [data, setData] = useState<OnboardingData>({
     name: "",
-    journalName: "My Journal",
-    writingTime: "morning",
-    goal: "reflection",
+    intent: "reflection",
+    cadence: "daily",
+    writingWindow: "morning",
+    promptStyle: "gentle",
     privacy: "private",
     reminders: true,
   })
 
-  const progress = ((currentStep - 1) / (STEPS.length - 1)) * 100
+  const progress = useMemo(() => ((step - 1) / (steps.length - 1)) * 100, [step])
 
-  const nextStep = () => setCurrentStep((s) => Math.min(s + 1, STEPS.length))
-  const prevStep = () => setCurrentStep((s) => Math.max(s - 1, 1))
+  const next = () => setStep((s) => Math.min(s + 1, steps.length))
+  const prev = () => setStep((s) => Math.max(s - 1, 1))
 
-  const updateData = (field: keyof OnboardingData, value: string | boolean) => {
-    setData((prev) => ({ ...prev, [field]: value }))
+  const starterPrompts = {
+    gentle: "What small moment felt meaningful today?",
+    direct: "What decision are you avoiding, and why?",
+    story: "Describe one scene from today as if it were a short story.",
   }
 
   return (
-    <div className="min-h-screen bg-[#faf8f5] dark:bg-[#1a1412] flex flex-col">
-      {/* Header */}
+    <div className="min-h-screen bg-[var(--warm-bg)] text-[var(--warm-ink)] dark:bg-[#120f0d] dark:text-[#efe0cf]">
       <header className="p-6">
-        <div className="flex items-center justify-between max-w-2xl mx-auto">
+        <div className="mx-auto flex max-w-2xl items-center justify-between">
           <div className="flex items-center gap-2.5">
             <LogoMark className="h-8 w-auto" />
-            <span className="font-script text-2xl font-semibold text-[#3d3535] dark:text-[#e8ddd5]">Unfiltered</span>
+            <span className="font-script text-2xl font-semibold">Unfiltered</span>
           </div>
           <div className="flex items-center gap-2">
             <ThemeToggle />
             <Link href="/">
-              <Button variant="ghost" className="text-[#8a7a7a] dark:text-[#9a8a82] hover:text-[#3d3535] dark:hover:text-[#e8ddd5]">
-                Skip for now
-              </Button>
+              <Button variant="ghost" className="text-[var(--warm-muted)] hover:bg-[#eee2d5] dark:text-[#cdb8a8] dark:hover:bg-[#241c18]">Skip for now</Button>
             </Link>
           </div>
         </div>
       </header>
 
-      {/* Progress */}
       <div className="px-6">
-        <div className="max-w-2xl mx-auto">
-          <Progress value={progress} className="h-1 bg-[#e8e0da] dark:bg-[#3a2f28]" />
-          <div className="flex justify-between mt-2">
-            <span className="text-xs text-[#8a7a7a] dark:text-[#9a8a82]">Step {currentStep} of {STEPS.length}</span>
-            <span className="text-xs text-[#8a7a7a] dark:text-[#9a8a82]">{STEPS[currentStep - 1].title}</span>
+        <div className="mx-auto max-w-2xl">
+          <Progress value={progress} className="h-1 bg-[#e7d9ca] dark:bg-[#312722]" />
+          <div className="mt-2 flex justify-between text-xs text-[var(--warm-muted)] dark:text-[#bfa89a]">
+            <span>Step {step} of {steps.length}</span>
+            <span>{steps[step - 1].title}</span>
           </div>
         </div>
       </div>
 
-      {/* Content */}
-      <main className="flex-1 flex items-center justify-center p-6">
-        <div className="w-full max-w-lg">
-          {/* Step 1: Welcome */}
-          {currentStep === 1 && (
+      <main className="mx-auto flex min-h-[70vh] w-full max-w-2xl items-center px-6 py-10">
+        <div className="w-full">
+          {step === 1 && (
             <div className="text-center animate-fade-in">
-              <div className="w-20 h-20 bg-[#d4a5a5]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Sparkles className="w-10 h-10 text-[#d4a5a5]" />
+              <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#ead5c4] dark:bg-[#30221a]">
+                <Sparkles className="h-10 w-10 text-[var(--warm-accent)]" />
               </div>
-              <h1 className="text-3xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-4">
-                Welcome to Unfiltered
-              </h1>
-              <p className="text-[#6a5f5f] dark:text-[#b0a098] mb-8 leading-relaxed">
-                Your personal space for authentic expression. Let's set up your journal 
-                in just a few steps so it feels truly yours.
+              <h1 className="font-editorial text-3xl font-semibold">Let&apos;s shape your daily writing ritual</h1>
+              <p className="mx-auto mt-4 max-w-lg text-[var(--warm-muted)] dark:text-[#bfa89a]">
+                We&apos;ll personalize your prompts, cadence, and writing flow in less than two minutes.
               </p>
-              <Button 
-                onClick={nextStep}
-                className="bg-[#3d3535] hover:bg-[#2d2525] text-white px-8"
-              >
-                Let's Get Started
-                <ArrowRight className="w-4 h-4 ml-2" />
+              <Button onClick={next} className="mt-8 bg-[var(--warm-ink)] text-[var(--warm-bg)] hover:bg-[#44342a] dark:bg-[#f0bc99] dark:text-[#241c17]">
+                Start setup
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
           )}
 
-          {/* Step 2: Name */}
-          {currentStep === 2 && (
-            <div className="animate-fade-in">
-              <div className="w-16 h-16 bg-[#d4a5a5]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <User className="w-8 h-8 text-[#d4a5a5]" />
-              </div>
-              <h2 className="text-2xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-2 text-center">
-                What should we call you?
-              </h2>
-              <p className="text-[#6a5f5f] dark:text-[#b0a098] mb-8 text-center">
-                This will be used to personalize your journal experience.
-              </p>
-              <div className="space-y-4">
+          {step === 2 && (
+            <Card className="border-[#e1d2c1] bg-[var(--warm-surface)] dark:border-[#342a24] dark:bg-[#1a1411] animate-fade-in">
+              <CardContent className="p-6">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#ead5c4] dark:bg-[#30221a]"><User className="h-6 w-6 text-[var(--warm-accent)]" /></div>
+                <h2 className="font-editorial text-2xl font-semibold">What should we call you?</h2>
+                <p className="mt-2 text-sm text-[var(--warm-muted)] dark:text-[#bfa89a]">Used for welcome messages and reminders.</p>
                 <Input
-                  type="text"
-                  placeholder="Your name"
                   value={data.name}
-                  onChange={(e) => updateData("name", e.target.value)}
-                  className="h-12 bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28] focus:border-[#d4a5a5] text-center text-lg"
+                  onChange={(e) => setData((p) => ({ ...p, name: e.target.value }))}
+                  className="mt-5 h-12 border-[#decdba] bg-[#fffdf9] dark:border-[#342a24] dark:bg-[#1d1613]"
+                  placeholder="Your name"
                 />
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           )}
 
-          {/* Step 3: Journal Name */}
-          {currentStep === 3 && (
-            <div className="animate-fade-in">
-              <div className="w-16 h-16 bg-[#d4a5a5]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <BookOpen className="w-8 h-8 text-[#d4a5a5]" />
-              </div>
-              <h2 className="text-2xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-2 text-center">
-                Name your journal
-              </h2>
-              <p className="text-[#6a5f5f] dark:text-[#b0a098] mb-8 text-center">
-                Give your journal a name that inspires you. You can always change this later.
-              </p>
-              <div className="space-y-4">
-                <Input
-                  type="text"
-                  placeholder="My Journal"
-                  value={data.journalName}
-                  onChange={(e) => updateData("journalName", e.target.value)}
-                  className="h-12 bg-white dark:bg-[#231c19] border-[#e8e0da] dark:border-[#3a2f28] focus:border-[#d4a5a5] text-center text-lg"
-                />
-                <div className="flex flex-wrap justify-center gap-2">
-                  {["My Journal", "Daily Reflections", "Life Notes", "Thoughts & Dreams"].map((name) => (
+          {step === 3 && (
+            <Card className="border-[#e1d2c1] bg-[var(--warm-surface)] dark:border-[#342a24] dark:bg-[#1a1411] animate-fade-in">
+              <CardContent className="p-6">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#ead5c4] dark:bg-[#30221a]"><Compass className="h-6 w-6 text-[var(--warm-accent)]" /></div>
+                <h2 className="font-editorial text-2xl font-semibold">What&apos;s your primary intent?</h2>
+                <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {[
+                    ["reflection", "Self Reflection"],
+                    ["gratitude", "Gratitude"],
+                    ["clarity", "Mental Clarity"],
+                    ["creativity", "Creative Practice"],
+                  ].map(([id, label]) => (
                     <button
-                      key={name}
-                      onClick={() => updateData("journalName", name)}
-                      className={`px-3 py-1.5 rounded-full text-sm transition-all ${
-                        data.journalName === name
-                          ? "bg-[#d4a5a5] text-white"
-                          : "bg-[#f0ebe5] dark:bg-[#2a211d] text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#e8e0da] dark:hover:bg-[#3a2f28]"
+                      key={id}
+                      onClick={() => setData((p) => ({ ...p, intent: id as OnboardingData["intent"] }))}
+                      className={`rounded-xl border px-4 py-3 text-left ${
+                        data.intent === id
+                          ? "border-[var(--warm-accent)] bg-[#f7ecdf] dark:bg-[#2a1f1a]"
+                          : "border-[#e1d2c1] bg-[#fffdf9] dark:border-[#342a24] dark:bg-[#1d1613]"
                       }`}
                     >
-                      {name}
+                      <p className="font-medium">{label}</p>
                     </button>
                   ))}
                 </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           )}
 
-          {/* Step 4: Writing Time */}
-          {currentStep === 4 && (
-            <div className="animate-fade-in">
-              <h2 className="text-2xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-2 text-center">
-                When do you prefer to write?
-              </h2>
-              <p className="text-[#6a5f5f] dark:text-[#b0a098] mb-8 text-center">
-                We'll customize your prompts based on your writing time.
-              </p>
-              <div className="grid grid-cols-1 gap-4">
-                {[
-                  { id: "morning", icon: Sun, label: "Morning", desc: "Start your day with reflection" },
-                  { id: "afternoon", icon: Sunset, label: "Afternoon", desc: "Capture midday thoughts" },
-                  { id: "evening", icon: Moon, label: "Evening", desc: "Wind down with journaling" },
-                ].map((option) => (
-                  <button
-                    key={option.id}
-                    onClick={() => updateData("writingTime", option.id)}
-                    className={`flex items-center gap-4 p-4 rounded-xl border-2 transition-all ${
-                      data.writingTime === option.id
-                        ? "border-[#d4a5a5] bg-[#d4a5a5]/5"
-                        : "border-[#e8e0da] dark:border-[#3a2f28] bg-white dark:bg-[#231c19] hover:border-[#d4a5a5]/50"
-                    }`}
-                  >
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                      data.writingTime === option.id ? "bg-[#d4a5a5]" : "bg-[#f0ebe5] dark:bg-[#2a211d]"
-                    }`}>
-                      <option.icon className={`w-6 h-6 ${
-                        data.writingTime === option.id ? "text-white" : "text-[#8a7a7a] dark:text-[#9a8a82]"
-                      }`} />
-                    </div>
-                    <div className="text-left">
-                      <div className="font-semibold text-[#3d3535] dark:text-[#e8ddd5]">{option.label}</div>
-                      <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">{option.desc}</div>
-                    </div>
-                    {data.writingTime === option.id && (
-                      <Check className="w-5 h-5 text-[#d4a5a5] ml-auto" />
-                    )}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+          {step === 4 && (
+            <Card className="border-[#e1d2c1] bg-[var(--warm-surface)] dark:border-[#342a24] dark:bg-[#1a1411] animate-fade-in">
+              <CardContent className="p-6">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#ead5c4] dark:bg-[#30221a]"><Clock3 className="h-6 w-6 text-[var(--warm-accent)]" /></div>
+                <h2 className="font-editorial text-2xl font-semibold">Choose your cadence</h2>
+                <div className="mt-5 grid grid-cols-1 gap-3">
+                  {[
+                    ["daily", "Daily", "Build momentum with short entries every day"],
+                    ["weekday", "Weekdays", "Write Monday to Friday"],
+                    ["three-times", "3x per week", "A sustainable rhythm for busy weeks"],
+                  ].map(([id, label, desc]) => (
+                    <button
+                      key={id}
+                      onClick={() => setData((p) => ({ ...p, cadence: id as OnboardingData["cadence"] }))}
+                      className={`rounded-xl border px-4 py-3 text-left ${
+                        data.cadence === id
+                          ? "border-[var(--warm-accent)] bg-[#f7ecdf] dark:bg-[#2a1f1a]"
+                          : "border-[#e1d2c1] bg-[#fffdf9] dark:border-[#342a24] dark:bg-[#1d1613]"
+                      }`}
+                    >
+                      <p className="font-medium">{label}</p>
+                      <p className="text-xs text-[var(--warm-muted)] dark:text-[#bfa89a]">{desc}</p>
+                    </button>
+                  ))}
+                </div>
 
-          {/* Step 5: Goals */}
-          {currentStep === 5 && (
-            <div className="animate-fade-in">
-              <div className="w-16 h-16 bg-[#d4a5a5]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Target className="w-8 h-8 text-[#d4a5a5]" />
-              </div>
-              <h2 className="text-2xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-2 text-center">
-                What's your journaling goal?
-              </h2>
-              <p className="text-[#6a5f5f] dark:text-[#b0a098] mb-8 text-center">
-                This helps us personalize your experience.
-              </p>
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { id: "reflection", label: "Self-Reflection", desc: "Understand yourself better" },
-                  { id: "gratitude", label: "Gratitude", desc: "Focus on the positive" },
-                  { id: "creativity", label: "Creativity", desc: "Express yourself freely" },
-                  { id: "memories", label: "Memories", desc: "Capture life moments" },
-                  { id: "growth", label: "Growth", desc: "Track personal progress" },
-                  { id: "healing", label: "Healing", desc: "Process emotions" },
-                ].map((option) => (
+                <div className="mt-5 grid grid-cols-2 gap-3">
                   <button
-                    key={option.id}
-                    onClick={() => updateData("goal", option.id)}
-                    className={`p-4 rounded-xl border-2 text-left transition-all ${
-                      data.goal === option.id
-                        ? "border-[#d4a5a5] bg-[#d4a5a5]/5"
-                        : "border-[#e8e0da] dark:border-[#3a2f28] bg-white dark:bg-[#231c19] hover:border-[#d4a5a5]/50"
-                    }`}
+                    onClick={() => setData((p) => ({ ...p, writingWindow: "morning" }))}
+                    className={`rounded-xl border p-3 ${data.writingWindow === "morning" ? "border-[var(--warm-accent)]" : "border-[#e1d2c1] dark:border-[#342a24]"}`}
                   >
-                    <div className="font-semibold text-[#3d3535] dark:text-[#e8ddd5] mb-1">{option.label}</div>
-                    <div className="text-xs text-[#8a7a7a] dark:text-[#9a8a82]">{option.desc}</div>
+                    <Sun className="mx-auto h-5 w-5 text-[var(--warm-accent)]" />
+                    <p className="mt-1 text-sm">Morning</p>
                   </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Step 6: Privacy */}
-          {currentStep === 6 && (
-            <div className="animate-fade-in">
-              <h2 className="text-2xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-2 text-center">
-                Set your default privacy
-              </h2>
-              <p className="text-[#6a5f5f] dark:text-[#b0a098] mb-8 text-center">
-                You can change this for individual entries anytime.
-              </p>
-              <div className="space-y-4">
-                {[
-                  { id: "private", icon: Lock, label: "Private", desc: "Only you can see your entries" },
-                  { id: "shared", icon: User, label: "Shared", desc: "Share with selected people" },
-                  { id: "public", icon: Globe, label: "Public", desc: "Anyone can read your entries" },
-                ].map((option) => (
                   <button
-                    key={option.id}
-                    onClick={() => updateData("privacy", option.id)}
-                    className={`flex items-center gap-4 p-4 rounded-xl border-2 w-full transition-all ${
-                      data.privacy === option.id
-                        ? "border-[#d4a5a5] bg-[#d4a5a5]/5"
-                        : "border-[#e8e0da] dark:border-[#3a2f28] bg-white dark:bg-[#231c19] hover:border-[#d4a5a5]/50"
-                    }`}
+                    onClick={() => setData((p) => ({ ...p, writingWindow: "evening" }))}
+                    className={`rounded-xl border p-3 ${data.writingWindow === "evening" ? "border-[var(--warm-accent)]" : "border-[#e1d2c1] dark:border-[#342a24]"}`}
                   >
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                      data.privacy === option.id ? "bg-[#d4a5a5]" : "bg-[#f0ebe5] dark:bg-[#2a211d]"
-                    }`}>
-                      <option.icon className={`w-6 h-6 ${
-                        data.privacy === option.id ? "text-white" : "text-[#8a7a7a] dark:text-[#9a8a82]"
-                      }`} />
-                    </div>
-                    <div className="text-left">
-                      <div className="font-semibold text-[#3d3535] dark:text-[#e8ddd5]">{option.label}</div>
-                      <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">{option.desc}</div>
-                    </div>
-                    {data.privacy === option.id && (
-                      <Check className="w-5 h-5 text-[#d4a5a5] ml-auto" />
-                    )}
-                  </button>
-                ))}
-              </div>
-
-              {/* Reminders Toggle */}
-              <div className="mt-8 p-4 bg-white dark:bg-[#231c19] rounded-xl border border-[#e8e0da] dark:border-[#3a2f28]">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Bell className="w-5 h-5 text-[#d4a5a5]" />
-                    <div>
-                      <div className="font-medium text-[#3d3535] dark:text-[#e8ddd5]">Daily Reminders</div>
-                      <div className="text-sm text-[#8a7a7a] dark:text-[#9a8a82]">Get gentle nudges to write</div>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => updateData("reminders", !data.reminders)}
-                    className={`w-12 h-7 rounded-full transition-colors ${
-                      data.reminders ? "bg-[#d4a5a5]" : "bg-[#e8e0da] dark:bg-[#3a2f28]"
-                    }`}
-                  >
-                    <div className={`w-5 h-5 rounded-full bg-white dark:bg-[#231c19] shadow-sm transition-transform ${
-                      data.reminders ? "translate-x-6" : "translate-x-1"
-                    }`} />
+                    <Moon className="mx-auto h-5 w-5 text-[var(--warm-accent)]" />
+                    <p className="mt-1 text-sm">Evening</p>
                   </button>
                 </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           )}
 
-          {/* Step 7: Ready */}
-          {currentStep === 7 && (
-            <div className="text-center animate-fade-in">
-              <div className="w-20 h-20 bg-[#d4a5a5] rounded-full flex items-center justify-center mx-auto mb-6">
-                <Check className="w-10 h-10 text-white" />
+          {step === 5 && (
+            <Card className="border-[#e1d2c1] bg-[var(--warm-surface)] dark:border-[#342a24] dark:bg-[#1a1411] animate-fade-in">
+              <CardContent className="p-6">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#ead5c4] dark:bg-[#30221a]"><Target className="h-6 w-6 text-[var(--warm-accent)]" /></div>
+                <h2 className="font-editorial text-2xl font-semibold">Pick your prompt style</h2>
+                <div className="mt-5 grid grid-cols-1 gap-3">
+                  {[
+                    ["gentle", "Gentle", "Soft prompts for calm reflection"],
+                    ["direct", "Direct", "Clear questions that challenge your thinking"],
+                    ["story", "Story", "Creative prompts to narrate your day"],
+                  ].map(([id, label, desc]) => (
+                    <button
+                      key={id}
+                      onClick={() => setData((p) => ({ ...p, promptStyle: id as OnboardingData["promptStyle"] }))}
+                      className={`rounded-xl border px-4 py-3 text-left ${
+                        data.promptStyle === id
+                          ? "border-[var(--warm-accent)] bg-[#f7ecdf] dark:bg-[#2a1f1a]"
+                          : "border-[#e1d2c1] bg-[#fffdf9] dark:border-[#342a24] dark:bg-[#1d1613]"
+                      }`}
+                    >
+                      <p className="font-medium">{label}</p>
+                      <p className="text-xs text-[var(--warm-muted)] dark:text-[#bfa89a]">{desc}</p>
+                    </button>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {step === 6 && (
+            <Card className="border-[#e1d2c1] bg-[var(--warm-surface)] dark:border-[#342a24] dark:bg-[#1a1411] animate-fade-in">
+              <CardContent className="p-6">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#ead5c4] dark:bg-[#30221a]"><Lock className="h-6 w-6 text-[var(--warm-accent)]" /></div>
+                <h2 className="font-editorial text-2xl font-semibold">Privacy and reminders</h2>
+                <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <button
+                    onClick={() => setData((p) => ({ ...p, privacy: "private" }))}
+                    className={`rounded-xl border px-4 py-3 text-left ${data.privacy === "private" ? "border-[var(--warm-accent)]" : "border-[#e1d2c1] dark:border-[#342a24]"}`}
+                  >
+                    <p className="font-medium">Private</p>
+                    <p className="text-xs text-[var(--warm-muted)] dark:text-[#bfa89a]">Only you can access by default.</p>
+                  </button>
+                  <button
+                    onClick={() => setData((p) => ({ ...p, privacy: "shared" }))}
+                    className={`rounded-xl border px-4 py-3 text-left ${data.privacy === "shared" ? "border-[var(--warm-accent)]" : "border-[#e1d2c1] dark:border-[#342a24]"}`}
+                  >
+                    <p className="font-medium">Shared</p>
+                    <p className="text-xs text-[var(--warm-muted)] dark:text-[#bfa89a]">Allow selective sharing.</p>
+                  </button>
+                </div>
+
+                <button
+                  onClick={() => setData((p) => ({ ...p, reminders: !p.reminders }))}
+                  className="mt-5 flex w-full items-center justify-between rounded-xl border border-[#e1d2c1] bg-[#fffdf9] px-4 py-3 dark:border-[#342a24] dark:bg-[#1d1613]"
+                >
+                  <div className="flex items-center gap-2">
+                    <Bell className="h-4 w-4 text-[var(--warm-accent)]" />
+                    <span className="text-sm">Daily reminder</span>
+                  </div>
+                  <span className="text-xs text-[var(--warm-muted)] dark:text-[#bfa89a]">{data.reminders ? "On" : "Off"}</span>
+                </button>
+              </CardContent>
+            </Card>
+          )}
+
+          {step === 7 && (
+            <div className="animate-fade-in text-center">
+              <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#d88d63]">
+                <Check className="h-10 w-10 text-white" />
               </div>
-              <h1 className="text-3xl font-bold text-[#3d3535] dark:text-[#e8ddd5] mb-4">
-                You're all set{data.name ? `, ${data.name}` : ""}!
-              </h1>
-              <p className="text-[#6a5f5f] dark:text-[#b0a098] mb-8 leading-relaxed">
-                Your journal "<span className="font-medium text-[#3d3535] dark:text-[#e8ddd5]">{data.journalName}</span>" is ready. 
-                Start capturing your thoughts and memories today.
+              <h1 className="font-editorial text-3xl font-semibold">You&apos;re ready{data.name ? `, ${data.name}` : ""}</h1>
+              <p className="mx-auto mt-3 max-w-lg text-[var(--warm-muted)] dark:text-[#bfa89a]">
+                Your journal setup is complete. We&apos;ve prepared your first prompt so you can begin immediately.
               </p>
 
-              {/* Summary Card */}
-              <Card className="bg-white/80 dark:bg-[#231c19]/80 border-[#e8e0da] dark:border-[#3a2f28] mb-8 text-left">
-                <CardContent className="p-4 space-y-3">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-[#8a7a7a] dark:text-[#9a8a82]">Writing time</span>
-                    <span className="text-[#3d3535] dark:text-[#e8ddd5] capitalize">{data.writingTime}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-[#8a7a7a] dark:text-[#9a8a82]">Goal</span>
-                    <span className="text-[#3d3535] dark:text-[#e8ddd5] capitalize">{data.goal}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-[#8a7a7a] dark:text-[#9a8a82]">Privacy</span>
-                    <span className="text-[#3d3535] dark:text-[#e8ddd5] capitalize">{data.privacy}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-[#8a7a7a] dark:text-[#9a8a82]">Reminders</span>
-                    <span className="text-[#3d3535] dark:text-[#e8ddd5]">{data.reminders ? "On" : "Off"}</span>
+              <Card className="mx-auto mt-6 max-w-xl border-[#e1d2c1] bg-[var(--warm-surface)] text-left dark:border-[#342a24] dark:bg-[#1a1411]">
+                <CardContent className="space-y-3 p-5">
+                  <div className="flex justify-between text-sm"><span className="text-[var(--warm-muted)] dark:text-[#bfa89a]">Intent</span><span className="capitalize">{data.intent}</span></div>
+                  <div className="flex justify-between text-sm"><span className="text-[var(--warm-muted)] dark:text-[#bfa89a]">Cadence</span><span className="capitalize">{data.cadence}</span></div>
+                  <div className="flex justify-between text-sm"><span className="text-[var(--warm-muted)] dark:text-[#bfa89a]">Writing window</span><span className="capitalize">{data.writingWindow}</span></div>
+                  <div className="rounded-lg border border-[#e1d2c1] bg-[#fffdf9] p-3 text-sm dark:border-[#342a24] dark:bg-[#1d1613]">
+                    <p className="text-xs uppercase tracking-wide text-[var(--warm-muted)] dark:text-[#bfa89a]">Starter prompt</p>
+                    <p className="mt-1">{starterPrompts[data.promptStyle]}</p>
                   </div>
                 </CardContent>
               </Card>
 
               <Link href="/">
-                <Button 
-                  className="bg-[#d4a5a5] hover:bg-[#c49090] text-white px-8"
-                >
-                  Start Writing
-                  <PenLine className="w-4 h-4 ml-2" />
+                <Button className="mt-8 bg-[var(--warm-ink)] text-[var(--warm-bg)] hover:bg-[#44342a] dark:bg-[#f0bc99] dark:text-[#241c17]">
+                  Start writing
+                  <BookOpen className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
             </div>
@@ -383,24 +302,16 @@ export default function OnboardingPage() {
         </div>
       </main>
 
-      {/* Navigation */}
-      {currentStep > 1 && currentStep < 7 && (
+      {step > 1 && step < steps.length && (
         <footer className="p-6">
-          <div className="max-w-lg mx-auto flex items-center justify-between">
-            <Button
-              variant="ghost"
-              onClick={prevStep}
-              className="text-[#6a5f5f] dark:text-[#b0a098] hover:text-[#3d3535] dark:text-[#e8ddd5]"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
+          <div className="mx-auto flex max-w-2xl items-center justify-between">
+            <Button variant="ghost" onClick={prev} className="text-[var(--warm-muted)] hover:bg-[#eee2d5] dark:text-[#cdb8a8] dark:hover:bg-[#241c18]">
+              <ArrowLeft className="mr-2 h-4 w-4" />
               Back
             </Button>
-            <Button
-              onClick={nextStep}
-              className="bg-[#3d3535] hover:bg-[#2d2525] text-white"
-            >
+            <Button onClick={next} className="bg-[var(--warm-ink)] text-[var(--warm-bg)] hover:bg-[#44342a] dark:bg-[#f0bc99] dark:text-[#241c17]">
               Continue
-              <ArrowRight className="w-4 h-4 ml-2" />
+              <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
         </footer>

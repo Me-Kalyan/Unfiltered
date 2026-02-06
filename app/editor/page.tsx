@@ -1,13 +1,12 @@
 "use client"
 
-import React, { useState, useRef, useCallback } from "react"
+import React, { useState, useRef, useCallback, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
@@ -45,11 +44,10 @@ import {
   Lock,
   Globe,
   Users,
-  Sparkles,
-  MoreHorizontal,
+  HelpCircle,
+  RotateCcw,
   ArrowLeft,
   Calendar,
-  FileText,
   Type,
   Minus,
   CheckSquare,
@@ -112,6 +110,8 @@ export default function EditorPage() {
   const [showTagInput, setShowTagInput] = useState(false)
   const [wordCount, setWordCount] = useState(0)
   const [charCount, setCharCount] = useState(0)
+  const [showShortcuts, setShowShortcuts] = useState(false)
+  const [historySnapshots, setHistorySnapshots] = useState<Array<{ title: string; content: string; savedAt: Date }>>([])
   const editorRef = useRef<HTMLDivElement>(null)
 
   // Format state
@@ -172,8 +172,23 @@ export default function EditorPage() {
     setIsSaving(true)
     // Simulate save
     await new Promise((resolve) => setTimeout(resolve, 1000))
+    setHistorySnapshots((prev) => [
+      { title, content, savedAt: new Date() },
+      ...prev.slice(0, 9),
+    ])
     setLastSaved(new Date())
     setIsSaving(false)
+  }
+
+  const handleRestoreLast = () => {
+    const latest = historySnapshots[0]
+    if (!latest) return
+    setTitle(latest.title)
+    setContent(latest.content)
+    if (editorRef.current) {
+      editorRef.current.innerHTML = latest.content
+      updateCounts(editorRef.current.innerText || "")
+    }
   }
 
   // Privacy icons
@@ -191,6 +206,21 @@ export default function EditorPage() {
     month: "long",
     day: "numeric",
   })
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "s") {
+        event.preventDefault()
+        void handleSave()
+      }
+      if ((event.metaKey || event.ctrlKey) && event.key === "/") {
+        event.preventDefault()
+        setShowShortcuts((prev) => !prev)
+      }
+    }
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+  }, [handleSave])
 
   return (
     <div className="min-h-screen bg-[#faf8f5] dark:bg-[#1a1412] flex flex-col">
@@ -263,6 +293,15 @@ export default function EditorPage() {
                 </DropdownMenuContent>
               </DropdownMenu>
 
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowShortcuts((prev) => !prev)}
+              className="text-[#6a5f5f] dark:text-[#b0a098] hover:bg-[#f0ebe5] dark:hover:bg-[#2a211d]"
+            >
+              <HelpCircle className="w-4 h-4 mr-1.5" />
+              <span className="hidden md:inline">Shortcuts</span>
+            </Button>
             <ThemeToggle />
             <Button
               onClick={handleSave}
@@ -365,6 +404,15 @@ export default function EditorPage() {
         <div className="flex items-center gap-2 text-sm text-[#8a7a7a] dark:text-[#9a8a82] mb-4">
           <Calendar className="w-4 h-4" />
           <span>{currentDate}</span>
+          {historySnapshots.length > 0 && (
+            <button
+              onClick={handleRestoreLast}
+              className="ml-3 inline-flex items-center gap-1 rounded-md border border-[#e8e0da] px-2 py-1 text-xs hover:bg-[#f0ebe5] dark:border-[#3a2f28] dark:hover:bg-[#2a211d]"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              Restore last save
+            </button>
+          )}
         </div>
 
         {/* Title */}
@@ -470,10 +518,19 @@ export default function EditorPage() {
               <span>~{Math.max(1, Math.ceil(wordCount / 200))} min read</span>
             </div>
             <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#d4a5a5]" />
-              <span>AI suggestions available</span>
+              <span className="hidden sm:inline">Save: Ctrl/⌘ + S</span>
+              <span className="hidden sm:inline">Shortcuts: Ctrl/⌘ + /</span>
             </div>
           </div>
+          {showShortcuts && (
+            <div className="mt-3 rounded-lg border border-[#e8e0da] bg-white/70 p-3 text-xs dark:border-[#3a2f28] dark:bg-[#231c19]/60">
+              <p className="font-medium mb-2">Keyboard shortcuts</p>
+              <p><span className="font-medium">Ctrl/⌘ + S</span> Save entry</p>
+              <p><span className="font-medium">Ctrl/⌘ + B</span> Bold</p>
+              <p><span className="font-medium">Ctrl/⌘ + I</span> Italic</p>
+              <p><span className="font-medium">Ctrl/⌘ + /</span> Toggle this panel</p>
+            </div>
+          )}
         </div>
       </footer>
     </div>
