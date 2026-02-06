@@ -100,10 +100,10 @@ const faqItems = [
 ]
 
 const stats = [
-  { label: "Active writers", value: "50K+" },
-  { label: "Entries written", value: "2M+" },
+  { label: "Growing community", value: "50K+" },
+  { label: "Words captured", value: "2M+" },
   { label: "Average weekly streak", value: "5.8 days" },
-  { label: "Product satisfaction", value: "4.9/5" },
+  { label: "User satisfaction", value: "4.9/5" },
 ]
 
 export default function LandingPage() {
@@ -212,6 +212,7 @@ export default function LandingPage() {
                 <span className="rounded-full border border-[var(--warm-border)] px-3 py-1 dark:border-[#342a24]">Export anytime</span>
                 <span className="rounded-full border border-[var(--warm-border)] px-3 py-1 dark:border-[#342a24]">No ads</span>
               </div>
+              <p className="mt-2 text-xs text-[var(--warm-muted)] dark:text-[#bfa89a]">Metrics shown are product aggregate indicators and may vary over time.</p>
             </div>
 
             <Card className="overflow-hidden border-[var(--warm-border)] bg-[var(--warm-surface)] shadow-2xl shadow-[#a86a4a]/10 dark:border-[#342a24] dark:bg-[#1b1512]">
@@ -354,10 +355,10 @@ export default function LandingPage() {
             <span className="font-script text-xl font-semibold">Unfiltered</span>
           </div>
           <div className="flex items-center gap-5 text-sm text-[var(--warm-muted)] dark:text-[#bda798]">
-            <Link href="/">Privacy</Link>
-            <Link href="/">Security</Link>
-            <Link href="/">Terms</Link>
-            <Link href="/">Status</Link>
+            <Link href="/privacy">Privacy</Link>
+            <Link href="/security">Security</Link>
+            <Link href="/terms">Terms</Link>
+            <Link href="/status">Status</Link>
           </div>
           <p className="text-sm text-[var(--warm-muted)] dark:text-[#bda798]">{year} Unfiltered. All rights reserved.</p>
         </div>

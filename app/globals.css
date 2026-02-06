@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
+  font-family: var(--font-geist-sans, "Segoe UI"), -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -216,11 +216,11 @@ body {
 
 /* Typography */
 .font-script {
-  font-family: var(--font-caveat), cursive;
+  font-family: var(--font-caveat, "Snell Roundhand"), "Brush Script MT", "Segoe Script", cursive;
 }
 
 .font-editorial {
-  font-family: var(--font-editorial), Georgia, serif;
+  font-family: var(--font-editorial, "Iowan Old Style"), Georgia, "Times New Roman", serif;
 }
 
 .heading-xl {

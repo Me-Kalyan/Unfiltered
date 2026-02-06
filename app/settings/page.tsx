@@ -994,12 +994,16 @@ export default function SettingsPage() {
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button variant="outline" className="border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] bg-transparent hover:bg-[#f5f0eb] dark:bg-[#231c19]">
-                  View FAQ
-                </Button>
-                <Button variant="outline" className="border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] bg-transparent hover:bg-[#f5f0eb] dark:bg-[#231c19]">
-                  Contact Support
-                </Button>
+                <Link href="/landing#faq">
+                  <Button variant="outline" className="border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] bg-transparent hover:bg-[#f5f0eb] dark:bg-[#231c19]">
+                    View FAQ
+                  </Button>
+                </Link>
+                <a href="mailto:support@unfiltered.app">
+                  <Button variant="outline" className="border-[#e8e0da] dark:border-[#3a2f28] text-[#6a5f5f] dark:text-[#b0a098] bg-transparent hover:bg-[#f5f0eb] dark:bg-[#231c19]">
+                    Contact Support
+                  </Button>
+                </a>
               </div>
             </div>
           </div>
