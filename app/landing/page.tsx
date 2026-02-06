@@ -354,10 +354,10 @@ export default function LandingPage() {
             <span className="font-script text-xl font-semibold">Unfiltered</span>
           </div>
           <div className="flex items-center gap-5 text-sm text-[var(--warm-muted)] dark:text-[#bda798]">
-            <Link href="/">Privacy</Link>
-            <Link href="/">Security</Link>
-            <Link href="/">Terms</Link>
-            <Link href="/">Status</Link>
+            <Link href="/privacy">Privacy</Link>
+            <Link href="/security">Security</Link>
+            <Link href="/terms">Terms</Link>
+            <Link href="/status">Status</Link>
           </div>
           <p className="text-sm text-[var(--warm-muted)] dark:text-[#bda798]">{year} Unfiltered. All rights reserved.</p>
         </div>
